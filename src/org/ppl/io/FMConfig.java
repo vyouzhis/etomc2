@@ -26,14 +26,15 @@ public class FMConfig extends function {
 		return fmc;
 	}
 
+	@SuppressWarnings("deprecation")
 	public Template getTemp(String path) {
-		if (TempList.containsKey(path) || mConfig.GetInt("CacheTemp")==1)
+		if (TempList.containsKey(path) && mConfig.GetInt("CacheTemp")==1)
 			return TempList.get(path);
 		try {
 			ProjectPath pp = ProjectPath.getInstance();
-			cfg = new Configuration();
+			cfg = new Configuration(Configuration.VERSION_2_3_23);
 
-			cfg.setObjectWrapper(new DefaultObjectWrapper());
+			cfg.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_23));
 			cfg.setDefaultEncoding("UTF-8");
 			try {
 				File file = new File(pp.ViewDir());
@@ -44,6 +45,7 @@ public class FMConfig extends function {
 			}
 			Template temple = cfg.getTemplate(path + ".html");
 			temple.setEncoding("UTF-8");
+			
 			TempList.put(path, temple);
 
 			return temple;
