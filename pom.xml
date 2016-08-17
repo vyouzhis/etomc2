@@ -56,6 +56,7 @@
 		<REngine.version>2.1.0</REngine.version>
 		<Rserve.version>1.8.1</Rserve.version>
 		<jcabi-ssh.version>2.0-SNAPSHOT</jcabi-ssh.version>
+		<slf4j-api.version>1.7.21</slf4j-api.version>
 	</properties>
 
 	<dependencies>
@@ -161,6 +162,22 @@
 			<artifactId>jcabi-ssh</artifactId>
 			<version>${jcabi-ssh.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j-api.version}</version>
+		</dependency>
+
+
 	</dependencies>
 	<repositories>
 		<!-- SSH Client -->

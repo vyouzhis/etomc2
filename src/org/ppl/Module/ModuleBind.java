@@ -31,6 +31,7 @@ public class ModuleBind extends PObject implements Module {
 		
 		for (String ps : ucl.getPackList()) {
 			try {
+				
 				Class<?> clazz = Class.forName(ps);
 								
 				if (clazz.getSuperclass().equals(BaseSurface.class)) {
