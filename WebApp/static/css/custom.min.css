@@ -75,3 +75,8 @@ ul.notifications {
 	background-color: rgba(52,152,219,0.88);
 	border-color: rgba(52,152,219,0.88)
 }
+
+.register-box {
+    margin: 0 auto;
+    width: 40%;
+}

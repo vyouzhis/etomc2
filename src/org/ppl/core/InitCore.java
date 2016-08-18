@@ -16,5 +16,5 @@ public class InitCore {
 	protected static String DB_NAME = mConfig.GetValue("db.name");
 	protected static String DB_PRE = mConfig.GetValue("db.rule.ext");
 	protected static String DB_HOR_PRE = mConfig.GetValue("db.hor.ext");
-	protected static String DB_WEB_PRE = mConfig.GetValue("db.web.ext");
+	protected static String DB_STOCK_PRE = mConfig.GetValue("db.stock.ext");
 }

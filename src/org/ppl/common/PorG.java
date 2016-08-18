@@ -66,8 +66,7 @@ public class PorG  extends function {
 		}
 		return null;
 	}
-
-	@SuppressWarnings({ "unused" })
+	
 	private void ParserParame() {
 		
 		long maxFileSize = Integer.valueOf(mConfig.GetInt("maxFileSize"));
@@ -83,7 +82,7 @@ public class PorG  extends function {
 		String contentType = request.getContentType();
 
 		Enumeration<String> parameterNames = request.getParameterNames();
-
+		
 		while (parameterNames.hasMoreElements()) {
 
 			String paramName = parameterNames.nextElement();
@@ -103,7 +102,7 @@ public class PorG  extends function {
 		}
 		if (contentType != null
 				&& (contentType.indexOf("multipart/form-data") != -1)) {
-			final String encoding = "UTF-8";
+			//final String encoding = "UTF-8";
 			try {
 				ServletRequestContext context = new ServletRequestContext(request) ;
 				
@@ -118,7 +117,7 @@ public class PorG  extends function {
 
 						String name = item.getFieldName();
 						String value = item.getString();
-
+						
 						try {
 							value = new String(value.getBytes("iso8859-1"),
 									"UTF-8");

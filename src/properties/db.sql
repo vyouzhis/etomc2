@@ -69,8 +69,6 @@ CREATE TABLE IF NOT EXISTS `stock_user_info` (
   `phone` int(11) NOT NULL DEFAULT '0' COMMENT 'user phone',
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',  
   `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
-  `gid` int(11) NOT NULL DEFAULT '0' COMMENT 'group id',
-  `cid` int(11) NOT NULL DEFAULT '0' COMMENT 'creater uid',
   `error` int(1) NOT NULL DEFAULT '0' COMMENT 'passwd error count',
   `active` int(1) NOT NULL DEFAULT '0' COMMENT '0 no , 1 yes',
   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT '第一次注册的IP',  

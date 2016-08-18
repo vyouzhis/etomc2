@@ -33,8 +33,10 @@ public class UrlClassList {
 		}		
 	}
 	
-	public String Url() {
-		return null;
+	public String Url(String uri) {
+		PorG pg = PorG.getInstance();
+		String url = pg.getContext_Path() + "/" + uri;
+		return url;
 	}
 	
 	public String BuildUrl(String libName, String action) {

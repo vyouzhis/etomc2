@@ -351,7 +351,7 @@ $(document).ready( function() {
 		$('#phone').mask('999-9999-9999');
 		$('#phone-ex').mask('(999) 999-9999? x99999');
 		$('#tax-id').mask('99-9999999');
-		$('#ssn').mask('999-99-9999');
+		$('#verify').mask('****');
 		$('#product-key').mask('a*-999-a999');
 	}
 
