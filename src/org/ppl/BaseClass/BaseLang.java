@@ -1,13 +1,13 @@
 package org.ppl.BaseClass;
 
-import org.ppl.core.PObject;
+import org.ppl.db.DBSQL;
 import org.ppl.etc.globale_config;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
 
-public abstract class BaseLang extends PObject implements BaseLangInterface {
+public abstract class BaseLang extends DBSQL implements BaseLangInterface {
 	private String StdName=null;
 		
 	public void setStdName(String stdName) {

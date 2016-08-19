@@ -1,8 +1,5 @@
 package org.ppl.core;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;

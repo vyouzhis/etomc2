@@ -11,10 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.ppl.BaseClass.BaseLang;
+import org.ppl.core.PObject;
 import org.ppl.etc.globale_config;
 
-public class DBSQL extends BaseLang {
+import com.alibaba.fastjson.JSON;
+import com.log.base.SQLErrorLog;
+
+public class DBSQL extends PObject {
 
 	//public static DBSQL dataSource = null;
 	private Connection ConDB = null;
@@ -166,7 +169,7 @@ public class DBSQL extends BaseLang {
 	public Map<String, Object> FetchOne(String sql) {
 		Map<String, Object> results = null;
 		List<Map<String, Object>> fetlist = null;
-
+		ErrorMsg = null;
 		try {
 			fetlist = query(sql);
 		} catch (SQLException e) {
@@ -220,7 +223,7 @@ public class DBSQL extends BaseLang {
 		}
 
 		stmt = ConDB.createStatement();
-		
+		ErrorMsg = null;
 		try {
 			if (ret) {
 				numRowsUpdated = stmt.executeUpdate(clearSQL,
@@ -241,7 +244,14 @@ public class DBSQL extends BaseLang {
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			ConDB.commit();
+			ErrorMsg = e.getMessage();
+							
+			SQLErrorLog sel = SQLErrorLog.getInstance();
+			String err = sel.SELog(sql, ErrorMsg);
+			if(err!=null)
+				stmt.execute(err);
+			
+			ConDB.commit();	
 		}
 				
 		clearSQL = null;

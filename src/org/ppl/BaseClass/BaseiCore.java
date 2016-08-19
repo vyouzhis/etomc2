@@ -2,7 +2,6 @@ package org.ppl.BaseClass;
 
 import java.util.Map;
 
-import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 
@@ -23,9 +22,9 @@ public class BaseiCore extends BaseSurface {
 				return -1;
 			}
 		} else {			
-			String username = porg.getKey("username");
-			String passwd = porg.getKey("passwd_login");
-			if (iLogin(username, passwd) == -1) {
+			String email = porg.getKey("email");
+			String passwd = porg.getKey("Password");
+			if (iLogin(email, passwd) == -1) {
 
 				iLogout();
 				return -1;
@@ -40,8 +39,8 @@ public class BaseiCore extends BaseSurface {
 		cookieAct.DelCookie(globale_config.Uinfo);
 	}
 
-	public int iLogin(String login, String pwd) {
-		if (login==null || login.length() < 1)
+	public int iLogin(String email, String pwd) {
+		if (email==null || email.length() < 1)
 			return -1;
 		if (pwd==null || pwd.length() < 1)
 			return -1;
@@ -51,8 +50,8 @@ public class BaseiCore extends BaseSurface {
 			return -1;
 		}
 
-		String format = "SELECT * FROM `"+DB_STOCK_PRE+"user` where login='%s' limit 1;";
-		String sql = String.format(format, login);
+		String format = "SELECT * FROM `"+DB_STOCK_PRE+"user_info` where email='%s' limit 1;";
+		String sql = String.format(format, email);
 
 		Map<String, Object> res;
 
@@ -62,7 +61,7 @@ public class BaseiCore extends BaseSurface {
 		}
 
 		Encrypt ec = Encrypt.getInstance();
-		String check_passd = ec.MD5(res.get("password").toString() + user_salt);
+		String check_passd = ec.MD5(res.get("passwd").toString() + user_salt);
 
 		if (!check_passd.equals(pwd))
 			return -1;

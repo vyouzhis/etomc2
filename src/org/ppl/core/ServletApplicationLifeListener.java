@@ -49,7 +49,7 @@ public class ServletApplicationLifeListener extends PObject implements
 
 
 
-		new Rlan();
+		//new Rlan();
 
 //		globale_config.RapidListQueue = new ArrayList<>();
 //		globale_config.RapidList = new HashMap<>();

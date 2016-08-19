@@ -59,17 +59,9 @@
 		</init-param>
 	</filter>
 
-
-	<servlet>
-		<servlet-name>WsChatServlet</servlet-name>
-		<servlet-class>WsChatServlet</servlet-class>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>WsChatServlet</servlet-name>
-		<url-pattern>/WsChatServlet</url-pattern>
-	</servlet-mapping>
-
+	<!-- <servlet> <servlet-name>WsChatServlet</servlet-name> <servlet-class>WsChatServlet</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>WsChatServlet</servlet-name> <url-pattern>/WsChatServlet</url-pattern> 
+		</servlet-mapping> -->
 	<servlet>
 		<servlet-name>SecureChatServerHandler</servlet-name>
 		<servlet-class>SecureChatServerHandler</servlet-class>

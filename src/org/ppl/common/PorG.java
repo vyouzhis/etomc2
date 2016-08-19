@@ -84,7 +84,7 @@ public class PorG  extends function {
 		Enumeration<String> parameterNames = request.getParameterNames();
 		
 		while (parameterNames.hasMoreElements()) {
-
+			
 			String paramName = parameterNames.nextElement();
 			String[] paramValues = request.getParameterValues(paramName);
 			

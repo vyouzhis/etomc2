@@ -1,0 +1,30 @@
+<#if isOK==false>
+<div class="page-content page-error text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>注册出错</h1>
+				<h2>OOPS! PAGE NOT FOUND</h2>
+				<hr>
+				<div class="error-description">
+					<p>The page you were looking for could not be found, use search form below to find the page you are looking for</p>
+				</div>
+				<form class="form-horizontal">
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<span class="input-group-btn">
+						<input type="submit" value="SEARCH" class="btn btn-default">
+					</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<#else>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+  		<h1>OK</h1>
+ 	</div>
+</div>
+</#if>

@@ -80,3 +80,91 @@ ul.notifications {
     margin: 0 auto;
     width: 40%;
 }
+
+.minimal-header + .shop-main {
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.login-box .text-right {
+    padding-top: 5px;
+}
+@media screen and (max-width: 480px) {
+.login-box .text-right {
+    font-size: 10px;
+}
+}
+.login-box a {
+    display: inline-block;
+    vertical-align: middle;
+}
+.login-copytext {
+    padding-left: 30px;
+}
+@media screen and (max-width: 768px) {
+.login-copytext {
+    padding: 30px 0;
+}
+}
+.login-copytext h2 {
+    font-size: 1.5em;
+    margin-top: 0;
+}
+.login-copytext p {
+    color: #959595;
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.shop-main {
+    padding-top: 10px;
+}
+
+.login-copytext h2 {
+    font-size: 1.5em;
+    margin-top: 0;
+}
+.login-copytext p {
+    color: #959595;
+    font-size: 1.2em;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+.box-with-help {
+    padding: 50px 30px 0;
+    position: relative;
+}
+.box-with-help .btn-login-help {
+    color: #8f8f8f;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.box-with-help .btn-login-help:hover, .box-with-help .btn-login-help:focus {
+    color: #7b7b7b;
+}
+
+.account-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 30px;
+}
+.account-box h1 {
+    font-size: 1.5em;
+    margin-bottom: 30px;
+    margin-top: 0;
+}
+.account-box a {
+    color: #7b7b7b;
+    text-decoration: underline;
+}
+.account-box a:hover, .account-box a:focus {
+    text-decoration: none;
+}
+.login-box .text-right {
+    padding-top: 5px;
+}

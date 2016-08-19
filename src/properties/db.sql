@@ -58,22 +58,22 @@ INSERT INTO role_user_info (name, passwd, cm, nickname, email, ctime, ltime,  gi
 -- 股票用户基本信息
 DROP TABLE IF EXISTS `stock_user_info`;
 CREATE TABLE IF NOT EXISTS `stock_user_info` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL COMMENT 'login name',
+  `uid` int(11) NOT NULL AUTO_INCREMENT,  
+  `email` varchar(255) NOT NULL COMMENT 'login name',
   `passwd` varchar(32) NOT NULL COMMENT 'login passwd only md5, if only one change code ,pls see here and use https to login',  
-  `nickname` varchar(255) NOT NULL COMMENT 'nick name',
-  `email` varchar(255) NOT NULL COMMENT 'email',
+  `nickname` varchar(255) NOT NULL COMMENT 'nick name',  
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',
   `etime` int(11)  DEFAULT '0' COMMENT 'edit time',  
   `ltime` int(11) NOT NULL DEFAULT '1' COMMENT 'last login time',  
-  `phone` int(11) NOT NULL DEFAULT '0' COMMENT 'user phone',
+  `phone` varchar(11) NOT NULL DEFAULT '0' COMMENT 'user phone',
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',  
   `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
   `error` int(1) NOT NULL DEFAULT '0' COMMENT 'passwd error count',
   `active` int(1) NOT NULL DEFAULT '0' COMMENT '0 no , 1 yes',
   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT '第一次注册的IP',  
   PRIMARY KEY (`uid`),
-  UNIQUE KEY `name` (`name`)
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `phone` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --- 股票用户的基本信息
@@ -162,6 +162,19 @@ CREATE TABLE IF NOT EXISTS `stock_strategy` (
 
 create index  `index_uid_isstop` on `stock_strategy` (`uid`,`isstop`);
 --ALTER TABLE `stock_strategy` ADD UNIQUE `unique_index`(`uid`, `isstop`, `code`，`sid`);
+
+
+
+---- 是单独给与 SQLErrorLog 类使用，专门记录出错的日志
+DROP TABLE IF EXISTS `error_log_sql`;
+CREATE TABLE IF NOT EXISTS `error_log_sql` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` text NOT NULL COMMENT '保存错误记录 JSON' ,
+  `error` varchar(255) NOT NULL COMMENT '出错原因' ,
+  `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',
+  
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --------------------------
