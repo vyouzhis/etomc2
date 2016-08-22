@@ -1,5 +1,7 @@
 package org.ppl.core;
 
+import java.util.Map;
+
 import org.ppl.etc.Config;
 import org.ppl.etc.globale_config;
 
@@ -17,4 +19,5 @@ public class InitCore {
 	protected static String DB_PRE = mConfig.GetValue("db.rule.ext");
 	protected static String DB_HOR_PRE = mConfig.GetValue("db.hor.ext");
 	protected static String DB_STOCK_PRE = mConfig.GetValue("db.stock.ext");
+		
 }

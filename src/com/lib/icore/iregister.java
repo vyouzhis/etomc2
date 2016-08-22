@@ -37,7 +37,7 @@ public class iregister extends BaseSurface {
 		setRoot("Salt", salt);
 		
 		salt = en.MD5(String.valueOf(time()+10));
-		setRoot("register_action_uri", ucl.Url("register_ok/"+salt));
+		setRoot("register_action_uri", ucl.Url("register_act/"+salt));
 		
 		super.View();
 	}

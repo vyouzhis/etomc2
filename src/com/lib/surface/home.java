@@ -1,6 +1,7 @@
 package com.lib.surface;
 
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.etc.UrlClassList;
 
 public class home extends BaseSurface{
 	private String className = null;
@@ -15,7 +16,15 @@ public class home extends BaseSurface{
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-		setRoot("user", "Big Joe");
+		UrlClassList ucl = UrlClassList.getInstance();
+		
+		setRoot("trade", ucl.Url("trade"));
+		setRoot("risk", ucl.Url("risk"));
+		setRoot("arbitrage", ucl.Url("arbitrage"));
+		setRoot("strategy", ucl.Url("strategy"));
+		
+		
+		setRoot("root_var", "var a=1;");
 		
 		super.View();
 	}

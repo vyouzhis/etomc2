@@ -1,12 +1,9 @@
 package org.ppl.etc;
 
 import java.sql.Connection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.quartz.Scheduler;
-import org.rosuda.REngine.Rserve.RConnection;
 
 import com.google.inject.Injector;
 import com.mongodb.MongoClient;
@@ -49,7 +46,7 @@ public class globale_config {
 	//public static RConnection rcoonnect = null;
 	
 	public static Map<Long, Connection> GDB = null;
-	
+		
 //	//listQueue
 //	public static List<Map<String, Object>> RapidListQueue;
 //	public static Map<String, Map<String, Object>> RapidList;

@@ -65,14 +65,7 @@ public class PObject extends function{
 	}
 
 	public void TellPostMan(String ThreadName, Object message) {
-//		Map<String, Object> tpm = new HashMap<>();
-//		tpm.put("name", ThreadName);
-//		tpm.put("obj", message);
-		
-//		synchronized (globale_config.RapidListQueue) {
-//			globale_config.RapidListQueue.add(tpm);
-//			globale_config.RapidListQueue.notify();
-//		}
+
 		RunQuartz rq = new RunQuartz();
 		rq.SimpleQuartz(ThreadName, message);
 	}

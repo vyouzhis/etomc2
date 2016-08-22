@@ -9,6 +9,7 @@ import org.ppl.core.ACLControl;
 import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 import org.ppl.io.FMConfig;
+
 import com.alibaba.fastjson.JSON;
 
 import freemarker.template.Template;
@@ -16,11 +17,11 @@ import freemarker.template.TemplateException;
 
 public class BaseView extends ACLControl {
 	protected String html = "";
-	private Map<String, Object> root;
+	protected Map<String, Object> root = null;
 
 	public BaseView() {
 		// TODO Auto-generated constructor stub
-
+		
 	}
 
 	public void View() {
@@ -32,19 +33,34 @@ public class BaseView extends ACLControl {
 
 		InitStatic();
 
-		FMConfig fmc = FMConfig.getInstance();
-
-		Template temp;
 		String[] libPaths = stdClass.split("\\.");
 		String path = "";
 		for (int i = 2; i < libPaths.length; i++) {
 			path += "/" + libPaths[i];
 		}
-		//echo("html path:"+path);
+		// echo("html path:"+path);
+		this.baseView(path);
+
+		
+	}
+
+	public void baseView(String path) {
+
+		if (root == null) {
+			echo("root is null");
+			return;
+		}
+
+		InitStatic();
+
+		FMConfig fmc = FMConfig.getInstance();
+
+		Template temp;
+
 		temp = fmc.getTemp(path);
 		if (temp != null) {
 			StringWriter out = new StringWriter();
-			
+
 			try {
 				temp.process(root, out);
 			} catch (TemplateException e) {
@@ -89,6 +105,10 @@ public class BaseView extends ACLControl {
 			root = new HashMap<String, Object>();
 		}
 		root.put(key, obj);
+	}
+	
+	public void addRoot(Map<String, Object> Root) {
+		root = Root;
 	}
 
 	public int isLogin() {

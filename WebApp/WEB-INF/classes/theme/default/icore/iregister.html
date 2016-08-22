@@ -1,80 +1,90 @@
 
 
-            <!-- LATEST NEWS -->
-            <div class="container">
-                <div class="register-box"  id="masked-input-demo">
-                    <h1>注册账号</h1>
-                    <form role="form" class="form-horizontal" action="${register_action_uri}" enctype="multipart/form-data" method="post">                    
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="username">用户名</label>
-                            <div class="col-sm-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" placeholder="用户名" id="nickname" name="nickname" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="email">邮件</label>
-                            <div class="col-sm-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="email" placeholder="邮件" id="email" name="email" class="form-control">
-                                </div>
-                            </div>
-                        </div>
+<!-- LATEST NEWS -->
+<div class="container">
+	<div class="register-box" id="masked-input-demo">
+		<h1>注册账号</h1>
+		<form role="form" class="form-horizontal"
+			action="${register_action_uri}" enctype="multipart/form-data"
+			method="post">
 
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="password">密码</label>
-                            <div class="col-sm-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                    <input type="password" placeholder="密码" id="password" name="password" class="form-control">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="password">电话</label>
-                            <div class="col-sm-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                    <input type="text" class="form-control" id="phone" name="phone">
-                                </div>
-                            </div>
+			<div class="form-group">
+				<label class="control-label sr-only" for="email">邮件</label>
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+						<input type="email" placeholder="888888@qq.com" id="email"
+							name="email" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label sr-only" for="username">昵称</label>
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span>
+						<input type="text" placeholder="昵称" id="nickname" name="nickname"
+							class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label sr-only" for="password">密码</label>
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+						<input type="password" placeholder="密码" id="password"
+							name="password" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label sr-only" for="password">电话</label>
+				<div class="col-sm-12">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-phone"></i></span>
+						<input type="text" class="form-control" id="phone" name="phone">
+					</div>
+				</div>
 
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label sr-only" for="password">电话</label>
-                            <div class="col-sm-12">                                                                
-                                <div class="form-group">
-											<label class="col-md-3 control-label" for="exampleInputFile"><img src="/etomc2/captcha_image" alt=""></label>
-											<div class="col-md-9">
-												<input type="text" placeholder="" class="form-control input-lg" id="verify" name="verify">
-											</div>
-									</div>
-                            </div>
+			</div>
+			<div class="form-group">
+				<label class="control-label sr-only" for="password">电话</label>
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="exampleInputFile"><img
+							src="/etomc2/captcha_image" alt=""></label>
+						<div class="col-md-9">
+							<input type="text" placeholder="" class="form-control input-lg"
+								id="verify" name="verify">
+						</div>
+					</div>
+				</div>
 
-                        </div>
-                        <div class="form-group">
-                            
-                            <div class="col-sm-12">
-                                <label class="fancy-checkbox">
-                                    <input type="checkbox">
-                                    <span>我同意这协议 <a href="shop-register.html#"> 法律风险 </a></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                            	  <input style="display:none;" type="text" id="salt" name="salt" value="${Salt}" />
-                                <button class="btn btn-primary btn-block" type="submit"><i class="fa fa-check-circle"></i> 注册</button>
-                            </div>
-                        </div>
-                    </form>
-                    <p><em>是否已有账号?</em> <a href="icore.html"><strong>Login</strong></a></p>
-                </div> 
-            </div>
+			</div>
+			<div class="form-group">
 
-            <!-- END LATEST NEWS -->
+				<div class="col-sm-12">
+					<label class="fancy-checkbox"> <input type="checkbox">
+						<span>我同意这协议 <a href="shop-register.html#"> 法律风险 </a></span>
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-12">
+					<input style="display: none;" type="text" id="salt" name="salt"
+						value="${Salt}" />
+					<button class="btn btn-primary btn-block" type="submit">
+						<i class="fa fa-check-circle"></i> 注册
+					</button>
+				</div>
+			</div>
+		</form>
+		<p>
+			<em>是否已有账号?</em> <a href="icore.html"><strong>Login</strong></a>
+		</p>
+	</div>
+</div>
 
-            
+<!-- END LATEST NEWS -->
+

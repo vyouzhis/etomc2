@@ -67,7 +67,7 @@ public class ProjectPath extends function {
 			// returns pathnames for files and directory
 			f = new File(newDir);
 			// create
-			bool = f.isDirectory();			
+			bool = f.isDirectory();
 			// print
 		} catch (Exception e) {
 			// if any error occurs

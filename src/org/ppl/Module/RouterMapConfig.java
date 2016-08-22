@@ -53,6 +53,9 @@ public class RouterMapConfig extends PObject {
 				if (BaseClass.length != 2){					
 					return;
 				}
+				
+				porg.setCurrentClass(BaseClass[1]);
+				
 				HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 				hcp.GetCon();
 				switch (BaseClass[0]) {
@@ -62,7 +65,7 @@ public class RouterMapConfig extends PObject {
 					
 					home.Show();
 					htmlCon = home.getHtml();
-					// System.out.println(htmlCon);
+					// echo(htmlCon);
 					isAjax = home.isAjax();
 					
 					break;
@@ -118,14 +121,14 @@ public class RouterMapConfig extends PObject {
 		if (servletPath.length() > 0 && servletPath.substring(0, 1).equals("/")) {
 			servletPath = servletPath.substring(1);
 		}
-		// System.out.println("servletpath: "+servletPath);
+		// echo("servletpath: "+servletPath);
 		String[] UrlServlet = servletPath.split("/");
 		String uri;
 		String mMthod = null;
 
 		List<String> lu = ucl.getUcls();
 
-		// System.out.println("getUcls: " + lu.size());
+		// echo("getUcls: " + lu.size());
 		for (int i = 0; i < lu.size(); i++) {
 			RMC.clear();
 			BaseName = lu.get(i).toString();
@@ -137,12 +140,12 @@ public class RouterMapConfig extends PObject {
 			int l = mMthod.toLowerCase().indexOf(mehtod.toLowerCase());
 			if (l == -1) {
 				BaseName = null;
-				// System.out.println("method is not");
+				// echo("method is not");
 				continue;
 			}
 
 			uri = GetMapUri(BaseName);
-			// System.out.println(uri);
+			//echo(uri);
 			if (uri.length() > 0 && uri.substring(0, 1).equals("/")) {
 				uri = uri.substring(1);
 			}
@@ -150,7 +153,7 @@ public class RouterMapConfig extends PObject {
 			String[] uris = uri.split("/");
 
 			if (uri.length() == 0 && servletPath.length() == 0) {
-				// System.out.println("uri equals index " + uri);
+				//echo("uri equals index " + uri);
 				RMC.add("");
 				return true;
 			} else if (uri.length() == 0 && servletPath.length() != 0) {
@@ -160,7 +163,7 @@ public class RouterMapConfig extends PObject {
 			if (uri.length() > 1 && uri.substring(uri.length() - 1).equals("?")) {
 				if (uris.length < UrlServlet.length) {
 					BaseName = null;
-					// System.out.println("UrlServlet.length < "
+					// echo("UrlServlet.length < "
 					// + UrlServlet.length);
 					continue;
 				}
@@ -168,14 +171,14 @@ public class RouterMapConfig extends PObject {
 
 				if (uris.length != UrlServlet.length) {
 					BaseName = null;
-					// System.out.println("UrlServlet.length != "
+					 //echo("UrlServlet.length != "
 					// + UrlServlet.length);
 					continue;
 				}
 			}
 
 			for (int j = 0; j < UrlServlet.length; j++) {
-				// System.out.println("uri: "+uris[j]+" us:"+UrlServlet[j]);
+				//echo("uri: "+uris[j]+" us:"+UrlServlet[j]);
 				Pattern r = Pattern.compile(uris[j]);
 				if (uris[j].length() > 11
 						&& uris[j].substring(0, 11).equals("Permission.")) {
@@ -186,7 +189,7 @@ public class RouterMapConfig extends PObject {
 				if (m.find()) {
 					if (m.group().equals(UrlServlet[j])) {
 						RMC.add(m.group());
-						// System.out.println("Found value: " + BaseName +
+						 //echo("Found value: " + BaseName +
 						// " arg:"
 						// + m.group());
 					} else {

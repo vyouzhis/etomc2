@@ -11,6 +11,14 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
+/**
+ * 
+ * 
+ * @author vyouzhi
+ * @see http://freemarker.org/docs/index.html
+ *
+ */
+
 public class FMConfig extends function {
 	static FMConfig fmc = null;
 	private static Configuration cfg = null;

@@ -38,9 +38,9 @@ public class RunQuartz extends function {
 					"properties/quartz.properties").getScheduler();
 
 			groupList = globale_config.scheduler.getJobGroupNames();
-			echo("+++++++++++++");
+			//echo("+++++++++++++");
 			// echo(scheduler.);
-			echo("+++++++++++++");
+			echo("Quartz start!");
 			Injector injector = globale_config.injector;
 
 			for (String ps : ucl.getPackList()) {
