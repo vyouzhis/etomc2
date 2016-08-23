@@ -28,20 +28,9 @@ public class iregister_action extends BaseSurface {
 		List<String> rmc = porg.getRmc();
 		
 		String salt = porg.getKey("salt");
-		
-		
-		
-	
-		
+
 		if (rmc.get(0).equals("register_act")) {
-			String kaptcha = porg.getKey("kaptchaImage");
-			String sess_kaptcha = SessAct.GetSession(globale_config.KaptchSes);
-			
-			if(!kaptcha.equals(sess_kaptcha)){
-				smsg.ShowMsg(ucl.Url("register_error/" + salt+"?arg=2"));
-				return;
-			}
-			
+					
 			if (!checkSalt(salt)) {
 				smsg.ShowMsg(ucl.Url("register_error/" + salt+"?arg=0"));
 				return;

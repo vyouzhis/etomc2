@@ -1,9 +1,10 @@
 package com.lib.icore;
 
-import org.ppl.BaseClass.BaseiCore;
-import org.ppl.etc.UrlClassList;
 
-public class istrategy extends BaseiCore {
+import org.ppl.BaseClass.BaseSurface;
+
+
+public class istrategy extends BaseSurface {
 	private String className = null;
 
 	public istrategy() {
@@ -15,14 +16,14 @@ public class istrategy extends BaseiCore {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-		if (super.Init() == -1) {
-
-			UrlClassList ucl = UrlClassList.getInstance();
-			String err_url = ucl.BuildUrl("login", "");
-
-			TipMessage(err_url, _CLang("error_passwd_or_name"));
+		setRoot("d", "d");
+		if (isLogin() > 0) {
+			
 		} else {
-			super.View();
+			
+			
 		}
+		
+		super.View();
 	}
 }

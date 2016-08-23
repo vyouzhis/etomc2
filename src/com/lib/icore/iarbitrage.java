@@ -22,6 +22,7 @@ public class iarbitrage extends BaseiCore {
 
 			TipMessage(err_url, _CLang("error_passwd_or_name"));
 		} else {
+			setRoot("d", "d");
 			super.View();
 		}
 	}

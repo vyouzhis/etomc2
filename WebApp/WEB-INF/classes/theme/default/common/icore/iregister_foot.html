@@ -1,10 +1,38 @@
 <script src="${static_js_uri}/plugins/md5/jquery.md5.js"></script>
 <script type="text/javascript">
+	var verify_boolen = false;
 	$(document).ready(function() {
+
 		$("form").submit(function(e) {
 			chkForm();
 		});
+
 	});
+
+	function validateForm() {
+		
+		if(!validateEmail($("#email").val())){
+			return false;
+		}
+		
+		if($("#nickname").val().length == 0){
+			return false;
+		}
+		if($("#password").val().length == 0){
+			return false;
+		}
+		
+		if($("#phone").val().length == 0){
+			return false;
+		}
+		
+		return verify_boolen;
+	}
+	
+	function validateEmail(email) {
+	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    return re.test(email);
+	}
 
 	function chkForm() {
 		var passwd = $("#password").val();
@@ -17,7 +45,37 @@
 				'/etomc2/captcha_image?' + Math.floor(Math.random() * 100))
 				.fadeIn();
 	}
-	
-	$('input[name=verify]').change(function() { console.log($("#verify").val()); });
-	
+
+	$('input[name=verify]').change(function() {
+		console.log($("#verify").val());
+		var verify = $("#verify").val();
+
+		$.ajax({
+			url : "/etomc2/captcha_check?jsoncallback=?",
+			contentType : 'text/html;charset=utf-8',
+
+			data : {
+				"kaptchaImage" : verify
+			},
+			success : function(result) {
+				console.log("success" + result);
+			},
+			error : function(request, textStatus, errorThrown) {
+				//alert(textStatus);
+			},
+			complete : function(request, textStatus) { //for additional info
+				var option = request.responseText;
+				console.log("option:" + option);
+				$("#verify_label").attr("class", "col-md-1 control-label");
+
+				if (parseInt(option) == 1) {
+					$("#verify_i").attr("class", "fa fa-check");
+					verify_boolen = true;
+				} else {
+					$("#verify_i").attr("class", "fa fa-close");
+				}
+			}
+		});
+
+	});
 </script>

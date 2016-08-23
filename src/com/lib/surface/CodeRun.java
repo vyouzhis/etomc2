@@ -42,7 +42,7 @@ public class CodeRun extends BaseSurface {
 		try {
 			shell = new SSHByPassword("192.168.1.248", 22, "root", "qazwsx");
 			//String stdout = new Shell.Plain(shell).exec("Rscript s.r");
-			String stdout = new Shell.Plain(shell).exec("mkdir "+name);
+			//String stdout = new Shell.Plain(shell).exec("mkdir "+name);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
