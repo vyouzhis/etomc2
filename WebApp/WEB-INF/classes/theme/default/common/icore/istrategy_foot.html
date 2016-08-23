@@ -468,3 +468,16 @@ var plot2 = $.plot("#demo-flot-line2", [{
 });
 
 </script>
+
+<script type="text/javascript">
+function istrSelect(i, id){
+	for(n=1;n<4;n++){
+		$("#select_"+n).attr("class","fa fa-close");
+	}
+	
+	$("#select_"+i).attr("class","fa fa-check");
+	
+	$("#strategy_name").html("");
+	
+}
+</script>

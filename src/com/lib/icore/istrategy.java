@@ -16,13 +16,13 @@ public class istrategy extends BaseSurface {
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
-		setRoot("d", "d");
-		if (isLogin() > 0) {
-			
-		} else {
-			
-			
-		}
+		
+		int islogin = isLogin();
+		echo("islogin:"+islogin);
+		setRoot("islogin", islogin);
+				
+		
+		setRoot("strategy_name", "default strategy");
 		
 		super.View();
 	}

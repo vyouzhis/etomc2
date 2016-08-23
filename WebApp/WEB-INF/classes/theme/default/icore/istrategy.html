@@ -164,7 +164,7 @@
 <!-- END LATEST NEWS -->
 <!-- 用户信息 登录后才显示 -->
 <section>
-	<div class="container">
+	<div class="container <#if islogin == -1> hide </#if> ">
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -374,13 +374,14 @@
 					<div class="form-group">
 						<label for="comment-text" class="control-label sr-only">Comments</label>
 						<div class="col-sm-12">
-							<textarea class="form-control" name="comment-text" id="comment-text" rows="5" cols="30"
-								placeholder="* Your comments"></textarea>
+							<textarea class="form-control" name="comment-text" id="comment-text" rows="5" cols="30"<#if islogin == -1> disabled="disabled" </#if> 
+								placeholder=" <#if islogin == -1> 还没登录，请登录！ <#else> * 在这儿发言 </#if> "></textarea>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary">Submit Comment</button>
+							<button type="submit"<#if islogin == -1> disabled="disabled" </#if> class="btn btn-primary">Submit
+								Comment</button>
 						</div>
 					</div>
 				</form>
@@ -404,15 +405,20 @@
 									<tbody>
 										<tr>
 											<th scope="row">股票代码:</th>
-											<td><input type="text" placeholder="Code" class="form-control"></td>
+											<td><input type="text" placeholder="默认回测沪深A股" class="form-control"></td>
 
 										</tr>
 										<tr>
+											<th ></th>
+											<td></td>
+											
+										</tr>
+										<tr>
+											
 											<th scope="row">策略:</th>
 											<td><h4>
-													<code>简易 MACD</code>
+													<code id="strategy_name" name="strategy_name">${strategy_name!""}</code>
 												</h4></td>
-
 										</tr>
 
 									</tbody>
@@ -424,8 +430,8 @@
 										</button>
 									</div>
 									<div class="col-sm-6">
-										<button class="btn btn-block btn-success" type="submit">
-											<i class="fa fa-heart"></i> 加入我的策略
+										<button class="btn btn-block btn-success"
+											<#if islogin == -1> disabled="disabled" </#if> type="submit"> <i class="fa fa-heart"></i> 加入我的策略
 										</button>
 									</div>
 								</div>
@@ -513,8 +519,8 @@
 								<td>10%</td>
 								<td>免费</td>
 								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button">
-										<i class="fa fa-check"></i> <span class="sr-only">Success</span>
+								<td><button title="Success" class="btn btn-outline btn-success" type="button" onclick="istrSelect(1, 12)">
+										<i class="fa fa-close" id="select_1" name="select_1"></i> <span class="sr-only">Success</span>
 									</button></td>
 							</tr>
 							<tr>
@@ -524,8 +530,8 @@
 								<td>10%</td>
 								<td>免费</td>
 								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button">
-										<i class="fa fa-close"></i> <span class="sr-only">Success</span>
+								<td><button title="Success" class="btn btn-outline btn-success" type="button" onclick="istrSelect(2, 15)">
+										<i class="fa fa-close" id="select_2" name="select_2"></i> <span class="sr-only">Success</span>
 									</button></td>
 							</tr>
 							<tr>
@@ -535,17 +541,25 @@
 								<td>10%</td>
 								<td>10个XX币</td>
 								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button">
-										<i class="fa fa-close"></i> <span class="sr-only">Success</span>
+								<td><button title="Success" class="btn btn-outline btn-success" type="button"  onclick="istrSelect(3, 17)">
+										<i class="fa fa-close" id="select_3" name="select_3"></i> <span class="sr-only">Success</span>
 									</button></td>
 							</tr>
 						</tbody>
 					</table>
-
+					<ul class="pagination borderless">
+						<li><a href="ui-pagination.html#"><i class="fa fa-angle-left"></i></a></li>
+						<li><a href="ui-pagination.html#">1</a></li>
+						<li><a href="ui-pagination.html#">2</a></li>
+						<li class="active"><a href="ui-pagination.html#">3</a></li>
+						<li><a href="ui-pagination.html#">4</a></li>
+						<li><a href="ui-pagination.html#">5</a></li>
+						<li><a href="ui-pagination.html#"><i class="fa fa-angle-right"></i></a></li>
+					</ul>
 				</div>
 				<!-- end categories -->
 				<!-- tabbed content 用户登录后才显示 -->
-				<div class="widget hide">
+				<div class="widget  <#if islogin == -1> hide </#if> ">
 					<div class="tabpanel">
 						<!-- nav tabs -->
 						<ul role="tablist" class="nav nav-tabs">
@@ -699,7 +713,7 @@
 				<!-- end tabbed content -->
 
 				<!-- text widget -->
-				<div class="widget hide">
+				<div class="widget <#if islogin == -1> hide </#if>">
 					<h4 class="widget-title">信息列表</h4>
 					<ul class="list-unstyled blogposts latest">
 						<li>
