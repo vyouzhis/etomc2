@@ -85,76 +85,7 @@
 				<hr>
 				<div class="row">
 
-					<div style="height: 200px; padding: 0px; position: relative;" id="demo-flot-line">
-						<canvas class="flot-base"
-							style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1108px; height: 200px;" width="1108"
-							height="200"></canvas>
-						<div class="flot-text"
-							style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-							<div class="flot-x-axis flot-x1-axis xAxis x1Axis"
-								style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 15px; text-align: center;"
-									class="flot-tick-label tickLabel">Jan.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 111px; text-align: center;"
-									class="flot-tick-label tickLabel">Feb.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 208px; text-align: center;"
-									class="flot-tick-label tickLabel">Mar.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 307px; text-align: center;"
-									class="flot-tick-label tickLabel">Apr.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 404px; text-align: center;"
-									class="flot-tick-label tickLabel">May</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 501px; text-align: center;"
-									class="flot-tick-label tickLabel">June</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 600px; text-align: center;"
-									class="flot-tick-label tickLabel">July</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 696px; text-align: center;"
-									class="flot-tick-label tickLabel">Aug.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 792px; text-align: center;"
-									class="flot-tick-label tickLabel">Sept.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 891px; text-align: center;"
-									class="flot-tick-label tickLabel">Oct.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 988px; text-align: center;"
-									class="flot-tick-label tickLabel">Nov.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 1086px; text-align: center;"
-									class="flot-tick-label tickLabel">Dec.</div>
-							</div>
-							<div class="flot-y-axis flot-y1-axis yAxis y1Axis"
-								style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-								<div style="position: absolute; top: 170px; left: 13px; text-align: right;" class="flot-tick-label tickLabel">0</div>
-								<div style="position: absolute; top: 146px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">100</div>
-								<div style="position: absolute; top: 123px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">200</div>
-								<div style="position: absolute; top: 99px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">300</div>
-								<div style="position: absolute; top: 75px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">400</div>
-								<div style="position: absolute; top: 51px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">500</div>
-								<div style="position: absolute; top: 28px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">600</div>
-								<div style="position: absolute; top: 4px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">700</div>
-							</div>
-						</div>
-						<canvas class="flot-overlay"
-							style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1108px; height: 200px;" width="1108"
-							height="200"></canvas>
-						<div class="legend">
-							<div
-								style="position: absolute; width: 54px; height: 32px; left: 39px; background-color: rgb(255, 255, 255); opacity: 0.85;">
-							</div>
-							<table style="position: absolute; top: NaNpx; left: 39px;; font-size: smaller; color: #545454">
-								<tbody>
-									<tr>
-										<td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-												<div style="width: 4px; height: 0; border: 5px solid rgb(55, 188, 155); overflow: hidden"></div>
-											</div></td>
-										<td class="legendLabel">上证指数</td>
-									</tr>
-									<tr>
-										<td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-												<div style="width: 4px; height: 0; border: 5px solid rgb(246, 187, 66); overflow: hidden"></div>
-											</div></td>
-										<td class="legendLabel">深证成指</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+					<div id="demo-flot-line" style="height:400px"></div>
 				</div>
 			</div>
 		</div>
@@ -511,7 +442,8 @@
 								<th>操作</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="straList" name="straList">
+						<!-- 
 							<tr>
 								<th scope="row">1</th>
 								<td>SMB</td>
@@ -523,38 +455,11 @@
 										<i class="fa fa-close" id="select_1" name="select_1"></i> <span class="sr-only">Success</span>
 									</button></td>
 							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>简要MACD</td>
-								<td>简单说明</td>
-								<td>10%</td>
-								<td>免费</td>
-								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button" onclick="istrSelect(2, 15)">
-										<i class="fa fa-close" id="select_2" name="select_2"></i> <span class="sr-only">Success</span>
-									</button></td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>黄金分割线</td>
-								<td>简单说明</td>
-								<td>10%</td>
-								<td>10个XX币</td>
-								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button"  onclick="istrSelect(3, 17)">
-										<i class="fa fa-close" id="select_3" name="select_3"></i> <span class="sr-only">Success</span>
-									</button></td>
-							</tr>
+							 -->
 						</tbody>
 					</table>
-					<ul class="pagination borderless">
-						<li><a href="ui-pagination.html#"><i class="fa fa-angle-left"></i></a></li>
-						<li><a href="ui-pagination.html#">1</a></li>
-						<li><a href="ui-pagination.html#">2</a></li>
-						<li class="active"><a href="ui-pagination.html#">3</a></li>
-						<li><a href="ui-pagination.html#">4</a></li>
-						<li><a href="ui-pagination.html#">5</a></li>
-						<li><a href="ui-pagination.html#"><i class="fa fa-angle-right"></i></a></li>
+					<ul class="pagination borderless" id="straPage" name="straPage">
+						
 					</ul>
 				</div>
 				<!-- end categories -->

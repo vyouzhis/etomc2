@@ -130,339 +130,6 @@ $(document).ready(function() {
         }
     });
     
-    var plot1 = $.plot("#demo-flot-line1", [{
-        label: '收益率',
-        data: pageviews,
-        lines: {
-            show: true,
-            fill: true,
-            lineWidth: 2,
-            fillColor: {
-                colors: ["rgba(255,255,255,.0)", "rgba(183,236,240,.8)"]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }, {
-        label: '深证成指',
-        data: unique_visitor,
-        lines: {
-            show: true,
-            lineWidth: 2,
-            fill: false,
-            fillColor: {
-                colors: [{
-                    opacity: 0.5
-                }, {
-                    opacity: 0.5
-                }]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }], {
-        series: {
-            lines: {
-                show: true
-            },
-            points: {
-                show: true
-            },
-            shadowSize: 0 // Drawing is faster without shadows
-        },
-        colors: ['#37BC9B;', '#F6BB42'],
-        legend: {
-            show: true,
-            position: 'nw',
-            margin: [15]
-
-        },
-        grid: {
-            hoverable: true,
-            clickable: true,
-            tickColor: "#eeeeee",
-            borderWidth: 1,
-            borderColor: "#eeeeee"
-        },
-        xaxis: {
-            ticks: [
-                [1, "Jan."],
-                [2, "Feb."],
-                [3, "Mar."],
-                [4, "Apr."],
-                [5, "May"],
-                [6, "June"],
-                [7, "July"],
-                [8, "Aug."],
-                [9, "Sept."],
-                [10, "Oct."],
-                [11, "Nov."],
-                [12, "Dec."]
-            ]
-        }
-    });
-var plot2 = $.plot("#demo-flot-line2", [{
-        label: '收益率',
-        data: pageviews,
-        lines: {
-            show: true,
-            fill: true,
-            lineWidth: 2,
-            fillColor: {
-                colors: ["rgba(255,255,255,.0)", "rgba(183,236,240,.8)"]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }, {
-        label: '深证成指',
-        data: unique_visitor,
-        lines: {
-            show: true,
-            lineWidth: 2,
-            fill: false,
-            fillColor: {
-                colors: [{
-                    opacity: 0.5
-                }, {
-                    opacity: 0.5
-                }]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }], {
-        series: {
-            lines: {
-                show: true
-            },
-            points: {
-                show: true
-            },
-            shadowSize: 0 // Drawing is faster without shadows
-        },
-        colors: ['#37BC9B;', '#F6BB42'],
-        legend: {
-            show: true,
-            position: 'nw',
-            margin: [15]
-
-        },
-        grid: {
-            hoverable: true,
-            clickable: true,
-            tickColor: "#eeeeee",
-            borderWidth: 1,
-            borderColor: "#eeeeee"
-        },
-        xaxis: {
-            ticks: [
-                [1, "Jan."],
-                [2, "Feb."],
-                [3, "Mar."],
-                [4, "Apr."],
-                [5, "May"],
-                [6, "June"],
-                [7, "July"],
-                [8, "Aug."],
-                [9, "Sept."],
-                [10, "Oct."],
-                [11, "Nov."],
-                [12, "Dec."]
-            ]
-        }
-    });
-    var plot4 = $.plot("#demo-flot-line4", [{
-        label: '收益率',
-        data: pageviews,
-        lines: {
-            show: true,
-            fill: true,
-            lineWidth: 2,
-            fillColor: {
-                colors: ["rgba(255,255,255,.0)", "rgba(183,236,240,.8)"]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }, {
-        label: '深证成指',
-        data: unique_visitor,
-        lines: {
-            show: true,
-            lineWidth: 2,
-            fill: false,
-            fillColor: {
-                colors: [{
-                    opacity: 0.5
-                }, {
-                    opacity: 0.5
-                }]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }], {
-        series: {
-            lines: {
-                show: true
-            },
-            points: {
-                show: true
-            },
-            shadowSize: 0 // Drawing is faster without shadows
-        },
-        colors: ['#37BC9B;', '#F6BB42'],
-        legend: {
-            show: true,
-            position: 'nw',
-            margin: [15]
-
-        },
-        grid: {
-            hoverable: true,
-            clickable: true,
-            tickColor: "#eeeeee",
-            borderWidth: 1,
-            borderColor: "#eeeeee"
-        },
-        xaxis: {
-            ticks: [
-                [1, "Jan."],
-                [2, "Feb."],
-                [3, "Mar."],
-                [4, "Apr."],
-                [5, "May"],
-                [6, "June"],
-                [7, "July"],
-                [8, "Aug."],
-                [9, "Sept."],
-                [10, "Oct."],
-                [11, "Nov."],
-                [12, "Dec."]
-            ]
-        }
-    });
-    
-    var plot3 = $.plot("#demo-flot-line3", [{
-        label: '收益率',
-        data: pageviews,
-        lines: {
-            show: true,
-            fill: true,
-            lineWidth: 2,
-            fillColor: {
-                colors: ["rgba(255,255,255,.0)", "rgba(183,236,240,.8)"]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }, {
-        label: '深证成指',
-        data: unique_visitor,
-        lines: {
-            show: true,
-            lineWidth: 2,
-            fill: false,
-            fillColor: {
-                colors: [{
-                    opacity: 0.5
-                }, {
-                    opacity: 0.5
-                }]
-            }
-        },
-        points: {
-            show: true,
-            lineWidth: 2,
-            fill: true,
-            fillColor: "#ffffff",
-            symbol: "circle",
-            radius: 5
-        }
-    }], {
-        series: {
-            lines: {
-                show: true
-            },
-            points: {
-                show: true
-            },
-            shadowSize: 0 // Drawing is faster without shadows
-        },
-        colors: ['#37BC9B;', '#F6BB42'],
-        legend: {
-            show: true,
-            position: 'nw',
-            margin: [15]
-
-        },
-        grid: {
-            hoverable: true,
-            clickable: true,
-            tickColor: "#eeeeee",
-            borderWidth: 1,
-            borderColor: "#eeeeee"
-        },
-        xaxis: {
-            ticks: [
-                [1, "Jan."],
-                [2, "Feb."],
-                [3, "Mar."],
-                [4, "Apr."],
-                [5, "May"],
-                [6, "June"],
-                [7, "July"],
-                [8, "Aug."],
-                [9, "Sept."],
-                [10, "Oct."],
-                [11, "Nov."],
-                [12, "Dec."]
-            ]
-        }
-    });
 
 
 });
@@ -470,14 +137,69 @@ var plot2 = $.plot("#demo-flot-line2", [{
 </script>
 
 <script type="text/javascript">
-function istrSelect(i, id){
-	for(n=1;n<4;n++){
+
+var straListData = "";
+function istrSelect(i){
+	for(n=0;n<5;n++){
 		$("#select_"+n).attr("class","fa fa-close");
 	}
 	
 	$("#select_"+i).attr("class","fa fa-check");
 	
-	$("#strategy_name").html("");
+	var name = straListData[i]['title'];
+	$("#strategy_name").html(name);
 	
 }
+
+function getPage(){
+	$.ajax({
+		url : "/etomc2/strapage?jsoncallback=?",
+		contentType : 'text/html;charset=utf-8',
+
+		data : {
+			"cid" : "1"
+		},
+		success : function(result) {
+			//console.log("success" + result);
+		},
+		error : function(request, textStatus, errorThrown) {
+			//alert(textStatus);
+		},
+		complete : function(request, textStatus) { //for additional info
+			var option = request.responseText;
+			console.log("option:" + option);
+			var Json = JSON.parse(option);
+			$("#straPage").html(Json['page']);
+			console.log("option:" + Json['data']);
+			
+			straListData = Json['data'];
+			
+			var ListHtml = "";
+			for (i=0;i<Json['data'].length; i++){
+				 ListHtml +="<tr>"+
+				"<th scope='row'>"+(i+1)+"</th>"+
+				"<td>"+Json['data'][i]['title']+"</td>"+
+				"<td>"+Json['data'][i]['summary']+"</td>"+
+				"<td>"+Json['data'][i]['income']+"</td>"+
+				"<td>"+Json['data'][i]['integral']+"</td>"+
+				"<td>"+Json['data'][i]['uid']+"</td>"+
+				"<td><button title='Success' class='btn btn-outline btn-success' type='button' onclick='istrSelect("+i+")'>"+
+				"		<i class='fa fa-close' id='select_"+i+"' name='select_"+i+"'></i> <span class='sr-only'>Success</span>"+
+				"	</button></td>"+
+				"</tr>";	
+			}
+			
+			
+			
+			$("#straList").html(ListHtml);
+		}
+	});
+}
+
+
+jQuery(function($) {
+	getPage();
+	
+});
+
 </script>
