@@ -39,6 +39,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 		if (header_html.length() == 0) {
 			SurfaceHeader header = new SurfaceHeader();
 			header.addRoot(getRoot());
+			header.addStdClazz(stdClass);
 			header.filter();
 			header_html = header.getHtml();
 
@@ -46,6 +47,7 @@ public abstract class BaseTheme extends BaseView implements BaseThemeInterface {
 		if (footer_html.length() == 0) {
 			SurfaceFooter footer = new SurfaceFooter();
 			footer.addRoot(getRoot());
+			footer.addStdClazz(stdClass);
 			footer.filter();
 			footer_html = footer.getHtml();
 

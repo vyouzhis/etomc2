@@ -46,11 +46,15 @@ public class function extends InitCore {
 	}
 
 	public String SliceName(String k) {
+		return BaseSlice(k, 1);
+	}
+	
+	public String BaseSlice(String k, int i) {
 		String[] name = k.split("\\.");
-		String cName = name[name.length - 1];
+		String cName = name[name.length - i];
 		return cName;
 	}
-
+	
 	public List<String> PermFileList(String directoryName) {
 		List<String> fl = new ArrayList<String>();
 		File directory = new File(directoryName);

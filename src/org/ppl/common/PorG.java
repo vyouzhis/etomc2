@@ -23,7 +23,6 @@ public class PorG  extends function {
 	private Map<String, String> sporg;
 	private String Context_Path;
 	private String mehtod = null;
-	private String CurrClass=null;
 	private List<String> rmc;
 	private Map<String, String> upload_name=null;
 	private Map<String, byte[]> upload_string=null;
@@ -217,14 +216,6 @@ public class PorG  extends function {
 
 	public Map<String, byte[]> getUpload_string() {
 		return upload_string;
-	}
-	
-	public String getCurrentClass() {
-		return CurrClass;
-	}
-	
-	public void setCurrentClass(String clazz) {
-		this.CurrClass = clazz;
 	}
 
 }

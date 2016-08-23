@@ -4,17 +4,14 @@
 <div class="container">
 	<div class="register-box" id="masked-input-demo">
 		<h1>注册账号</h1>
-		<form role="form" class="form-horizontal"
-			action="${register_action_uri}" enctype="multipart/form-data"
-			method="post">
+		<form role="form" class="form-horizontal" action="${register_action_uri}" enctype="multipart/form-data" method="post">
 
 			<div class="form-group">
 				<label class="control-label sr-only" for="email">邮件</label>
 				<div class="col-sm-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-						<input type="email" placeholder="888888@qq.com" id="email"
-							name="email" class="form-control">
+						<span class="input-group-addon"><i class="fa fa-envelope"></i></span> <input type="email"
+							placeholder="888888@qq.com" id="email" name="email" class="form-control">
 					</div>
 				</div>
 			</div>
@@ -22,9 +19,8 @@
 				<label class="control-label sr-only" for="username">昵称</label>
 				<div class="col-sm-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-user"></i></span>
-						<input type="text" placeholder="昵称" id="nickname" name="nickname"
-							class="form-control">
+						<span class="input-group-addon"><i class="fa fa-user"></i></span> <input type="text" placeholder="昵称" id="nickname"
+							name="nickname" class="form-control">
 					</div>
 				</div>
 			</div>
@@ -32,9 +28,8 @@
 				<label class="control-label sr-only" for="password">密码</label>
 				<div class="col-sm-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-						<input type="password" placeholder="密码" id="password"
-							name="password" class="form-control">
+						<span class="input-group-addon"><i class="fa fa-lock"></i></span> <input type="password" placeholder="密码"
+							id="password" name="password" class="form-control">
 					</div>
 				</div>
 			</div>
@@ -42,26 +37,29 @@
 				<label class="control-label sr-only" for="password">电话</label>
 				<div class="col-sm-12">
 					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-phone"></i></span>
-						<input type="text" class="form-control" id="phone" name="phone">
+						<span class="input-group-addon"><i class="fa fa-phone"></i></span> <input type="text" class="form-control"
+							id="phone" name="phone">
 					</div>
 				</div>
 
 			</div>
 			<div class="form-group">
-				<label class="control-label sr-only" for="password">电话</label>
+				
 				<div class="col-sm-12">
 					<div class="form-group">
-						<label class="col-md-3 control-label" for="exampleInputFile"><img
-							src="/etomc2/captcha_image" alt=""></label>
-						<div class="col-md-9">
-							<input type="text" placeholder="" class="form-control input-lg"
-								id="verify" name="verify">
+						<label class="col-md-3 control-label" for="exampleInputFile"><img src="/etomc2/captcha_image" alt=""
+							id="kaptchaImage" name="kaptchaImage" onclick="changeCode()"></label>
+						<div class="col-md-5">
+							<input type="text" placeholder="" class="form-control input-lg" id="verify" name="verify">
 						</div>
+						<label class="col-md-1 control-label hide">
+						<button type="button" class="btn btn-outline btn-success"><i class="fa fa-close"></i> </button>
+						</label>
 					</div>
 				</div>
 
 			</div>
+			<!-- 
 			<div class="form-group">
 
 				<div class="col-sm-12">
@@ -70,10 +68,10 @@
 					</label>
 				</div>
 			</div>
+			 -->
 			<div class="form-group">
 				<div class="col-sm-12">
-					<input style="display: none;" type="text" id="salt" name="salt"
-						value="${Salt}" />
+					<input style="display: none;" type="text" id="salt" name="salt" value="${Salt}" />
 					<button class="btn btn-primary btn-block" type="submit">
 						<i class="fa fa-check-circle"></i> 注册
 					</button>

@@ -3,7 +3,6 @@ package com.lib.icore;
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
-import org.ppl.etc.globale_config;
 import org.ppl.io.Encrypt;
 
 public class iregister extends BaseSurface {
@@ -31,13 +30,13 @@ public class iregister extends BaseSurface {
 		}
 		
 		Encrypt en = Encrypt.getInstance();
-		String salt = en.MD5(String.valueOf(time()));
-
-		SessAct.SetSession(globale_config.SessSalt, salt);
+		
+		String salt = getSalt();
+		
 		setRoot("Salt", salt);
 		
-		salt = en.MD5(String.valueOf(time()+10));
-		setRoot("register_action_uri", ucl.Url("register_act/"+salt));
+		String radromSalt = en.MD5(String.valueOf(time()+10));
+		setRoot("register_action_uri", ucl.Url("register_act/"+radromSalt));
 		
 		super.View();
 	}

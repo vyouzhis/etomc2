@@ -119,14 +119,14 @@ public class BaseView extends ACLControl {
 	}
 
 	public int igetUid() {
-		String uid = getUinfo("id");
+		String uid = getUinfo("uid");
 		if (uid == null)
 			return 0;
 		return Integer.valueOf(uid);
 	}
 
 	public String igetName() {
-		return getUinfo("alias");
+		return getUinfo("nickname");
 	}
 
 	@SuppressWarnings("unchecked")

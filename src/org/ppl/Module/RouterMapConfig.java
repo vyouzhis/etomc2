@@ -53,9 +53,7 @@ public class RouterMapConfig extends PObject {
 				if (BaseClass.length != 2){					
 					return;
 				}
-				
-				porg.setCurrentClass(BaseClass[1]);
-				
+								
 				HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 				hcp.GetCon();
 				switch (BaseClass[0]) {

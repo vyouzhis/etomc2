@@ -7,7 +7,6 @@ import org.ppl.BaseClass.BaseSurface;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
-import org.ppl.io.Encrypt;
 
 public class iregister_action extends BaseSurface {
 	private String className = null;
@@ -29,27 +28,36 @@ public class iregister_action extends BaseSurface {
 		List<String> rmc = porg.getRmc();
 		
 		String salt = porg.getKey("salt");
-		String csalt = SessAct.GetSession(globale_config.SessSalt);
-		//echo("salt:" + salt + " csalt:" + csalt);
-
+		
+		
+		
+	
+		
 		if (rmc.get(0).equals("register_act")) {
-
-			if (!salt.equals(csalt)) {
-				smsg.ShowMsg(ucl.Url("register_error/" + csalt));
+			String kaptcha = porg.getKey("kaptchaImage");
+			String sess_kaptcha = SessAct.GetSession(globale_config.KaptchSes);
+			
+			if(!kaptcha.equals(sess_kaptcha)){
+				smsg.ShowMsg(ucl.Url("register_error/" + salt+"?arg=2"));
+				return;
+			}
+			
+			if (!checkSalt(salt)) {
+				smsg.ShowMsg(ucl.Url("register_error/" + salt+"?arg=0"));
 				return;
 			}
 
 			AddUser();
 			if (isOK) {
-				smsg.ShowMsg(ucl.Url("register_ok/" + csalt));
+				smsg.ShowMsg(ucl.Url("register_ok/" + salt));
 			} else {
-				smsg.ShowMsg(ucl.Url("register_error/" + csalt));
+				smsg.ShowMsg(ucl.Url("register_error"+ salt+"?arg=1" ));
 			}
 		} else {
 			if (rmc.get(0).equals("register_ok")) {
-				setRoot("isOK", true);
+				setRoot("isOK", -1);
 			} else {
-				setRoot("isOK", false);
+				setRoot("isOK", porg.getKey("arg"));
 			}
 
 			super.View();
@@ -63,9 +71,9 @@ public class iregister_action extends BaseSurface {
 				+ DB_STOCK_PRE
 				+ "user_info` ( `passwd`, `nickname`, `email`, `ctime`, `phone`,  `ip`) "
 				+ "VALUES ('%s', '%s', '%s', '%d',  '%s', '%s');";
-
-		Encrypt ec = Encrypt.getInstance();
-		String pwd = ec.MD5(porg.getKey("password"));
+		
+		String pwd = porg.getKey("password");
+		
 		String sql = String.format(format, pwd, porg
 				.getKey("nickname"), porg.getKey("email"), now,
 				porg.getKey("phone").replace("-", ""), porg.GetIP());

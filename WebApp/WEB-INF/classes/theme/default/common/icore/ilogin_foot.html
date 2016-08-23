@@ -1,0 +1,22 @@
+<script src="${static_js_uri}/plugins/md5/jquery.md5.js"></script>
+<script type="text/javascript">
+       $(document).ready(function(){
+       	  $("form").submit(function(e){
+       		  chkForm();
+       	  });
+       	});
+   	
+       function chkForm(){
+          var passwd = $("#Password").val();          
+          var salt = $("#salt").val();
+          var md5 = $.md5($.md5(passwd)+salt);
+          $("#Password").val(md5);           
+       }
+       
+       function changeCode() {
+   		$('#kaptchaImage').attr(
+   				'src',
+   				'/etomc2/captcha_image?'
+   						+ Math.floor(Math.random() * 100)).fadeIn();		
+   	}
+</script>

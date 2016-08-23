@@ -17,16 +17,19 @@ public class SurfaceFooter extends BaseModule {
 	@Override
 	public void filter() {
 		// TODO Auto-generated method stub
-		// echo("current class:" + porg.getCurrentClass());
+		//echo("pclazz class:" + getPClazz());
+
+		String clazz = SliceName(getPClazz());
+		String pclazz = BaseSlice(getPClazz(), 2);
 
 		ProjectPath pp = ProjectPath.getInstance();
-		String path = pp.ViewDir().getPath() + "/common/"
-				+ porg.getCurrentClass() + "_foot.html";
+		String path = pp.ViewDir().getPath() + "/common/" + pclazz + "/"
+				+ clazz + "_foot.html";
 
 		File file = new File(path);
 		if (file.exists()) {
 
-			super.baseView("common/" + porg.getCurrentClass() + "_foot");
+			super.baseView("common/" + pclazz + "/" + clazz + "_foot");
 
 			String content = super.html;
 

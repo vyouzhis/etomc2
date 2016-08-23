@@ -19,7 +19,7 @@ public class ilogin_action extends BaseiCore {
 
 		UrlClassList ucl = UrlClassList.getInstance();
 
-		echo(SessAct.GetSession(globale_config.KaptchSes));
+		echo("SessSalt:"+SessAct.GetSession(globale_config.SessSalt));
 
 		if (super.Init() == 0) {
 			String ok_url = ucl.BuildUrl("icore", time() + "");

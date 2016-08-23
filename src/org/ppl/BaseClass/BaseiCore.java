@@ -52,7 +52,7 @@ public class BaseiCore extends BaseSurface {
 
 		String format = "SELECT * FROM `"+DB_STOCK_PRE+"user_info` where email='%s' limit 1;";
 		String sql = String.format(format, email);
-
+		
 		Map<String, Object> res;
 
 		res = FetchOne(sql);
@@ -63,6 +63,7 @@ public class BaseiCore extends BaseSurface {
 		Encrypt ec = Encrypt.getInstance();
 		String check_passd = ec.MD5(res.get("passwd").toString() + user_salt);
 
+		echo("check_pawd:"+check_passd + " pwd:"+pwd);
 		if (!check_passd.equals(pwd))
 			return -1;
 
