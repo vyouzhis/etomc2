@@ -18,7 +18,7 @@ public class istrategy extends BaseSurface {
 		// TODO Auto-generated method stub
 		
 		int islogin = isLogin();
-		echo("islogin:"+islogin);
+		//echo("islogin:"+islogin);
 		setRoot("islogin", islogin);
 				
 		

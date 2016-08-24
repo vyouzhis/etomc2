@@ -25,21 +25,44 @@ public class StraPage extends BaseSurface {
 	public void Show() {
 		// TODO Auto-generated method stub
 		super.setAjax(true);
-		String stdout = "";
+		
 
 		Page page = new Page();
 		int tol = getTol();
 		int p = toInt(porg.getKey("p"));
 
-		String url = "/etomc2/strapage";
+		String url = "";
 
-		stdout = page.s_page(url, tol, p, limit, "cid=" + porg.getKey("cid"));
+		String pageString = page.base_page(url, tol, p, limit, "");
+		
+		String[] pp = pageString.split(";");
+		String Listli = "";
+		String CurrPage = "1";
+		for (int i = 0; i < pp.length; i++) {
+			String[] nn = pp[i].split("@");
+			
+			if(nn[0].equals("#")){
+				CurrPage =nn[1];
+				Listli+="<li class='active'><a href='#'>"+nn[1]+"</a></li>";
+			}else if (nn[1].equals("[left]")) {
+				Listli+="<li><a href='javascript:void(0)' onclick=getPage(1)><i class='fa fa-angle-left'></i></a></li>";
+			}else if (nn[1].equals("[right]")) {
+				int pnum = toInt(CurrPage);
+				pnum++;
+				Listli+="<li><a href='javascript:void(0)' onclick=getPage("+pnum+") ><i class='fa fa-angle-right'></i></a></li>";
+			}else if (nn[1].equals("[last]")) {
+				
+			}else {
+				Listli+="<li><a  href='javascript:void(0)' onclick=getPage("+nn[1]+") >"+nn[1]+"</a></li>";
+			}
+		}
+		
 
 		Map<String, Object> pageInfo = new HashMap<>();
 
 		pageInfo.put("data", getStra());
 
-		pageInfo.put("page", stdout);
+		pageInfo.put("page", Listli);
 
 		String json = JSON.toJSONString(pageInfo);
 
