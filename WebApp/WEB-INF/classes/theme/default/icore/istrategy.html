@@ -85,7 +85,7 @@
 				<hr>
 				<div class="row">
 
-					<div id="demo-flot-line" style="height:400px"></div>
+					<div id="echart_k" name="echart_k" style="height:400px"></div>
 				</div>
 			</div>
 		</div>
@@ -323,8 +323,7 @@
 
 					<div class="x_content">
 						<!-- search form -->
-						<div class="widget">
-							<form role="form" class="form-horizontal">
+						<div class="widget">							
 								<table class="table table-striped">
 									<thead>
 										<tr>
@@ -336,7 +335,7 @@
 									<tbody>
 										<tr>
 											<th scope="row">股票代码:</th>
-											<td><input type="text" placeholder="默认回测沪深A股" class="form-control"></td>
+											<td><input type="text" placeholder="hs300" class="form-control" id="code_num" name="code_num"></td>
 
 										</tr>
 										<tr>
@@ -356,7 +355,7 @@
 								</table>
 								<div class="form-group">
 									<div class="col-sm-6">
-										<button class="btn btn-block btn-success" type="submit">
+										<button class="btn btn-block btn-success" type="button" onclick="tactics()">
 											<i class="fa fa-asterisk"></i> 回测
 										</button>
 									</div>
@@ -366,9 +365,6 @@
 										</button>
 									</div>
 								</div>
-
-
-							</form>
 						</div>
 						<!-- end search form -->
 						<h2 class="section-heading">当前策略筛选</h2>

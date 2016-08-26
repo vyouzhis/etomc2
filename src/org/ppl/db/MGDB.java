@@ -1,6 +1,5 @@
 package org.ppl.db;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
