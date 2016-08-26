@@ -145,7 +145,7 @@
 
 
 <script type="text/javascript">
-	var straListData = "";
+	var straListData = [];
 	var nowTId=0;
 	function istrSelect(i) {
 		for (n = 0; n < 5; n++) {
@@ -195,9 +195,9 @@
 									+ "<td>"
 									+ Json['data'][i]['summary']
 									+ "</td>"
-									+ "<td>"
-									+ Json['data'][i]['income']
-									+ "</td>"
+									//+ "<td>"
+								//	+ Json['data'][i]['income']
+								//	+ "</td>"
 									+ "<td>"
 									+ Json['data'][i]['integral']
 									+ "</td>"
@@ -226,12 +226,13 @@
 		var code = $("#code_num").val();
 		
 		$.ajax({
-			url : "/etomc2/strapage?jsoncallback=?",
+			url : "/etomc2/ptactics?jsoncallback=?",
 			contentType : 'text/html;charset=utf-8',
 
 			data : {
 				"code" : code,
-				"" : straListData[i]['']
+				"iid" : straListData[nowTId]['iid'],
+				"path" : straListData[nowTId]['path'],
 			},
 			success : function(result) {
 				//console.log("success" + result);

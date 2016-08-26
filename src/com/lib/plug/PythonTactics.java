@@ -31,13 +31,14 @@ public class PythonTactics extends BaseSurface {
 		super.setAjax(true);
 
 		String code = porg.getKey("code");
-		String tactics = porg.getKey("tactics");
-
+		String iid = porg.getKey("iid");
+		String path = porg.getKey("path");
+		echo("code:"+code+" iid:"+iid+" path:"+path);
 		try {
 			shell = new SSHByPassword("192.168.122.151", 22, "root", "!@#qazwsx");
 
-			String stdout = new Shell.Plain(shell).exec("python /root/pyalgotrade_pro/"
-					+ tactics+".py" +" "+code);
+			String stdout = new Shell.Plain(shell).exec("python /root/macd/"
+					+ path +" "+code);
 
 			super.setHtml(stdout);
 
