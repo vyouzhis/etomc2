@@ -33,13 +33,18 @@ public class PythonTactics extends BaseSurface {
 		String code = porg.getKey("code");
 		String iid = porg.getKey("iid");
 		String path = porg.getKey("path");
-		echo("code:"+code+" iid:"+iid+" path:"+path);
+		echo("python /root/macd/"
+				+ path +" "+code);
 		try {
 			shell = new SSHByPassword("192.168.122.151", 22, "root", "!@#qazwsx");
 
 			String stdout = new Shell.Plain(shell).exec("python /root/macd/"
 					+ path +" "+code);
-
+			stdout += "@";
+			
+			stdout += new Shell.Plain(shell).exec("python /root/macd/"
+					+ path +" hs300");
+			
 			super.setHtml(stdout);
 
 		} catch (IOException e) {
