@@ -43,41 +43,49 @@
 		<!-- 其中一条线是当前会员关注的股票 -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2 class="panel-title section-heading no-margin">法码三因子选股</h2>
-				<i class="fa fa-heart red" data-unicode="f004"></i> (600898)
+				<h2 class="panel-title section-heading no-margin" id="tactics" name="tactics">法码三因子选股</h2>
+				<i class="fa fa-heart red" data-unicode="f004"></i> (<span id="icode" name="icode">600898</span>)
 
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-plug pull-left"></i>
-							<p>
-								52.5% <span>年化收益率</span>
+							<p id="iprofit" name="iprofit">
+								52.5% <span>累计年化收益</span>
 							</p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-cubes pull-left"></i>
-							<p>
+							<p id="ialpha" name="ialpha">
 								27.3% <span>阿尔法</span>
 							</p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-star pull-left"></i>
-							<p>
-								16.8% <span>贝塔</span>
+							<p id="ibeta" name="ibeta">
+								0.17 <span>贝塔</span>
 							</p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-users pull-left"></i>
-							<p>
-								13.9% <span>夏普比率</span>
+							<p id="isharpe" name="isharpe">
+								13.9 <span>夏普比率</span>
+							</p>
+						</div>
+					</div>
+					<div class="col-sm-2 col-xs-6">
+						<div class="number-info horizontal">
+							<i class="fa fa-users pull-left"></i>
+							<p id="iMaxDrawDown" name="iMaxDrawDown">
+								13.9% <span>最大回撤</span>
 							</p>
 						</div>
 					</div>
