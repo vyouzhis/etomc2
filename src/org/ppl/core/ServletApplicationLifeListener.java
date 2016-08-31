@@ -1,6 +1,5 @@
 package org.ppl.core;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import java.util.List;
@@ -13,7 +12,6 @@ import org.ppl.Module.ModuleBind;
 import org.ppl.db.HikariConnectionPool;
 import org.ppl.etc.globale_config;
 import org.ppl.plug.Quartz.RunQuartz;
-import org.ppl.plug.R.Rlan;
 
 import com.alibaba.fastjson.JSON;
 import com.google.inject.Guice;
@@ -42,26 +40,12 @@ public class ServletApplicationLifeListener extends PObject implements
 
 		HikariConnectionPool.getInstance();
 		globale_config.GDB = new HashMap<>();
-		// globale_config.RengineJava = new Rengine(new String[] { "--no-save"
-		// }, false, null);
 
 		InitPackList();
-
-
-
-		//new Rlan();
-
-//		globale_config.RapidListQueue = new ArrayList<>();
-//		globale_config.RapidList = new HashMap<>();
-//		globale_config.CronListQueue = new HashMap<>();
 		
-		int autorun = mConfig.GetInt("autorun");
-		if (autorun == 1) {
-			// Thread dt = new Thread(new RapidThread(), "dt_");
-			// dt.start();
-			//
-			// Thread cron = new Thread(new CronThread(), "cron_");
-			// cron.start();
+		int QuartzRun = mConfig.GetInt("QuartzRun");
+		if (QuartzRun == 1) {
+
 			RunQuartz rq = new RunQuartz();
 			rq.CronQuartz();
 		}
