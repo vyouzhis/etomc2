@@ -5,6 +5,7 @@ import java.util.List;
 import org.ppl.common.function;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
+import org.quartz.CronScheduleBuilder;
 import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -38,7 +39,7 @@ public class RunQuartz extends function {
 					"properties/quartz.properties").getScheduler();
 
 			groupList = globale_config.scheduler.getJobGroupNames();
-			//echo("+++++++++++++");
+			// echo("+++++++++++++");
 			// echo(scheduler.);
 			echo("Quartz start!");
 			Injector injector = globale_config.injector;
@@ -62,13 +63,25 @@ public class RunQuartz extends function {
 									.withIdentity(name, runquartz.getGroup())
 									.build();
 
+							CronScheduleBuilder cb = null;
+							try {
+								 cb = cronSchedule(runquartz
+										.cronSchedule());
+							} catch (Exception e) {
+								// TODO: handle exception
+								echo("cronSchedule error:"+e.getMessage());
+							}
+							
+							if(cb == null){
+								echo(String.format("cron class: %s, error %s", name, runquartz
+										.cronSchedule()));
+								continue;
+							}
 							Trigger trigger = newTrigger()
 									.withIdentity(runquartz.getTrigger(),
 											runquartz.getGroup())
 									.withSchedule(
-											cronSchedule(
-													runquartz.cronSchedule())
-													.withMisfireHandlingInstructionDoNothing())
+											cb.withMisfireHandlingInstructionDoNothing())
 
 									.forJob(name, runquartz.getGroup()).build();
 

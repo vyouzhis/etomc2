@@ -34,8 +34,11 @@ public class UpdateAllStockMarket extends CronQuartz implements Job {
 	@Override
 	public String cronSchedule() {
 		// TODO Auto-generated method stub		
-		echo(mConfig.GetValue("Quartz.UpdateAllStockMarket"));
-		return "0 5/* * * 1-5 ?";
+		String cron =  mConfig.GetValue("Quartz.UpdateAllStockMarket");
+		cron = cron.replace("\"", ""); 
+		return cron;
+		 
+		//return "0 */5 * * 1-5 ?";
 	}
 
 	@Override

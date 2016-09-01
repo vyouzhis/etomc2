@@ -1,7 +1,6 @@
 package org.ppl.plug.Quartz;
 
 import org.ppl.db.DBSQL;
-import org.ppl.db.HikariConnectionPool;
 
 public abstract class SimpleQuartz extends DBSQL {
 	public SimpleQuartz() {
