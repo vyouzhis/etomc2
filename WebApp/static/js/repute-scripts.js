@@ -353,6 +353,7 @@ $(document).ready( function() {
 		$('#tax-id').mask('99-9999999');
 		$('#verify').mask('****');
 		$('#product-key').mask('a*-999-a999');
+		$('#code_num').mask('999999');
 	}
 
 	

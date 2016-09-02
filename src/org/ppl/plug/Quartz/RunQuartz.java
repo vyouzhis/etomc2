@@ -19,6 +19,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.*;
 import static org.quartz.CronScheduleBuilder.*;
+import static org.quartz.TriggerKey.*;
 
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -54,8 +55,8 @@ public class RunQuartz extends function {
 						echo("name====:" + name);
 						runquartz = (CronQuartz) injector.getInstance(Key.get(
 								CronQuartz.class, Names.named(name)));
-
-						if (!groupList.contains("Group_" + name)) {
+						String GroupName = "Group_" + name;
+						if (!groupList.contains(GroupName)) {
 
 							JobDetail job = (JobDetail) JobBuilder
 									.newJob((Class<? extends Job>) runquartz
@@ -88,7 +89,30 @@ public class RunQuartz extends function {
 							globale_config.scheduler.scheduleJob(job, trigger);
 
 						} else {
-							echo("job " + name + " is exits  !!");
+							
+							Trigger oldTrigger = globale_config.scheduler.getTrigger(triggerKey(runquartz.getTrigger(), GroupName));
+
+							CronScheduleBuilder cb = null;
+							try {
+								 cb = cronSchedule(runquartz
+										.cronSchedule());
+							} catch (Exception e) {
+								// TODO: handle exception
+								echo("cronSchedule error:"+e.getMessage());
+							}
+							
+							// obtain a builder that would produce the trigger
+							Trigger newTrigger = newTrigger()
+									.withIdentity(runquartz.getTrigger(),
+											runquartz.getGroup())
+									.withSchedule(
+											cb.withMisfireHandlingInstructionDoNothing())
+
+									.forJob(name, runquartz.getGroup()).build();
+
+							globale_config.scheduler.rescheduleJob(oldTrigger.getKey(), newTrigger);
+							
+							echo("job " + name + " is exits, update new Trigger !!");
 						}
 
 						if (runquartz.isRun() == 0) {

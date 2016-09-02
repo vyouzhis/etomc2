@@ -1,9 +1,14 @@
 package com.lib.Quartz;
 
+import java.io.IOException;
+
 import org.ppl.plug.Quartz.CronQuartz;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+
+import com.jcabi.ssh.SSHByPassword;
+import com.jcabi.ssh.Shell;
 
 public class UpdateAllStockMarket extends CronQuartz implements Job {
 	String nowTime = null;
@@ -12,16 +17,26 @@ public class UpdateAllStockMarket extends CronQuartz implements Job {
 		String className = null;
 		className = this.getClass().getCanonicalName();
 		super.GetSubClassName(className);
-		
-		//int week = toInt(DateFormat((long)time(), "W"));
-		
+				
 		nowTime = DateFormat((long)time(), "yyyy-MM-dd");
-		echo("UpdateAllStockMarket ...."+nowTime);
+		echo("UpdateAllStockMarket start ...."+nowTime);
 	}
 	
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		// TODO Auto-generated method stub
+		nowTime = DateFormat((long)time(), "yyyy-MM-dd");
+		echo("UpdateAllStockMarket execute  ...."+nowTime);
+		Shell shell = null;
+		try {
+			shell = new SSHByPassword("192.168.122.151", 22, "root", "!@#qazwsx");
+
+			new Shell.Plain(shell).exec("python /root/tushare_pro/tushare_mongo.py");
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -37,14 +52,12 @@ public class UpdateAllStockMarket extends CronQuartz implements Job {
 		String cron =  mConfig.GetValue("Quartz.UpdateAllStockMarket");
 		cron = cron.replace("\"", ""); 
 		return cron;
-		 
-		//return "0 */5 * * 1-5 ?";
 	}
 
 	@Override
 	public int isRun() {
 		// TODO Auto-generated method stub
-		return 0;
+		return mConfig.GetInt("Quartz.UpdateAllStockMarket.isRun");
 	}
 
 }

@@ -343,7 +343,20 @@
 									<tbody>
 										<tr>
 											<th scope="row">股票代码:</th>
-											<td><input type="text" placeholder="hs300" class="form-control" id="code_num" name="code_num"></td>
+											<td>
+											<div class="btn-group" id="masked-input-demo">
+                                      <input type="text" placeholder="hs300" id="code_num" name="code_num" data-toggle="dropdown"  aria-expanded="true" class="form-control">
+                                      <ul role="menu" class="dropdown-menu dropdown-menu-right country-selector">
+                                          <li>
+                                          <a href="#">600054</a>
+                                          </li>
+                                          <li>
+                                          <a href="#">600808</a>
+                                          </li>
+                                      </ul>
+                                  </div>
+																																	
+											</td>
 
 										</tr>
 										<tr>
@@ -362,12 +375,17 @@
 									</tbody>
 								</table>
 								<div class="form-group">
-									<div class="col-sm-6">
+									<div class="col-sm-4">
+										<button class="btn btn-block btn-success" type="button" onclick="KChart()">
+											<i class="fa fa-asterisk"></i> K线图
+										</button>
+									</div>
+									<div class="col-sm-4">
 										<button class="btn btn-block btn-success" type="button" onclick="Tactics()">
 											<i class="fa fa-asterisk"></i> 回测
 										</button>
 									</div>
-									<div class="col-sm-6">
+									<div class="col-sm-4">
 										<button class="btn btn-block btn-success"
 											<#if islogin == -1> disabled="disabled" </#if> type="submit"> <i class="fa fa-heart"></i> 加入我的策略
 										</button>

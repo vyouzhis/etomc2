@@ -115,10 +115,8 @@ CREATE TABLE IF NOT EXISTS `strategy_stock` (
   `title` varchar(255) NOT NULL COMMENT '策略标题',
   `uid` int(11) NOT NULL COMMENT 'login uid' ,
   `sdesc` text default '' COMMENT '详细说明' ,
-  `summary`  varchar(100) NOT NULL COMMENT '标题',
-  `income` double NOT NULL DEFAULT '0' COMMENT '年化收益',
+  `summary`  varchar(100) NOT NULL COMMENT '摘要',
   `integral` int(11)  DEFAULT '0' COMMENT '0 免费 ',
-  
   `iid` int(11) NOT NULL COMMENT '策略 运行信息 id' ,
   `path` text default '' COMMENT '策略路经' ,  
   PRIMARY KEY (`id`)  

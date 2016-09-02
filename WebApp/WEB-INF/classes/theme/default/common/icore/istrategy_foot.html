@@ -4,9 +4,50 @@
 	// 基于准备好的dom，初始化echarts图表
 	var myChart = echarts.init(document.getElementById('echart_k'));
 	var StockData = "";
-	getStockData("600808");
+	getStockData("hs300");
 	
-	function getStockData(code){
+	var AllStock=${AllStock}
+	
+	jQuery(function($) {
+		getPage(1);
+		
+		$("#code_num").keypress(function() {
+			  var code = $("#code_num").val();
+			  $.ajax({
+					url : "/etomc2/stockdata?jsoncallback=?",
+					contentType : 'text/html;charset=utf-8',
+
+					data : {
+						"code" : code,
+					},
+					success : function(result) {
+						//console.log("success" + result);
+					},
+					error : function(request, textStatus, errorThrown) {
+						//alert(textStatus);
+					},
+					complete : function(request, textStatus) { //for additional info
+						var option = request.responseText;
+						//console.log("option:" + option);
+						StockData = option;
+						showChart(StockData);
+					}
+				});
+			});
+
+	});
+	
+
+	function KChart(){
+		var code = $("#code_num").val();
+		if(code.length == 0){
+			alert("请填写代码");
+			return;
+		}
+		
+		getStockData(code);
+	}
+	function getStockData(code) {
 		$.ajax({
 			url : "/etomc2/stockdata?jsoncallback=?",
 			contentType : 'text/html;charset=utf-8',
@@ -23,36 +64,37 @@
 			complete : function(request, textStatus) { //for additional info
 				var option = request.responseText;
 				//console.log("option:" + option);
-				StockData = option;				
+				StockData = option;
 				showChart(StockData);
 			}
 		});
 	}
-   function showChart(dt){
-	   if(dt.length>2){
+	function showChart(dt) {
+		if (dt.length > 2) {
 			var JsonList = JSON.parse(dt);
-			var DateList=[];					
-			var legendName=[];
+			var DateList = [];
+			var legendName = [];
 			var bool = 0;
-			var seriesList=[];
-			for(var cn in JsonList){
+			var seriesList = [];
+			for ( var cn in JsonList) {
 				var Json = JsonList[cn];
-				legendName.push(cn);
-				var seriesData={};	
-				var shList=[];
-				seriesData['name'] = cn;
+				legendName.push(cn + "_k线");
+				var seriesData = {};
+				var shList = [];
+				seriesData['name'] = cn + "_k线";
 				seriesData['type'] = "k";
-				
-				for (var k in Json){
-					if(k=="_id")continue;
-					
-					if(bool == 0){
-						sdate = k.replace(/[-]/g, "/");	
+
+				for ( var k in Json) {
+					if (k == "_id")
+						continue;
+
+					if (bool == 0) {
+						sdate = k.replace(/[-]/g, "/");
 						DateList.push(sdate);
 					}
 					//console.log("sdate:" +sdate );
 					var datalist = [];
-					 // 开盘，收盘，最低，最高
+					// 开盘，收盘，最低，最高
 					datalist.push(Json[k]['open']);
 					datalist.push(Json[k]['close']);
 					datalist.push(Json[k]['low']);
@@ -63,90 +105,95 @@
 				seriesData['data'] = shList;
 				seriesList.push(seriesData);
 			}
-		//console.log("seriesList:" +JSON.stringify(seriesList)  );
-			
-			var JsonOpton =	{
-					title : {
-						text : ''
-					},
-					tooltip : {
-						trigger : 'axis',
-						formatter : function(params) {
-							//console.log("params:" +JSON.stringify(params)  );
-							var res = "";
-							for(var m=0;m<params.length; m++){
-								if(params[m]['series']['type']=="k"){
-									res = params[0].seriesName + ' ' + params[0].name;
-									res += '<br/>  开盘 : ' + params[0].value[0] + '  最高 : '
-											+ params[0].value[3];
-									res += '<br/>  收盘 : ' + params[0].value[1] + '  最低 : '
-											+ params[0].value[2];
-								}else{
-									res += params[0].seriesName+":"+params[0].value;
-								}
-							}
-							return res;
-						}
-					},
-					legend : {
-						data : legendName
-					},
-					toolbox : {
-						show : true,
-						feature : {
-							mark : {
-								show : true
-							},
-							dataZoom : {
-								show : true
-							},
-							magicType : {
-								show : true,
-								type : [ 'line', 'bar' ]
-							},
-							restore : {
-								show : true
-							}
 
+			var JsonOpton = {
+				title : {
+					text : ''
+				},
+				tooltip : {
+					trigger : 'axis',
+					formatter : function(params) {
+						//console.log("params:" +JSON.stringify(params)  );
+						var res = "";
+						for (var m = 0; m < params.length; m++) {
+							if (params[m]['series']['type'] == "k") {
+								res = params[0].seriesName + ' '
+										+ params[0].name;
+								res += '<br/>  开盘 : ' + params[0].value[0]
+										+ '  最高 : ' + params[0].value[3];
+								res += '<br/>  收盘 : ' + params[0].value[1]
+										+ '  最低 : ' + params[0].value[2];
+							} else {
+								res += params[0].seriesName + ":"
+										+ params[0].value;
+							}
 						}
-					},
-					dataZoom : {
-						show : true,
-						realtime : true,
-						start : 50,
-						end : 100
-					},
-					xAxis : [
-					         
-					         {
-						type : 'category',
-						boundaryGap : true,
-						axisTick : {
-							onGap : false
+						return res;
+					}
+				},
+				legend : {
+					data : legendName
+				},
+				toolbox : {
+					show : true,
+					feature : {
+						mark : {
+							show : true
 						},
-						splitLine : {
-							show : false
+						dataZoom : {
+							show : true
 						},
-						data : DateList
-					} ],
-					yAxis : [ {
-						type : 'value',
-						scale : true,
-						boundaryGap : [ 0.01, 0.01 ]
-					} ],
-					 series : seriesList
-				};
-	
-			  //console.log("JsonOpton:" +JSON.stringify(JsonOpton)  );
-			
-	    	  myChart.clear();
-	    	  myChart.setOption(JsonOpton, true);
-	    	  myChart.refresh();
-	    	  
+						magicType : {
+							show : true,
+							type : [ 'line', 'bar' ]
+						},
+						restore : {
+							show : true
+						}
+
+					}
+				},
+				dataZoom : {
+					show : true,
+					realtime : true,
+					start : 50,
+					end : 100
+				},
+				xAxis : [
+
+				{
+					type : 'category',
+					boundaryGap : true,
+					axisTick : {
+						onGap : false
+					},
+					splitLine : {
+						show : false
+					},
+					data : DateList
+				} ],
+				yAxis : [ {
+					type : 'value',
+					scale : true,
+					boundaryGap : [ 0.01, 0.01 ]
+				}, {
+					"scale" : true,
+					"type" : "value",
+					"name" : ""
+				} ],
+				series : seriesList
+			};
+
+			//console.log("JsonOpton:" +JSON.stringify(JsonOpton)  );
+
+			myChart.clear();
+			myChart.setOption(JsonOpton, true);
+			myChart.refresh();
+
 		}
-   }
+	}
 	var straListData = [];
-	var nowTId=0;
+	var nowTId = 0;
 	function istrSelect(i) {
 		for (n = 0; n < 5; n++) {
 			$("#select_" + n).attr("class", "fa fa-close");
@@ -186,7 +233,15 @@
 
 						var ListHtml = "";
 						for (i = 0; i < Json['data'].length; i++) {
-							ListHtml += "<tr>" + "<th scope='row'>"
+							var inte = Json['data'][i]['integral'];
+							var insval = "";
+							if (inte == 0) {
+								insval = '免费';
+							} else {
+								insval = inte + ' 积分';
+							}
+							ListHtml += "<tr>"
+									+ "<th scope='row'>"
 									+ (i + 1)
 									+ "</th>"
 									+ "<td>"
@@ -196,10 +251,10 @@
 									+ Json['data'][i]['summary']
 									+ "</td>"
 									//+ "<td>"
-								//	+ Json['data'][i]['income']
-								//	+ "</td>"
+									//	+ Json['data'][i]['income']
+									//	+ "</td>"
 									+ "<td>"
-									+ Json['data'][i]['integral']
+									+ insval
 									+ "</td>"
 									+ "<td>"
 									+ Json['data'][i]['uid']
@@ -216,26 +271,26 @@
 				});
 	}
 
-	jQuery(function($) {
-		getPage(1);
-
-	});
 	
+
 	/*
 	
 	 {value:90, symbol:'pin',symbolSize:5,
-                     itemStyle: {        // 数据级个性化折线样式
-                        normal: {
-                            color: 'red'
-                        },
-                       
-                    }},
-                    
-	*/
-	
-	function Tactics(){
+	                 itemStyle: {        // 数据级个性化折线样式
+	                    normal: {
+	                        color: 'red'
+	                    },
+	                   
+	                }},
+	                
+	 */
+
+	function Tactics() {
 		var code = $("#code_num").val();
-		
+		if(code.length == 0){
+			alert("请填写代码");
+			return;
+		}
 		$.ajax({
 			url : "/etomc2/ptactics?jsoncallback=?",
 			contentType : 'text/html;charset=utf-8',
@@ -253,149 +308,90 @@
 			},
 			complete : function(request, textStatus) { //for additional info
 				var option = request.responseText;
-				
-				if(option.length>0){
+
+				if (option.length > 0) {
+					var oldOption = myChart.getOption();
+
 					var stock = option.split("@");
 					var codeJson = JSON.parse(stock[0]);
 					var hs300 = JSON.parse(stock[1]);
-					var legendName=[];
-					var DateList=[];
-					var seriesList=[];
-					
+					var legendName = oldOption['legend']['data'];
+					var selected = {};
+					for (var n = 0; n < legendName.length; n++) {
+						selected[legendName[n]] = false;
+					}
+					oldOption['legend']['selected'] = selected;
+
+					//var DateList=oldOption['legend']['data'];
+					var seriesList = oldOption['series'];
+
 					//legendName.push("600808");
 					legendName.push("hs300");
 					var hsReturn = hs300['returns'];
 					//console.log("hs300:" + hs300['returns']);
 					//console.log("hs300 sell:" + hs300['sell']);
 					var hsData = [];
-					for(var k in hsReturn){
+					for ( var k in hsReturn) {
 						//console.log("hs300 k:" + hsReturn[k]['time']);
-						DateList.push(hsReturn[k]['time']);
+						//DateList.push(hsReturn[k]['time']);
 						hsData.push(hsReturn[k]['item']);
 					}
-					var seriesData={};
+					var seriesData = {};
 					seriesData['name'] = "hs300";
 					seriesData['type'] = "line";
 					seriesData['data'] = hsData;
+					seriesData['yAxisIndex'] = 1;
 					seriesList.push(seriesData);
-					
-					
+
 					legendName.push(code);
 					var cReturn = codeJson['returns'];
 					//console.log("hs300:" + hs300['returns']);
 					//console.log("hs300 sell:" + hs300['sell']);
 					var cData = [];
-					for(var k in cReturn){
+					for ( var k in cReturn) {
 						//console.log("hs300 k:" + cReturn[k]['time']);
-						
+
 						cData.push(cReturn[k]['item']);
 					}
-					var cseriesData={};
+					var cseriesData = {};
 					cseriesData['name'] = code;
 					cseriesData['type'] = "line";
 					cseriesData['data'] = cData;
-					//cseriesData['yAxisIndex'] = 1;					 
+					cseriesData['yAxisIndex'] = 1;
 					seriesList.push(cseriesData);
-					
+
 					var profit = codeJson["profit"];
-					$("#iprofit").html(profit+"<span>年化收益</span>");
+					$("#iprofit").html(profit + "<span>年化收益</span>");
 					var sharpe = codeJson["sharpe"];
-					$("#isharpe").html(sharpe+"<span>夏普比率</span>");
+					$("#isharpe").html(sharpe + "<span>夏普比率</span>");
 					var maxDraw = codeJson['maxDraw'];
-					$("#iMaxDrawDown").html(maxDraw+"<span>最大回撤</span>");
-					
+					$("#iMaxDrawDown").html(maxDraw + "<span>最大回撤</span>");
+
 					var beta = codeJson['alpha']['beta'];
-					$("#ibeta").html(beta+"<span>贝塔</span>");
-					
+					$("#ibeta").html(beta + "<span>贝塔</span>");
+
 					var alpha = codeJson['alpha']['alpha'];
-					$("#ialpha").html(alpha+"<span>阿尔法</span>");
-					
+					$("#ialpha").html(alpha + "<span>阿尔法</span>");
+
 					//console.log("option:" + Json['returns']);
 					var name = straListData[nowTId]['title'];
 					$("#tactics").html(name);
 					$("#icode").html(code);
-					
-					var JsonOpton =	{
-							title : {
-								text : ''
-							},
-							tooltip : {
-								trigger : 'axis',
-								formatter : function(params) {
-									console.log("params:" +JSON.stringify(params)  );
-									var res = "";
-									for(var m=0;m<params.length; m++){
-										if(params[m]['series']['type']=="k"){
-											res = params[0].seriesName + ' ' + params[0].name;
-											res += '<br/>  开盘 : ' + params[0].value[0] + '  最高 : '
-													+ params[0].value[3];
-											res += '<br/>  收盘 : ' + params[0].value[1] + '  最低 : '
-													+ params[0].value[2];
-										}else{
-											res += params[0].seriesName+":"+params[0].value+"<br />";
-										}
-									}
-									return res;
-								}
-							},
-							legend : {
-								data : legendName
-							},
-							toolbox : {
-								show : true,
-								feature : {
-									mark : {
-										show : true
-									},
-									dataZoom : {
-										show : true
-									},
-									magicType : {
-										show : true,
-										type : [ 'line', 'bar' ]
-									},
-									restore : {
-										show : true
-									}
 
-								}
-							},
-							dataZoom : {
-								show : true,
-								realtime : true,
-								start : 50,
-								end : 100
-							},
-							xAxis : [
-							         
-							         {
-								type : 'category',
-								boundaryGap : true,
-								axisTick : {
-									onGap : false
-								},
-								splitLine : {
-									show : false
-								},
-								data : DateList
-							} ],
-							yAxis : [ {
-								type : 'value',
-								scale : true,
-								boundaryGap : [ 0.01, 0.01 ]
-							} ],
-							 series : seriesList
-						};
+					oldOption['legend']['data'] = legendName;
+					oldOption['series'] = seriesList;
+					console.log("oldOption:"
+							+ JSON.stringify(oldOption['legend']['data']));
 			
-					  console.log("JsonOpton:" +JSON.stringify(JsonOpton)  );
-					
-			    	  myChart.clear();
-			    	  myChart.setOption(JsonOpton, true);
-			    	  myChart.refresh();
+				//  console.log("JsonOpton:" +JSON.stringify(oldOption)  );
+
+					myChart.clear();
+					myChart.setOption(oldOption, true);
+					myChart.refresh();
 				}
 			}
 		});
-		
+
 	}
-	</script>
+</script>
 
