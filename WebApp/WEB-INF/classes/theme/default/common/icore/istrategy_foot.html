@@ -5,46 +5,65 @@
 	var myChart = echarts.init(document.getElementById('echart_k'));
 	var StockData = "";
 	getStockData("hs300");
-	
-	var AllStock=${AllStock}
-	
+
 	jQuery(function($) {
 		getPage(1);
-		
-		$("#code_num").keypress(function() {
-			  var code = $("#code_num").val();
-			  $.ajax({
-					url : "/etomc2/stockdata?jsoncallback=?",
-					contentType : 'text/html;charset=utf-8',
 
-					data : {
-						"code" : code,
-					},
-					success : function(result) {
-						//console.log("success" + result);
-					},
-					error : function(request, textStatus, errorThrown) {
-						//alert(textStatus);
-					},
-					complete : function(request, textStatus) { //for additional info
-						var option = request.responseText;
-						//console.log("option:" + option);
-						StockData = option;
-						showChart(StockData);
-					}
-				});
-			});
+		$("#code_num")
+				.keypress(
+						function() {
+							var code = $("#code_num").val();
+							$
+									.ajax({
+										url : "/etomc2/stockcode?jsoncallback=?",
+										contentType : 'text/html;charset=utf-8',
+
+										data : {
+											"codeext" : code,
+										},
+										success : function(result) {
+											//console.log("success" + result);
+										},
+										error : function(request, textStatus,
+												errorThrown) {
+											//alert(textStatus);
+										},
+										complete : function(request, textStatus) { //for additional info
+											var option = request.responseText;
+											//console.log("option:" + option);
+											if (option.length > 0) {
+												var JsonList = JSON
+														.parse(option);
+
+												var html = " "
+												for (var i = 0; i < JsonList.length; i++) {
+													html += "<li><a href='javascript:void(0)' onclick=\"addCode('"
+															+ JsonList[i]['code']
+															+ "')\">"
+															+ JsonList[i]['code']
+															+ " "
+															+ JsonList[i]['name']
+															+ "</a></li>";
+												}
+												$("#codeMenu").html(html);
+											}
+										}
+									});
+						});
 
 	});
-	
 
-	function KChart(){
+	function addCode(o) {
+		$("#code_num").val(o);
+	}
+
+	function KChart() {
 		var code = $("#code_num").val();
-		if(code.length == 0){
+		if (code.length == 0) {
 			alert("请填写代码");
 			return;
 		}
-		
+
 		getStockData(code);
 	}
 	function getStockData(code) {
@@ -208,7 +227,8 @@
 	}
 
 	function getPage(p) {
-		$.ajax({
+		$
+				.ajax({
 					url : "/etomc2/strapage?jsoncallback=?",
 					contentType : 'text/html;charset=utf-8',
 
@@ -271,8 +291,6 @@
 				});
 	}
 
-	
-
 	/*
 	
 	 {value:90, symbol:'pin',symbolSize:5,
@@ -287,7 +305,7 @@
 
 	function Tactics() {
 		var code = $("#code_num").val();
-		if(code.length == 0){
+		if (code.length == 0) {
 			alert("请填写代码");
 			return;
 		}
@@ -382,8 +400,8 @@
 					oldOption['series'] = seriesList;
 					console.log("oldOption:"
 							+ JSON.stringify(oldOption['legend']['data']));
-			
-				//  console.log("JsonOpton:" +JSON.stringify(oldOption)  );
+
+					//  console.log("JsonOpton:" +JSON.stringify(oldOption)  );
 
 					myChart.clear();
 					myChart.setOption(oldOption, true);
