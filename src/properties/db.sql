@@ -92,16 +92,14 @@ CREATE TABLE IF NOT EXISTS `stock_user_base` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 股票用户 对某一条策略留言
-DROP TABLE IF EXISTS `stock_user_msg`;
-CREATE TABLE IF NOT EXISTS `stock_user_msg` (
+DROP TABLE IF EXISTS `stock_user_talk`;
+CREATE TABLE IF NOT EXISTS `stock_user_talk` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pid` int(11) NOT NULL COMMENT 'pid 回复上一个留言的id' ,
   `sid` int(11) NOT NULL COMMENT '策略 id' ,
   `uid` int(11) NOT NULL COMMENT 'login uid' ,
   `msg` text default '',
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',
-  `etime` int(11)  DEFAULT '0' COMMENT 'edit time',  
-  `ltime` int(11) NOT NULL DEFAULT '1' COMMENT 'last login time',
    `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'IP',  
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

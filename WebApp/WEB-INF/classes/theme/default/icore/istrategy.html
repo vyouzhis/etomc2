@@ -308,22 +308,21 @@
 				</article>
 				<!-- end comments -->
 				<!-- 注册之后才可以留言 -->
-				<form class="form-horizontal comment-form" role="form">
 
-					<div class="form-group">
-						<label for="comment-text" class="control-label sr-only">Comments</label>
-						<div class="col-sm-12">
-							<textarea class="form-control" name="comment-text" id="comment-text" rows="5" cols="30"<#if islogin == -1> disabled="disabled" </#if> 
-								placeholder=" <#if islogin == -1> 还没登录，请登录！ <#else> * 在这儿发言 </#if> "></textarea>
-						</div>
+				<div class="form-group">
+					<label for="comment-text" class="control-label sr-only">Comments</label>
+					<div class="col-sm-12">
+						<textarea class="form-control" name="comment-text" id="comment-text" rows="5" cols="30"<#if islogin == -1> disabled="disabled" </#if> 
+							placeholder=" <#if islogin == -1> 还没登录，请登录！ <#else> * 在这儿发言 </#if> "></textarea>
 					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<button type="submit"<#if islogin == -1> disabled="disabled" </#if> class="btn btn-primary">Submit
-								Comment</button>
-						</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<button type="button" onclick="saveTalk(1)"  <#if islogin == -1> disabled="disabled" </#if> class="btn btn-primary">Submit
+							Comment</button>
 					</div>
-				</form>
+				</div>
+				
 			</div>
 			<div class="col-sm-6 col-xs-6">
 				<!-- 策略选出的股票列表 -->

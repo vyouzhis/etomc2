@@ -1,5 +1,6 @@
 
 <script src="${static_js_uri}/plugins/echart2/echarts-all.js"></script>
+<script src="${static_js_uri}/plugins/talk.js"></script>
 <script type="text/javascript">
 	// 基于准备好的dom，初始化echarts图表
 	var myChart = echarts.init(document.getElementById('echart_k'));
@@ -13,8 +14,7 @@
 				.keypress(
 						function() {
 							var code = $("#code_num").val();
-							$
-									.ajax({
+							$.ajax({
 										url : "/etomc2/stockcode?jsoncallback=?",
 										contentType : 'text/html;charset=utf-8',
 
