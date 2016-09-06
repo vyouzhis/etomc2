@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `stock_user_info` (
   `etime` int(11)  DEFAULT '0' COMMENT 'edit time',  
   `ltime` int(11) NOT NULL DEFAULT '1' COMMENT 'last login time',  
   `phone` varchar(11) NOT NULL DEFAULT '0' COMMENT 'user phone',
-  `status` int(1) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',  
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',  
   `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
   `error` int(1) NOT NULL DEFAULT '0' COMMENT 'passwd error count',
   `active` int(1) NOT NULL DEFAULT '0' COMMENT '0 no , 1 yes',
@@ -94,13 +94,16 @@ CREATE TABLE IF NOT EXISTS `stock_user_base` (
 -- 股票用户 对某一条策略留言
 DROP TABLE IF EXISTS `stock_user_talk`;
 CREATE TABLE IF NOT EXISTS `stock_user_talk` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) NOT NULL COMMENT 'pid 回复上一个留言的id' ,
-  `sid` int(11) NOT NULL COMMENT '策略 id' ,
-  `uid` int(11) NOT NULL COMMENT 'login uid' ,
+  `id` int(11) NOT NULL AUTO_INCREMENT,   
+  `pid` int(11) NOT NULL DEFAULT '0' COMMENT 'pid 回复上一个留言的id　０　代表独立的',
+  `sid` int(11) NOT NULL DEFAULT '0' COMMENT '策略 id 0 是股票讨论',  
+  `code` varchar(16) NOT NULL DEFAULT '' COMMENT '股票代码 空是策略讨论', 
+  `uid` int(11) NOT NULL ,
   `msg` text default '',
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',
-   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'IP',  
+   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'IP',
+   `reply` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 可以 1 不可以回复',
+   `top` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 一般  1 置顶',
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -112,8 +115,8 @@ CREATE TABLE IF NOT EXISTS `strategy_stock` (
   `cid` int(11) NOT NULL COMMENT '策略 类型 id' ,  
   `title` varchar(255) NOT NULL COMMENT '策略标题',
   `uid` int(11) NOT NULL COMMENT 'login uid' ,
-  `sdesc` text default '' COMMENT '详细说明' ,
-  `summary`  varchar(100) NOT NULL COMMENT '摘要',
+  `sdesc` text default '' COMMENT '详细说明' ,  
+  `follow` INT(11) NOT NULL　DEFAULT '0'　COMMENT '当有人使用的时候记录一次' ;
   `integral` int(11)  DEFAULT '0' COMMENT '0 免费 ',
   `iid` int(11) NOT NULL COMMENT '策略 运行信息 id' ,
   `path` text default '' COMMENT '策略路经' ,  
@@ -146,7 +149,7 @@ DROP TABLE IF EXISTS `stock_strategy`;
 CREATE TABLE IF NOT EXISTS `stock_strategy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL COMMENT 'login uid' ,
-  `code` varchar(32) NOT NULL COMMENT '股票代码' ,
+  `code` varchar(10) NOT NULL COMMENT '股票代码' ,
   `cid` int(11) NOT NULL COMMENT '策略 类型 id' ,  
   `sid`  int(11) NOT NULL COMMENT '策略ID' ,
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',

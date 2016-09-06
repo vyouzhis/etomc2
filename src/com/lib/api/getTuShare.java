@@ -1,8 +1,8 @@
 package com.lib.api;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.db.MGDB;
@@ -29,28 +29,28 @@ public class getTuShare extends BaseSurface {
 			return;
 		}
 
-		String[] codes = code.split(",");
-		Map<String, Object> JSONList = new TreeMap<>();
 		String Json = "";
 		MGDB mgdb = new MGDB();
+		mgdb.DBEnd();
+		mgdb.SetCollection("stockDB");
 
-		for (String c : codes) {
-			mgdb.DBEnd();
-			mgdb.SetCollection(c.trim());
+		Map<String, Integer> cMap = new HashMap<>();
+		cMap.put(mgdb.exists, 1);
 
-			boolean s = mgdb.FetchList();
-			if (s) {
-				List<Map<String, Object>> res = mgdb.GetValue();
-
-				Map<String, Object> TMap = new TreeMap<>();
-				TMap.putAll(res.get(0));
-				JSONList.put(c, TMap);
-			}
+		Map<String, Object> wMap = new HashMap<>();
+		wMap.put(code, cMap);
+		String JsonMap = JSON.toJSONString(wMap);
+		mgdb.JsonWhere(JsonMap);
+		echo(JsonMap);
+		boolean s = mgdb.FetchList();
+		if (s) {
+			List<Map<String, Object>> res = mgdb.GetValue();
+									
+			Json = JSON.toJSONString(res.get(0));
 		}
-		// echo(mgdb.getErrorMsg());
+
 		mgdb.Close();
 
-		Json = JSON.toJSONString(JSONList);
 		super.setHtml(Json);
 	}
 }

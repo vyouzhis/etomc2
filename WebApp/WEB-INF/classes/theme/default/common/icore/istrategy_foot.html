@@ -1,55 +1,18 @@
 
 <script src="${static_js_uri}/plugins/echart2/echarts-all.js"></script>
 <script src="${static_js_uri}/plugins/talk.js"></script>
+<script src="${static_js_uri}/plugins/showChart.js"></script>
+<script src="${static_js_uri}/plugins/codeAutoTip.js"></script>
 <script type="text/javascript">
 	// 基于准备好的dom，初始化echarts图表
-	var myChart = echarts.init(document.getElementById('echart_k'));
+	
 	var StockData = "";
 	getStockData("hs300");
 
 	jQuery(function($) {
 		getPage(1);
 
-		$("#code_num")
-				.keypress(
-						function() {
-							var code = $("#code_num").val();
-							$.ajax({
-										url : "/etomc2/stockcode?jsoncallback=?",
-										contentType : 'text/html;charset=utf-8',
-
-										data : {
-											"codeext" : code,
-										},
-										success : function(result) {
-											//console.log("success" + result);
-										},
-										error : function(request, textStatus,
-												errorThrown) {
-											//alert(textStatus);
-										},
-										complete : function(request, textStatus) { //for additional info
-											var option = request.responseText;
-											//console.log("option:" + option);
-											if (option.length > 0) {
-												var JsonList = JSON
-														.parse(option);
-
-												var html = " "
-												for (var i = 0; i < JsonList.length; i++) {
-													html += "<li><a href='javascript:void(0)' onclick=\"addCode('"
-															+ JsonList[i]['code']
-															+ "')\">"
-															+ JsonList[i]['code']
-															+ " "
-															+ JsonList[i]['name']
-															+ "</a></li>";
-												}
-												$("#codeMenu").html(html);
-											}
-										}
-									});
-						});
+		CodeAuto();
 
 	});
 
@@ -88,129 +51,7 @@
 			}
 		});
 	}
-	function showChart(dt) {
-		if (dt.length > 2) {
-			var JsonList = JSON.parse(dt);
-			var DateList = [];
-			var legendName = [];
-			var bool = 0;
-			var seriesList = [];
-			for ( var cn in JsonList) {
-				var Json = JsonList[cn];
-				legendName.push(cn + "_k线");
-				var seriesData = {};
-				var shList = [];
-				seriesData['name'] = cn + "_k线";
-				seriesData['type'] = "k";
-
-				for ( var k in Json) {
-					if (k == "_id")
-						continue;
-
-					if (bool == 0) {
-						sdate = k.replace(/[-]/g, "/");
-						DateList.push(sdate);
-					}
-					//console.log("sdate:" +sdate );
-					var datalist = [];
-					// 开盘，收盘，最低，最高
-					datalist.push(Json[k]['open']);
-					datalist.push(Json[k]['close']);
-					datalist.push(Json[k]['low']);
-					datalist.push(Json[k]['high']);
-					shList.push(datalist);
-				}
-				bool = 1;
-				seriesData['data'] = shList;
-				seriesList.push(seriesData);
-			}
-
-			var JsonOpton = {
-				title : {
-					text : ''
-				},
-				tooltip : {
-					trigger : 'axis',
-					formatter : function(params) {
-						//console.log("params:" +JSON.stringify(params)  );
-						var res = "";
-						for (var m = 0; m < params.length; m++) {
-							if (params[m]['series']['type'] == "k") {
-								res = params[0].seriesName + ' '
-										+ params[0].name;
-								res += '<br/>  开盘 : ' + params[0].value[0]
-										+ '  最高 : ' + params[0].value[3];
-								res += '<br/>  收盘 : ' + params[0].value[1]
-										+ '  最低 : ' + params[0].value[2];
-							} else {
-								res += params[0].seriesName + ":"
-										+ params[0].value;
-							}
-						}
-						return res;
-					}
-				},
-				legend : {
-					data : legendName
-				},
-				toolbox : {
-					show : true,
-					feature : {
-						mark : {
-							show : true
-						},
-						dataZoom : {
-							show : true
-						},
-						magicType : {
-							show : true,
-							type : [ 'line', 'bar' ]
-						},
-						restore : {
-							show : true
-						}
-
-					}
-				},
-				dataZoom : {
-					show : true,
-					realtime : true,
-					start : 50,
-					end : 100
-				},
-				xAxis : [
-
-				{
-					type : 'category',
-					boundaryGap : true,
-					axisTick : {
-						onGap : false
-					},
-					splitLine : {
-						show : false
-					},
-					data : DateList
-				} ],
-				yAxis : [ {
-					type : 'value',
-					scale : true,
-					boundaryGap : [ 0.01, 0.01 ]
-				}, {
-					"scale" : true,
-					"type" : "value",
-					"name" : ""
-				} ],
-				series : seriesList
-			};
-
-			//console.log("JsonOpton:" +JSON.stringify(JsonOpton)  );
-
-			myChart.clear();
-			myChart.setOption(JsonOpton, true);
-			myChart.refresh();
-
-		}
-	}
+	
 	var straListData = [];
 	var nowTId = 0;
 	function istrSelect(i) {
@@ -220,15 +61,21 @@
 
 		$("#select_" + i).attr("class", "fa fa-check");
 
+		
 		var name = straListData[i]['title'];
 		nowTId = i;
 		$("#strategy_name").html(name);
 
+		$("#talkNameStra").html("<i class='fa fa-flask'></i>"+name);
+		
+		$("#comment-sid").val(straListData[i]['id']);
+		//console.log("sid:" + straListData[i]['id']);
+		// 获取策略的讨论内容
+		listTalk(0, straListData[i]['id'], "");
 	}
 
 	function getPage(p) {
-		$
-				.ajax({
+		$.ajax({
 					url : "/etomc2/strapage?jsoncallback=?",
 					contentType : 'text/html;charset=utf-8',
 
@@ -260,6 +107,7 @@
 							} else {
 								insval = inte + ' 积分';
 							}
+							
 							ListHtml += "<tr>"
 									+ "<th scope='row'>"
 									+ (i + 1)
@@ -268,7 +116,7 @@
 									+ Json['data'][i]['title']
 									+ "</td>"
 									+ "<td>"
-									+ Json['data'][i]['summary']
+									+ Json['data'][i]['follow']
 									+ "</td>"
 									//+ "<td>"
 									//	+ Json['data'][i]['income']
@@ -277,7 +125,7 @@
 									+ insval
 									+ "</td>"
 									+ "<td>"
-									+ Json['data'][i]['uid']
+									+ Json['data'][i]['nickname']
 									+ "</td>"
 									+ "<td><button title='Success' class='btn btn-outline btn-success' type='button' onclick='istrSelect("
 									+ i
@@ -291,17 +139,6 @@
 				});
 	}
 
-	/*
-	
-	 {value:90, symbol:'pin',symbolSize:5,
-	                 itemStyle: {        // 数据级个性化折线样式
-	                    normal: {
-	                        color: 'red'
-	                    },
-	                   
-	                }},
-	                
-	 */
 
 	function Tactics() {
 		var code = $("#code_num").val();
@@ -328,7 +165,7 @@
 				var option = request.responseText;
 
 				if (option.length > 0) {
-					var oldOption = myChart.getOption();
+					var oldOption = getChartOption();
 
 					var stock = option.split("@");
 					var codeJson = JSON.parse(stock[0]);
@@ -403,9 +240,7 @@
 
 					//  console.log("JsonOpton:" +JSON.stringify(oldOption)  );
 
-					myChart.clear();
-					myChart.setOption(oldOption, true);
-					myChart.refresh();
+					ChartRefresh(oldOption);
 				}
 			}
 		});

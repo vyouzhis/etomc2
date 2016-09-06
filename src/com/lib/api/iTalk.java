@@ -31,9 +31,7 @@ public class iTalk extends BaseiCore {
 	private void Save() {
 		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`, `uid`, `msg`, `ctime`, `ip`) VALUES "
 				+ "('%d', '%d', '%d', '%s', '%d', '%s');";
-
-		echo(porg.getAllpg());
-		
+				
 		int pid = toInt(porg.getKey("pid"));
 		int sid = toInt(porg.getKey("sid"));
 		int uid = igetUid();
@@ -50,3 +48,4 @@ public class iTalk extends BaseiCore {
 		}
 	}
 }
+

@@ -1,6 +1,6 @@
 package org.ppl.common;
 
-public class Page {
+public class Page extends function{
 
 	public String s_page(String url, int total, int page, int limit, String para) {
 
@@ -135,5 +135,39 @@ public class Page {
 
 		return ceil > 1 ? ppage + spage + npage : spage;
 
+	}
+	
+	public String getDefPage(String url , int p, int tol, int limit, String onclickFun) {
+
+
+		String pageString = base_page(url, tol, p, limit, "");
+		
+		String[] pp = pageString.split(";");
+		
+		if(pp.length == 0 ) return "";
+		String Listli = "";
+		String CurrPage = "1";
+		for (int i = 0; i < pp.length; i++) {
+			String[] nn = pp[i].split("@");
+			
+			if(nn.length <= 1) continue;
+			
+			if(nn[0].equals("#")){
+				CurrPage =nn[1];
+				Listli+="<li class='active'><a href='#'>"+nn[1]+"</a></li>";
+			}else if (nn[1].equals("[left]")) {
+				Listli+="<li><a href='javascript:void(0)' onclick="+onclickFun+"(1)><i class='fa fa-angle-left'></i></a></li>";
+			}else if (nn[1].equals("[right]")) {
+				int pnum = toInt(CurrPage);
+				pnum++;
+				Listli+="<li><a href='javascript:void(0)' onclick="+onclickFun+"("+pnum+") ><i class='fa fa-angle-right'></i></a></li>";
+			}else if (nn[1].equals("[last]")) {
+				
+			}else {
+				Listli+="<li><a  href='javascript:void(0)' onclick="+onclickFun+"("+nn[1]+") >"+nn[1]+"</a></li>";
+			}
+		}
+		
+		return Listli;
 	}
 }

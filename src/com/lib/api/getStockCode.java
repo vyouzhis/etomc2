@@ -54,13 +54,14 @@ public class getStockCode extends BaseSurface {
 		mgdb.setLimit(10);
 
 		boolean s = mgdb.FetchList();
-		
+		String jsonres = "";
 		if (s) {
 			List<Map<String, Object>> res = mgdb.GetValue();
 		
-			super.setHtml(JSON.toJSONString(res));
+			jsonres = JSON.toJSONString(res);
 		}
 		
+		super.setHtml(jsonres);
 		// echo(mgdb.getErrorMsg());
 		mgdb.Close();
 	}
