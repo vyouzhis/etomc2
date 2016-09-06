@@ -39,7 +39,7 @@ public class iTalk extends BaseiCore {
 		String ip = porg.GetIP();
 
 		String sql = String.format(format, pid, sid, uid, msg, time(), ip);
-		echo(sql);
+		
 		try {
 			insert(sql);
 		} catch (SQLException e) {

@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 
 import javax.servlet.*;
 import javax.servlet.annotation.*;
@@ -32,8 +33,15 @@ public class Index extends HttpServlet {
 	public void service(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-			
+
 		synchronized (mutex) {
+			try {
+				req.setCharacterEncoding("utf8");
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+
 			PorG porg = PorG.getInstance();
 			porg.Init(req, res);
 			porg.setContext_Path(req.getContextPath());
@@ -64,7 +72,7 @@ public class Index extends HttpServlet {
 				res.getWriter().println(rmc.getHtml());
 			}
 		}
-		//SystemInfo(req, res);
+		// SystemInfo(req, res);
 	}
 
 	private void SystemInfo(HttpServletRequest req, HttpServletResponse res) {

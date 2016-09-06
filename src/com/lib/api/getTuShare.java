@@ -41,7 +41,7 @@ public class getTuShare extends BaseSurface {
 		wMap.put(code, cMap);
 		String JsonMap = JSON.toJSONString(wMap);
 		mgdb.JsonWhere(JsonMap);
-		echo(JsonMap);
+		
 		boolean s = mgdb.FetchList();
 		if (s) {
 			List<Map<String, Object>> res = mgdb.GetValue();

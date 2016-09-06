@@ -90,13 +90,14 @@ public class PorG  extends function {
 			
 			String pres = Check(paramValues[0]);
 			
-			try {
-				pres = new String(pres.getBytes("iso8859-1"),
-						"UTF-8");				
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				pres = new String(pres.getBytes("iso8859-1"),
+//						"UTF-8");				
+//			} catch (UnsupportedEncodingException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
 			
 			sporg.put(paramName, pres);
 		}
@@ -118,14 +119,15 @@ public class PorG  extends function {
 						String name = item.getFieldName();
 						String value = item.getString();
 						
-						try {
-							value = new String(value.getBytes("iso8859-1"),
-									"UTF-8");
-
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+//						try {
+//							value = new String(value.getBytes("iso8859-1"),
+//									"UTF-8");
+//
+//						} catch (UnsupportedEncodingException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+						
 						
 						//System.out.println("name:"+name+"  value:"+value);
 												
