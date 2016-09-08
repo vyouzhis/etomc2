@@ -16,8 +16,48 @@
 
 	});
 
-	function addCode(o) {
+	function addCode(o, n) {
 		$("#code_num").val(o);
+		
+		$("#talkNameCode").html("<i class='fa fa-flask'></i>"+o+" "+n);
+		$("#talkNameCode").attr("class","");
+								
+		$( "#talkNameCode" ).focus();
+
+		console.log("code:" + o);
+		
+		// 获取股票的讨论内容
+		listTalk(0, 0, o);
+		
+		talkSelect(0);
+	}
+	
+	function talkSelect(i){
+		var ariaCode = true;		
+		var activeCode = "active";
+		
+		var ariaStra = false;
+		var activeStra = "";
+		
+		if(i==1){
+			// stra
+			ariaCode = false;
+			activeCode = "";
+			
+			ariaStra = true;
+			activeStra = "active";
+			
+		}
+		
+		$("#talkNameCode").attr("aria-expanded",ariaCode);
+		$("#listtab2").attr("class", activeCode);
+		$("#chapter2").attr("class","tab-pane fade "+activeCode+" in");
+		
+		
+		$("#talkNameStra").attr("aria-expanded", ariaStra);			
+		$("#listtab1").attr("class",activeStra);				
+		$("#chapter1").attr("class","tab-pane fade "+activeStra+" in");
+		
 	}
 
 	function KChart() {
@@ -28,7 +68,10 @@
 		}
 
 		getStockData(code);
+		
+		
 	}
+	
 	function getStockData(code) {
 		$.ajax({
 			url : "/etomc2/stockdata?jsoncallback=?",
@@ -70,8 +113,11 @@
 		
 		$("#comment-sid").val(straListData[i]['id']);
 		//console.log("sid:" + straListData[i]['id']);
+		
 		// 获取策略的讨论内容
 		listTalk(0, straListData[i]['id'], "");
+		
+		talkSelect(1);
 	}
 
 	function getPage(p) {
@@ -80,7 +126,7 @@
 					contentType : 'text/html;charset=utf-8',
 
 					data : {
-						"cid" : "1",
+						"cid" : 1,
 						"p" : p
 					},
 					success : function(result) {
@@ -97,7 +143,12 @@
 						//console.log("option:" + Json['data']);
 
 						straListData = Json['data'];
-
+						listTalk(0, straListData[0]['id'], "");
+						
+						var name = straListData[0]['title'];
+					
+						$("#talkNameStra").html("<i class='fa fa-flask'></i>"+name);
+						
 						var ListHtml = "";
 						for (i = 0; i < Json['data'].length; i++) {
 							var inte = Json['data'][i]['integral'];
@@ -247,4 +298,5 @@
 
 	}
 </script>
+
 

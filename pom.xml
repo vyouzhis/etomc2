@@ -57,6 +57,7 @@
 		<Rserve.version>1.8.1</Rserve.version>
 		<jcabi-ssh.version>2.0-SNAPSHOT</jcabi-ssh.version>
 		<slf4j-api.version>1.7.21</slf4j-api.version>
+		<esapi.version>2.1.0.1</esapi.version>
 	</properties>
 
 	<dependencies>
@@ -176,6 +177,20 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>${slf4j-api.version}</version>
 		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.owasp.esapi/esapi -->
+		<dependency>
+			<groupId>org.owasp.esapi</groupId>
+			<artifactId>esapi</artifactId>
+			<version>${esapi.version}</version>
+		</dependency>
+		
+		<dependency>
+      <groupId>org.owasp.antisamy</groupId>
+      <artifactId>antisamy</artifactId>
+      <version>1.5.3</version>
+    </dependency>
 
 
 	</dependencies>

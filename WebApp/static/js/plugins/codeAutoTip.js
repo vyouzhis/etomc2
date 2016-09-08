@@ -8,8 +8,11 @@
 function CodeAuto(){
 $("#code_num")
 		.keypress(
-				function() {
+				function(e) {
+					
 					var code = $("#code_num").val();
+					console.log("code:" + code);
+					
 					code = code.replace(/_/g, "");
 					$
 							.ajax({
@@ -37,7 +40,8 @@ $("#code_num")
 										var html = " "
 										for (var i = 0; i < JsonList.length; i++) {
 											html += "<li><a href='javascript:void(0)' onclick=\"addCode('"
-													+ JsonList[i]['code']
+													+ JsonList[i]['code']+"'"
+													+", '"+JsonList[i]['name']
 													+ "')\">"
 													+ JsonList[i]['code']
 													+ " "

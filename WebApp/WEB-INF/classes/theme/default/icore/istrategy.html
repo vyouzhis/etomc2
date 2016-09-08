@@ -245,10 +245,14 @@
 					<h3 class="section-heading">讨论区</h3>
 
 					<ul role="tablist" class="nav nav-pills tabs-iconized">
-						<li class="active"><a id="talkNameStra" name="talkNameStra" data-toggle="tab" role="tab" href="ui-tabs-accordion.html#chapter1" aria-expanded="true"><i
-								class="fa fa-flask"></i> </a></li>
-						<li class=""><a data-toggle="tab" role="tab" href="ui-tabs-accordion.html#chapter2" aria-expanded="false"><i
-								class="fa fa-bar-chart-o"></i> 002597 金禾实业</a></li>
+						<li id="listtab1" name="listtab1" class="active">
+							<a id="talkNameStra" name="talkNameStra" data-toggle="tab" role="tab" href="ui-tabs-accordion.html#chapter1" aria-expanded="true"><i
+								class="fa fa-flask"></i> </a>
+						</li>
+						<li id="listtab2" name="listtab2" class="">
+							<a id="talkNameCode" name="talkNameCode" data-toggle="tab" class="hide" role="tab" href="ui-tabs-accordion.html#chapter2" aria-expanded="false"><i
+								class="fa fa-bar-chart-o"></i> 002597 金禾实业</a>
+						</li>
 
 					</ul>
 
@@ -258,7 +262,7 @@
 							</ul>
 						</div>
 						<div id="chapter2" class="tab-pane fade" id="talkCode" name="talkCode">
-							<ul class="media-list">
+							<ul class="media-list" id="talkCode" name="talkCode">
 								<li class="media"><a class="media-left" href="#"> <span class="avatar anonymous"><i
 											class="fa fa-legal"></i></span>
 								</a>
@@ -460,19 +464,7 @@
 							</tr>
 						</thead>
 						<tbody id="straList" name="straList">
-							<!-- 
-							<tr>
-								<th scope="row">1</th>
-								<td>SMB</td>
-								<td>smb 说明在这儿有详述的说明</td>
-								<td>10%</td>
-								<td>免费</td>
-								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button" onclick="istrSelect(1, 12)">
-										<i class="fa fa-close" id="select_1" name="select_1"></i> <span class="sr-only">Success</span>
-									</button></td>
-							</tr>
-							 -->
+
 						</tbody>
 					</table>
 					<ul class="pagination borderless" id="straPage" name="straPage">

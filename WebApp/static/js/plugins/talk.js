@@ -52,8 +52,6 @@ function saveTalk() {
 	var sid = $("#comment-sid").val();
 	var code = $("#comment-code").val();
 
-	
-
 	$.ajax({
 		url : "/etomc2/italk?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -78,8 +76,7 @@ function saveTalk() {
 }
 
 function listTalk(p, sid, code) {
-	$
-			.ajax({
+	$.ajax({
 				url : "/etomc2/listtalk?jsoncallback=?",
 				contentType : 'text/html;charset=utf-8',
 				data : {

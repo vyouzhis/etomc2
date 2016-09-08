@@ -29,6 +29,10 @@ public class ProjectPath extends function {
 	public URI DataDir() {
 		return getPath("../../Data/");
 	}
+	
+	public URI Properties() {
+		return getPath("./properties/");
+	}
 
 	public boolean mkDir(String dir) {
 		File f = null;
