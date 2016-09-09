@@ -1,16 +1,6 @@
 package com.lib.icore;
 
-import java.net.URL;
-
-import org.owasp.esapi.ESAPI;
-import org.owasp.esapi.crypto.CipherText;
-import org.owasp.esapi.crypto.PlainText;
-import org.owasp.esapi.errors.EncryptionException;
-import org.owasp.esapi.reference.DefaultSecurityConfiguration;
 import org.ppl.BaseClass.BaseSurface;
-import org.ppl.io.ProjectPath;
-
-
 
 public class istrategy extends BaseSurface {
 	private String className = null;
@@ -37,6 +27,5 @@ public class istrategy extends BaseSurface {
 		super.View();
 	}
 
-	
 	
 }

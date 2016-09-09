@@ -15,6 +15,7 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.ppl.esapi.pEsapi;
 
 public class PorG  extends function {
 	static PorG source;
@@ -164,7 +165,11 @@ public class PorG  extends function {
 		//value = value.replace(" ", "&nbsp;");
 		//value = value.replace("<", "&lt;");
 		//value = value.replaceAll(">", "&gt;");
-		return value.trim();
+		pEsapi pe = new pEsapi();
+		String val = pe.encode(value, pe.ENC_JAVA_SCRIPT);
+		//val = pe.encode(val, pe.en);
+		
+		return val.trim();
 	}
 
 	public String getContext_Path() {

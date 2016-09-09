@@ -6,13 +6,16 @@
  *	############################################################################
  */
 function CodeAuto(){
+	
+	
+	
+	
 $("#code_num")
-		.keypress(
+		.keyup(
 				function(e) {
 					
 					var code = $("#code_num").val();
-					console.log("code:" + code);
-					
+				
 					code = code.replace(/_/g, "");
 					$
 							.ajax({
@@ -34,9 +37,9 @@ $("#code_num")
 																			// info
 									var option = request.responseText;
 									// console.log("option:" + option);
-									if (option.length > 0) {
+									if (option.length > 2) {
 										var JsonList = JSON.parse(option);
-
+										
 										var html = " "
 										for (var i = 0; i < JsonList.length; i++) {
 											html += "<li><a href='javascript:void(0)' onclick=\"addCode('"

@@ -4,6 +4,9 @@ import java.net.URL;
 
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.Encoder;
+import org.owasp.esapi.codecs.Codec;
+import org.owasp.esapi.codecs.MySQLCodec;
+import org.owasp.esapi.codecs.MySQLCodec.Mode;
 import org.owasp.esapi.crypto.CipherText;
 import org.owasp.esapi.crypto.PlainText;
 import org.owasp.esapi.errors.EncodingException;
@@ -29,6 +32,17 @@ public class pEsapi extends function {
 	public static final short ENC_XML_ATTR = 13;
 	public static final short ENC_XPATH = 14;
 
+	public pEsapi() {
+		// TODO Auto-generated constructor stub
+		URL path = ProjectPath.class.getClassLoader().getResource(
+				"./properties/esapi/");
+
+		System.setProperty("org.owasp.esapi.resources", path.getPath());
+
+		DefaultSecurityConfiguration dc = new DefaultSecurityConfiguration();
+		dc.setResourceDirectory(path.getPath());
+	}
+	
 	public String HtmlFilter(String html) {
 		return ESAPI.encoder().encodeForHTML(html);
 	}
@@ -77,7 +91,7 @@ public class pEsapi extends function {
 				out = encoder.encodeForDN(item);
 			case ENC_HTML:
 				out = encoder.encodeForHTML(item);
-
+				
 			case ENC_HTML_ATTR:
 				out = encoder.encodeForHTMLAttribute(item);
 			case ENC_JAVA_SCRIPT:
@@ -85,8 +99,9 @@ public class pEsapi extends function {
 			case ENC_LDAP:
 				out = encoder.encodeForLDAP(item);
 				// case ENC_CSS:return encoder.encodeForOS(arg0, arg1)(item);
-				// case ENC_CSS:return encoder.encodeForSQL(arg0,
-				// arg1)CSS(item);
+			case ENC_SQl:
+				Codec mysqlCode = new MySQLCodec(Mode.ANSI);
+				out = encoder.encodeForSQL(mysqlCode, item);				 
 			case ENC_URL:
 				out = encoder.encodeForURL(item);
 			case ENC_VB_SCRIPT:

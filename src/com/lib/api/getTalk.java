@@ -1,6 +1,7 @@
 package com.lib.api;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,18 +34,20 @@ public class getTalk extends BaseSurface {
 
 		Page page = new Page();
 		String Listli = page.getDefPage(url, p, tol, limit, "getPage");
-
+	
 		Map<String, Object> pageInfo = new HashMap<>();
-
+				
+		if(porg.getKey("code")!=null){
+			List<Map<String, Object>> stock_info = StockInfo(porg.getKey("code"));
+			pageInfo.put("StockInfo", stock_info);
+		}
+		
 		pageInfo.put("data", talks());
 
 		pageInfo.put("page", Listli);
 
 		String json = JSON.toJSONString(pageInfo);
-
-		if(porg.getKey("code")!=null){
-			StockInfo(porg.getKey("code"));
-		}
+		
 		super.setHtml(json);
 
 	}
@@ -108,34 +111,87 @@ public class getTalk extends BaseSurface {
 		return res;
 	}
 
-	private void StockInfo(String code) {
+	private List<Map<String, Object>> StockInfo(String code) {
+		List<String> Info = new ArrayList<>();
+		List<Map<String, Object>> Infos = new ArrayList<>();
+		//Info.add("basics");
+		Info.add("report");
+		Info.add("profit");
+		Info.add("operation");
+		Info.add("growth");
+		Info.add("debtpaying");
+		Info.add("cashflow");
+		
+	
+		for (int i = 0; i < Info.size(); i++) {
+			Infos.add(getInfo(Info.get(i), code));
+		}
+		Infos.add(getBasics(code));
+		
+		return Infos;			
+	}
+	
+	private Map<String, Object> getInfo(String itype, String code) {
 		MGDB mgdb = new MGDB();
 		mgdb.DBEnd();
 		mgdb.SetCollection("stockInfo");
 
 		Map<String, String> wMap = new HashMap<>();
-		wMap.put("operation.code", code);
+		wMap.put(itype+".code", code);
 
 		String JsonMap = JSON.toJSONString(wMap);
+		
 		mgdb.JsonWhere(JsonMap);
 
 		Map<String, Integer> cMap = new HashMap<>();
-		cMap.put("operation.$", 1);
+		cMap.put(itype+".$", 1);
 		cMap.put("_id", 0);
 
 		String JsonColu = JSON.toJSONString(cMap);
+		
 		mgdb.JsonColumn(JsonColu);
 
-		String Json = "";
+		boolean s = mgdb.FetchList();
+		List<Map<String, Object>> res = null;
+		if (s) {
+			res = mgdb.GetValue();
+			
+		}else {
+			
+			mgdb.Close();
+			return null;
+		}
+		mgdb.Close();
+		
+		return res.get(0);			
+	}
+	
+	private Map<String, Object> getBasics(String code) {
+		MGDB mgdb = new MGDB();
+		mgdb.DBEnd();
+		mgdb.SetCollection("stockInfo");
+
+
+		Map<String, Integer> cMap = new HashMap<>();
+		cMap.put("basics."+code, 1);
+		cMap.put("_id", 0);
+
+		String JsonColu = JSON.toJSONString(cMap);
+		
+		mgdb.JsonColumn(JsonColu);
 
 		boolean s = mgdb.FetchList();
+		List<Map<String, Object>> res = null;
 		if (s) {
-			List<Map<String, Object>> res = mgdb.GetValue();
-
-			Json = JSON.toJSONString(res.get(0));
+			res = mgdb.GetValue();
+			
+		}else {
+			
+			mgdb.Close();
+			return null;
 		}
-
 		mgdb.Close();
-		echo(Json);
+		
+		return res.get(0);			
 	}
 }
