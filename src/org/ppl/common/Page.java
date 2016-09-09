@@ -82,6 +82,7 @@ public class Page extends function{
 			para = '&' + para;
 		double tol_page = (double) total / (double) limit;
 		int ceil = (int) Math.ceil(tol_page);
+				
 		int st = 0;
 		int ceil_limit = 0;
 		String spage, npage, ppage;
@@ -139,9 +140,8 @@ public class Page extends function{
 	
 	public String getDefPage(String url , int p, int tol, int limit, String onclickFun) {
 
-
 		String pageString = base_page(url, tol, p, limit, "");
-		
+				
 		String[] pp = pageString.split(";");
 		
 		if(pp.length == 0 ) return "";

@@ -29,16 +29,20 @@ public class iTalk extends BaseiCore {
 	}
 
 	private void Save() {
-		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`, `uid`, `msg`, `ctime`, `ip`) VALUES "
-				+ "('%d', '%d', '%d', '%s', '%d', '%s');";
+		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`,`code`, `uid`, `msg`, `ctime`, `ip`) VALUES "
+				+ "('%d', '%d', '%s','%d', '%s', '%d', '%s');";
 				
 		int pid = toInt(porg.getKey("pid"));
 		int sid = toInt(porg.getKey("sid"));
 		int uid = igetUid();
 		String msg = porg.getKey("msg");
+		String code = porg.getKey("code");
+		if(code==null){
+			code="";
+		}
 		String ip = porg.GetIP();
 
-		String sql = String.format(format, pid, sid, uid, msg, time(), ip);
+		String sql = String.format(format, pid, sid,code ,uid, msg, time(), ip);
 		
 		try {
 			insert(sql);

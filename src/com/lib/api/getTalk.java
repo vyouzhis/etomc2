@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSON;
 
 public class getTalk extends BaseSurface {
 	private String className = null;
-	private int limit = 5;
+	private int limit = 10;
 
 	public getTalk() {
 		// TODO Auto-generated constructor stub
@@ -32,6 +32,8 @@ public class getTalk extends BaseSurface {
 		int p = toInt(porg.getKey("p"));
 		String url = "";
 
+		echo("tol:"+tol);
+		echo("p:"+p);
 		Page page = new Page();
 		String Listli = page.getDefPage(url, p, tol, limit, "getPage");
 	
@@ -68,7 +70,7 @@ public class getTalk extends BaseSurface {
 		String format = "SELECT count(*) as cou FROM `stock_user_talk` t where %s limit 1";
 
 		String sql = String.format(format, where);
-
+		echo(sql);
 		Map<String, Object> res = FetchOne(sql);
 		if (res != null) {
 			return toInt(res.get("cou").toString());

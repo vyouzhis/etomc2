@@ -54,7 +54,8 @@ function saveTalk() {
 	var msg = $("#comment-text").val();
 	var sid = $("#comment-sid").val();
 	var code = $("#comment-code").val();
-
+	console.log("code:"+'msg=' + msg + "&sid=" + sid + "&code=" + code + "&pid=" + 0);
+	
 	$.ajax({
 		url : "/etomc2/italk?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -100,9 +101,13 @@ function listTalk(p, sid, code) {
 					// console.log("option:" + option);
 					var Json = JSON.parse(option);
 					StockInfoData = Json["StockInfo"];
-
-					$("#talkPage").html(Json['page']);
-
+					
+					console.log("page:" + Json['page']);
+					if(Json['page'].length == 0){
+						$("#talkPage").html("");
+					}else{
+						$("#talkPage").html(Json['page']);
+					}
 					var talkData = Json['data'];
 					
 					var ListHtml = "";
@@ -171,6 +176,7 @@ function listTalk(p, sid, code) {
 
 						$("#talkCode").html(codeHtml + ListHtml);
 						infoshow("basics", code);
+						$("#comment-code").val(code);
 					}
 				}
 			});
