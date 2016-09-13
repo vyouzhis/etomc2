@@ -13,10 +13,6 @@ symbols += "[\\]^_`";
 symbols += loAZ;
 symbols += "{|}~";
 
-// 全局;
-var StockInfoData;
-var StockCode = "";
-var StockSid = 0;
 
 
 function talkSelect(i, sid){
@@ -28,8 +24,7 @@ function talkSelect(i, sid){
 	
 	StockCode = $("#code_num").val();
 	StockSid = 0;
-	
-	
+		
 	if(i==1){
 		// stra
 		ariaCode = false;
@@ -92,7 +87,7 @@ function saveTalk() {
 	var msg = $("#comment-text").val();
 
 	var dataList = 'msg=' + msg + "&sid=" + StockSid + "&code=" + StockCode + "&pid=" + 0;
-	console.log(dataList);
+	//console.log(dataList);
 
 	$.ajax({
 		url : "/etomc2/italk?jsoncallback=?",
@@ -231,8 +226,13 @@ function listTalk(p, sid, code) {
 					}
 					
 					//console.log("page:" + Json['page']);
+					if(sid != 0){
+						$("#talkListPageStra").html(Json['page']);
+					}else{
+						$("#talkListPageCode").html(Json['page']);
+					}
+						
 					
-					$("#talkListPage").html(Json['page']);
 				}
 			});
 }

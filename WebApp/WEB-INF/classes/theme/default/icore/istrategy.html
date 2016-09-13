@@ -205,14 +205,17 @@
 						<div id="chapter1" class="tab-pane fade active in">
 							<ul class="media-list" id="talkStra" name="talkStra">
 							</ul>
+							<ul class="pagination borderless" id="talkListPageStra" name="talkListPageStra">
+							</ul>
 						</div>
 						<div id="chapter2" class="tab-pane fade" id="talkCode" name="talkCode">
 							<ul class="media-list" id="talkCode" name="talkCode">
 							</ul>
+							<ul class="pagination borderless" id="talkListPageCode" name="talkListPageCode">
+							</ul>
 						</div>
 					</div>
-					<ul class="pagination borderless" id="talkListPage" name="talkListPage">
-					</ul>
+					
 				</article>
 				<!-- end comments -->
 				<!-- 注册之后才可以留言 -->
@@ -384,7 +387,7 @@
 				<!-- end categories -->
 				<!-- tabbed content 用户登录后才显示 -->
 				<div class="widget  <#if islogin == -1> hide </#if> ">
-					<div class="tabpanel">
+					<div class="tabpanel hide">
 						<!-- nav tabs -->
 						<ul role="tablist" class="nav nav-tabs">
 							<li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="content-popular"

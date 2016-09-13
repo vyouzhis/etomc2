@@ -64,7 +64,7 @@ function ListBookMarksStra(code, name, cid, i){
 	$("#CodeAndName").html(code+" "+name);
 	
 	addCode(code, name);
-	
+		
 	$.ajax({
 		url : "/etomc2/bookmark?jsoncallback=?",
 		contentType : 'text/html;charset=utf-8',
@@ -97,14 +97,9 @@ function ListBookMarksStra(code, name, cid, i){
 							"</tr>";
 			}
 			$("#bmlist_"+i).attr("class", "btn btn-outline btn-success");
-			$("#nowCodeStraList").html(htmlList);
+			$("#nowCodeStraList").html(htmlList);						
 		}
 	});
-	
-	
-	
-	
-	
 	
 }
 

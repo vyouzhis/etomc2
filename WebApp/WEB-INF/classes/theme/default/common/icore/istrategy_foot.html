@@ -12,12 +12,21 @@
 	
 	// 全局
 	var StockCodeName="";
+	var straListData = [];
+	var nowTId = 0;
+	var selectStraId = 0;
 	
-	getStockData("hs300");
+	// 全局;
+	var StockInfoData;
+	var StockCode = "";
+	var StockSid = 0;	
 
 	jQuery(function($) {
+		
+		getStockData("hs300");
+		
 		getPage(1);
-
+		
 		CodeAuto();
 		
 		ListBookMarksCode(1, ${Step_strategy!1});
@@ -85,8 +94,7 @@
 		});
 	}
 
-	var straListData = [];
-	var nowTId = 0;
+	
 	function istrSelect(i) {
 		for (n = 0; n < 5; n++) {
 			$("#select_" + n).attr("class", "fa fa-close");
@@ -98,6 +106,7 @@
 			$("#bmslist_" + n).attr("class", "fa fa-close");
 		}
 
+		selectStraId = straListData[i]['id'];
 		var name = straListData[i]['title'];
 		nowTId = i;
 		$("#strategy_name").html(name);
@@ -124,7 +133,8 @@
 		}
 		$("#bmslist_" + i).attr("class", "fa fa-check");
 		
-
+		selectStraId = sid;
+		
 		$("#strategy_name").html(name);
 
 		$("#talkNameStra").html("<i class='fa fa-flask'></i>" + name);
@@ -140,8 +150,8 @@
 	
 
 	function getPage(p) {
-		$
-				.ajax({
+		
+		$.ajax({
 					url : "/etomc2/strapage?jsoncallback=?",
 					contentType : 'text/html;charset=utf-8',
 
@@ -161,20 +171,15 @@
 						var Json = JSON.parse(option);
 						$("#straPage").html(Json['page']);
 						//console.log("option:" + Json['data']);
-
-						straListData = Json['data'];
-						if (talkListInit == 0) {
-							listTalk(0, straListData[0]['id'], "");
-							talkListInit = 1;
-						}
-
-						var name = straListData[0]['title'];
-
-						$("#talkNameStra").html(
-								"<i class='fa fa-flask'></i>" + name);
-
+																							
 						var ListStrHtml = "";
 						for (i = 0; i < Json['data'].length; i++) {
+							var fa = "fa-close";
+																					
+							if(selectStraId == Json['data'][i]['id']){
+								fa = "fa-check";
+							}
+														
 							var inte = Json['data'][i]['integral'];
 							var insval = "";
 							if (inte == 0) {
@@ -205,12 +210,23 @@
 									+ "<td><button title='Success' class='btn btn-outline btn-success' type='button' onclick='istrSelect("
 									+ i
 									+ ")'>"
-									+ "		<i class='fa fa-close' id='select_"+i+"' name='select_"+i+"'></i> <span class='sr-only'>Success</span>"
+									+ "		<i class='fa "+fa+"' id='select_"+i+"' name='select_"+i+"'></i> <span class='sr-only'>Success</span>"
 									+ "	</button></td>" + "</tr>";
 						}
 
 						$("#straList").html(ListStrHtml);
-						istrSelect(0);
+						//console.log("talkListInit:" + talkListInit);
+						straListData = Json['data'];
+						var name = straListData[0]['title'];
+						
+						if (talkListInit == 0) {
+							listTalk(0, straListData[0]['id'], "");
+							talkListInit = 1;
+							istrSelect(0);
+							$("#talkNameStra").html(
+									"<i class='fa fa-flask'></i>" + name);
+						}
+						
 					}
 				});
 	}
