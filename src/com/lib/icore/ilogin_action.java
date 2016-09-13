@@ -2,7 +2,6 @@ package com.lib.icore;
 
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.etc.UrlClassList;
-import org.ppl.etc.globale_config;
 
 public class ilogin_action extends BaseiCore {
 	private String className = null;
@@ -18,14 +17,15 @@ public class ilogin_action extends BaseiCore {
 		// TODO Auto-generated method stub
 
 		UrlClassList ucl = UrlClassList.getInstance();
-
-		echo("SessSalt:"+SessAct.GetSession(globale_config.SessSalt));
-
-		if (super.Init() == 0) {
+		
+		int act = super.Init();
+		
+		if (act == 0) {
 			String ok_url = ucl.BuildUrl("icore", time() + "");
 
 			TipMessage(ok_url, _CLang("ok_welcome"));
-		} else {
+		}
+		else {
 			String err_url = ucl.Url("login");
 						
 			TipMessage(err_url, _CLang("error_passwd_or_name"));

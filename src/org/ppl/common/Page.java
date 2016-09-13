@@ -156,15 +156,15 @@ public class Page extends function{
 				CurrPage =nn[1];
 				Listli+="<li class='active'><a href='#'>"+nn[1]+"</a></li>";
 			}else if (nn[1].equals("[left]")) {
-				Listli+="<li><a href='javascript:void(0)' onclick="+onclickFun+"(1)><i class='fa fa-angle-left'></i></a></li>";
+				Listli+="<li><a href='javascript:void(0)' onclick=\""+onclickFun+"(1)\"><i class='fa fa-angle-left'></i></a></li>";
 			}else if (nn[1].equals("[right]")) {
 				int pnum = toInt(CurrPage);
 				pnum++;
-				Listli+="<li><a href='javascript:void(0)' onclick="+onclickFun+"("+pnum+") ><i class='fa fa-angle-right'></i></a></li>";
+				Listli+="<li><a href='javascript:void(0)' onclick=\""+onclickFun+"("+pnum+")\" ><i class='fa fa-angle-right'></i></a></li>";
 			}else if (nn[1].equals("[last]")) {
 				
 			}else {
-				Listli+="<li><a  href='javascript:void(0)' onclick="+onclickFun+"("+nn[1]+") >"+nn[1]+"</a></li>";
+				Listli+="<li><a  href='javascript:void(0)' onclick=\""+onclickFun+"("+nn[1]+")\" >"+nn[1]+"</a></li>";
 			}
 		}
 		

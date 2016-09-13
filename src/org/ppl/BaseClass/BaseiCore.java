@@ -24,10 +24,11 @@ public class BaseiCore extends BaseSurface {
 		} else {			
 			String email = porg.getKey("email");
 			String passwd = porg.getKey("Password");
-			if (iLogin(email, passwd) == -1) {
-
+			int il = iLogin(email, passwd);
+						
+			if ( il != 0) {
 				iLogout();
-				return -1;
+				return il;
 			}
 		}
 
@@ -47,7 +48,7 @@ public class BaseiCore extends BaseSurface {
 
 		String user_salt = porg.getKey("salt");
 		if (checkSalt(user_salt) == false) {
-			return -1;
+			return -2;
 		}
 
 		String format = "SELECT * FROM `"+DB_STOCK_PRE+"user_info` where email='%s' limit 1;";
@@ -56,21 +57,22 @@ public class BaseiCore extends BaseSurface {
 		Map<String, Object> res;
 
 		res = FetchOne(sql);
+		
 		if (res == null) {
-			return -1;
+			return -3;
 		}
 
 		Encrypt ec = Encrypt.getInstance();
 		String check_passd = ec.MD5(res.get("passwd").toString() + user_salt);
 
-		echo("check_pawd:"+check_passd + " pwd:"+pwd);
+		//echo("check_pawd:"+check_passd + " pwd:"+pwd);
 		if (!check_passd.equals(pwd))
-			return -1;
+			return -4;
 
 		String info_json = JSON.toJSONString(res);
 
 		String hex = ec.toHex(info_json);
-
+		
 		cookieAct.SetCookie(globale_config.Uinfo, hex);
 		return 0;
 	}

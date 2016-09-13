@@ -32,10 +32,8 @@ public class getTalk extends BaseSurface {
 		int p = toInt(porg.getKey("p"));
 		String url = "";
 
-		echo("tol:"+tol);
-		echo("p:"+p);
 		Page page = new Page();
-		String Listli = page.getDefPage(url, p, tol, limit, "getPage");
+		String Listli = page.getDefPage(url, p, tol, limit, "getTalkPage");
 	
 		Map<String, Object> pageInfo = new HashMap<>();
 				
@@ -70,7 +68,7 @@ public class getTalk extends BaseSurface {
 		String format = "SELECT count(*) as cou FROM `stock_user_talk` t where %s limit 1";
 
 		String sql = String.format(format, where);
-		echo(sql);
+		//echo(sql);
 		Map<String, Object> res = FetchOne(sql);
 		if (res != null) {
 			return toInt(res.get("cou").toString());

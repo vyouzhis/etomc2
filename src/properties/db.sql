@@ -150,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `stock_strategy` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL COMMENT 'login uid' ,
   `code` varchar(10) NOT NULL COMMENT '股票代码' ,
+  `name` varchar(20) NOT NULL COMMENT '股票名称' ,
   `cid` int(11) NOT NULL COMMENT '策略 类型 id' ,  
   `sid`  int(11) NOT NULL COMMENT '策略ID' ,
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',

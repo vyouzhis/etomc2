@@ -132,41 +132,22 @@
 											</tr>
 										</thead>
 										<tbody>
+										<#if strategy_list ??>
+											<#list strategy_list as item>
 											<tr>
-												<th scope="row">1</th>
+												<th scope="row">${item?index+1}</th>
 												<th><a href=""> <code>
-															<i class="fa fa-star"></i> 600432
+															<i class="fa fa-star"></i> ${item['code']}
 														</code>
 												</a></th>
 												<td>10000</td>
 												<td>5.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
+												<td><button title="Success" class="btn btn-outline btn-success" type="button" onclick="showStra(${item?index})">
 														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
 													</button></td>
 											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<th><a href=""> <code>
-															<i class="fa fa-star"></i> 600432
-														</code>
-												</a></th>
-												<td>20000</td>
-												<td>7.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<th><a href=""> <span class="label label-danger label-main-nav"><i class="fa fa-star"></i>
-															600432</span>
-												</a></th>
-												<td>15000</td>
-												<td>6.9%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
+										    </#list>
+										</#if>
 										</tbody>
 									</table>
 
@@ -193,7 +174,7 @@
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="nowCodeStraList" name="nowCodeStraList">
 											<tr>
 												<th scope="row">1</th>
 												<td>SMA 线</td>
@@ -203,24 +184,7 @@
 														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
 													</button></td>
 											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>黄金分割</td>
-												<td>9%</td>
-												<td>7.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<td>MACE 线</td>
-												<td>45%</td>
-												<td>6.9%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
+											
 										</tbody>
 									</table>
 
@@ -244,7 +208,7 @@
 				<article class="comments">
 					<h3 class="section-heading">讨论区</h3>
 
-					<ul role="tablist" class="nav nav-pills tabs-iconized">
+					<ul role="tablist" class="nav nav-pills tabs-iconized" id="talkUl" name="talkUl">
 						<li id="listtab1" name="listtab1" class="active">
 							<a id="talkNameStra" name="talkNameStra" data-toggle="tab" role="tab" href="ui-tabs-accordion.html#chapter1" aria-expanded="true"><i
 								class="fa fa-flask"></i> </a>
@@ -262,48 +226,11 @@
 							</ul>
 						</div>
 						<div id="chapter2" class="tab-pane fade" id="talkCode" name="talkCode">
-							<ul class="media-list" id="talkCode" name="talkCode">
-								<li class="media"><a class="media-left" href="#"> <span class="avatar anonymous"><i
-											class="fa fa-legal"></i></span>
-								</a>
-									<div class="media-body">
-										<h4 class="media-heading comment-author">
-											<a href="#">John Doe</a>
-										</h4>
-										<span class="timestamp text-muted">Dec 11, 2014 12:30 PM</span>
-										<p>公司是由安徽金瑞化工投资有限公司(原皖东金瑞化工有限责任公司)、安徽省定远县大江医疗用品有限责任公司和来安县长安混凝土外加剂有限公司于2006年12月共同发起设立的股份有限公司。</p>
-										<p>
-											<a href="#"><i class="fa fa-reply"></i> @</a>
-										</p>
-										<hr>
-									</div></li>
-								<li class="media">
-									<div class="media child">
-										<a class="media-left" href="#"> <span class="avatar anonymous"><i class="fa fa-legal"></i></span>
-										</a>
-										<div class="media-body">
-											<h4 class="media-heading comment-author">
-												<a href="#">Anonymous</a>
-											</h4>
-											<span class="timestamp text-muted">8 hours ago</span>
-											<p>全景网8月9日讯
-												黄河旋风（600172）周二晚间发布2016年半年度报告，公司上半年归属于上市公司股东的净利润1.82亿元，同比增长72.67%。每股收益0.2296元。实现营业收入11.57亿元，同比增长36.57%。黄河旋风表示，公司上半年主动提升认识、转变意识...
-											</p>
-											<p>
-												<a href="#"><i class="fa fa-reply"></i> @</a>
-											</p>
-										</div>
-									</div>
-								</li>
+							<ul class="media-list" id="talkCode" name="talkCode">							
 							</ul>
 						</div>
-
 					</div>
-
-
-
-					<ul class="pagination borderless" id="talkPage" name="talkPage">
-
+					<ul class="pagination borderless" id="talkListPage" name="talkListPage">
 					</ul>
 				</article>
 				<!-- end comments -->
@@ -386,7 +313,7 @@
 								</div>
 								<div class="col-sm-4">
 									<button class="btn btn-block btn-success"
-										<#if islogin == -1> disabled="disabled" </#if> type="submit"> <i class="fa fa-heart"></i> 加入我的策略
+										<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_strategy})" > <i class="fa fa-heart"></i> 加入我的策略
 										</button>
 								</div>
 							</div>

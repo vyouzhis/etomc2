@@ -1,6 +1,9 @@
 package org.ppl.esapi;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import org.owasp.esapi.ESAPI;
 import org.owasp.esapi.Encoder;
@@ -42,7 +45,7 @@ public class pEsapi extends function {
 		DefaultSecurityConfiguration dc = new DefaultSecurityConfiguration();
 		dc.setResourceDirectory(path.getPath());
 	}
-	
+
 	public String HtmlFilter(String html) {
 		return ESAPI.encoder().encodeForHTML(html);
 	}
@@ -91,7 +94,7 @@ public class pEsapi extends function {
 				out = encoder.encodeForDN(item);
 			case ENC_HTML:
 				out = encoder.encodeForHTML(item);
-				
+
 			case ENC_HTML_ATTR:
 				out = encoder.encodeForHTMLAttribute(item);
 			case ENC_JAVA_SCRIPT:
@@ -101,7 +104,7 @@ public class pEsapi extends function {
 				// case ENC_CSS:return encoder.encodeForOS(arg0, arg1)(item);
 			case ENC_SQl:
 				Codec mysqlCode = new MySQLCodec(Mode.ANSI);
-				out = encoder.encodeForSQL(mysqlCode, item);				 
+				out = encoder.encodeForSQL(mysqlCode, item);
 			case ENC_URL:
 				out = encoder.encodeForURL(item);
 			case ENC_VB_SCRIPT:
@@ -120,5 +123,69 @@ public class pEsapi extends function {
 
 		}
 		return out;
+	}
+
+	public String xss(String value) {
+		List<Pattern> XSS_INPUT_PATTERNS = new ArrayList<Pattern>();
+
+		// Avoid anything between script tags
+		XSS_INPUT_PATTERNS.add(Pattern.compile("<script>(.*?)</script>",
+				Pattern.CASE_INSENSITIVE));
+
+		// avoid iframes
+		XSS_INPUT_PATTERNS.add(Pattern.compile("<iframe(.*?)>(.*?)</iframe>",
+				Pattern.CASE_INSENSITIVE));
+
+		// Avoid anything in a src='...' type of expression
+		XSS_INPUT_PATTERNS.add(Pattern.compile(
+				"src[\r\n]*=[\r\n]*\\\'(.*?)\\\'", Pattern.CASE_INSENSITIVE
+						| Pattern.MULTILINE | Pattern.DOTALL));
+
+		XSS_INPUT_PATTERNS.add(Pattern.compile(
+				"src[\r\n]*=[\r\n]*\\\"(.*?)\\\"", Pattern.CASE_INSENSITIVE
+						| Pattern.MULTILINE | Pattern.DOTALL));
+
+		XSS_INPUT_PATTERNS.add(Pattern.compile("src[\r\n]*=[\r\n]*([^>]+)",
+				Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));
+
+		// Remove any lonesome </script> tag
+		XSS_INPUT_PATTERNS.add(Pattern.compile("</script>",
+				Pattern.CASE_INSENSITIVE));
+
+		// Remove any lonesome <script ...> tag
+		XSS_INPUT_PATTERNS.add(Pattern.compile("<script(.*?)>",
+				Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));
+
+		// Avoid eval(...) expressions
+		XSS_INPUT_PATTERNS.add(Pattern.compile("eval\\((.*?)\\)",
+				Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));
+
+		// Avoid expression(...) expressions
+		XSS_INPUT_PATTERNS.add(Pattern.compile("expression\\((.*?)\\)",
+				Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));
+
+		// Avoid javascript:... expressions
+		XSS_INPUT_PATTERNS.add(Pattern.compile("javascript:",
+				Pattern.CASE_INSENSITIVE));
+
+		// Avoid vbscript:... expressions
+		XSS_INPUT_PATTERNS.add(Pattern.compile("vbscript:",
+				Pattern.CASE_INSENSITIVE));
+
+		// Avoid onload= expressions
+		XSS_INPUT_PATTERNS.add(Pattern.compile("onload(.*?)=",
+				Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));
+		
+		value = ESAPI.encoder().canonicalize(value);
+
+		// Avoid null characters
+		value = value.replaceAll("\0", "");
+
+		// test against known XSS input patterns
+		for (Pattern xssInputPattern : XSS_INPUT_PATTERNS) {
+			value = xssInputPattern.matcher(value).replaceAll("");
+		}
+		
+		return value;
 	}
 }

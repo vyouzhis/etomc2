@@ -6,16 +6,10 @@
  *	############################################################################
  */
 function CodeAuto(){
-	
-	
-	
-	
 $("#code_num")
 		.keyup(
-				function(e) {
-					
-					var code = $("#code_num").val();
-				
+				function(e) {					
+					var code = $("#code_num").val();				
 					code = code.replace(/_/g, "");
 					$
 							.ajax({
@@ -32,9 +26,7 @@ $("#code_num")
 										errorThrown) {
 									// alert(textStatus);
 								},
-								complete : function(request, textStatus) { // for
-																			// additional
-																			// info
+								complete : function(request, textStatus) {
 									var option = request.responseText;
 									// console.log("option:" + option);
 									if (option.length > 2) {
@@ -52,6 +44,8 @@ $("#code_num")
 													+ "</a></li>";
 										}
 										$("#codeMenu").html(html);
+									}else{
+										console.log("option:" + option);
 									}
 								}
 							});

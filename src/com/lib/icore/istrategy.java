@@ -16,14 +16,14 @@ public class istrategy extends BaseSurface {
 		// TODO Auto-generated method stub
 
 		int islogin = isLogin();
+		
 		// echo("islogin:"+islogin);
 		setRoot("islogin", islogin);
 
 		setRoot("strategy_name", "default strategy");
 
-		setRoot("Step.strategy", mConfig.GetInt("Step.strategy"));
+		setRoot("Step_strategy", mConfig.GetInt("Step.strategy"));
 		
-
 		super.View();
 	}
 

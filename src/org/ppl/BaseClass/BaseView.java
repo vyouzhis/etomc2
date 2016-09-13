@@ -122,7 +122,7 @@ public class BaseView extends ACLControl {
 		String uid = getUinfo("uid");
 		if (uid == null)
 			return 0;
-		return Integer.valueOf(uid);
+		return toInt(uid);
 	}
 
 	public String igetName() {

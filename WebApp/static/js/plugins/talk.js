@@ -15,6 +15,44 @@ symbols += "{|}~";
 
 // 全局;
 var StockInfoData;
+var StockCode = "";
+var StockSid = 0;
+
+
+function talkSelect(i){
+	var ariaCode = true;		
+	var activeCode = "active";
+	
+	var ariaStra = false;
+	var activeStra = "";
+	
+	StockCode = $("#code_num").val();
+	StockSid = 0;
+	
+	
+	if(i==1){
+		// stra
+		ariaCode = false;
+		activeCode = "";
+		
+		ariaStra = true;
+		activeStra = "active";		
+		
+		StockCode = "";
+		StockSid = straListData[nowTId]['id'];
+	}
+	
+	$("#talkNameCode").attr("aria-expanded",ariaCode);
+	$("#listtab2").attr("class", activeCode);
+	$("#chapter2").attr("class","tab-pane fade "+activeCode+" in");
+	
+	
+	$("#talkNameStra").attr("aria-expanded", ariaStra);			
+	$("#listtab1").attr("class",activeStra);				
+	$("#chapter1").attr("class","tab-pane fade "+activeStra+" in");
+	
+}
+
 
 function toAscii(valueStr) {
 
@@ -52,14 +90,14 @@ function saveTalk() {
 	// var icore = getCookie("iCore");
 
 	var msg = $("#comment-text").val();
-	var sid = $("#comment-sid").val();
-	var code = $("#comment-code").val();
-	console.log("code:"+'msg=' + msg + "&sid=" + sid + "&code=" + code + "&pid=" + 0);
-	
+
+	var dataList = 'msg=' + msg + "&sid=" + StockSid + "&code=" + StockCode + "&pid=" + 0;
+	console.log(dataList);
+
 	$.ajax({
 		url : "/etomc2/italk?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-		data : 'msg=' + msg + "&sid=" + sid + "&code=" + code + "&pid=" + 0,
+		data : dataList,
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
@@ -75,13 +113,19 @@ function saveTalk() {
 		}
 	});
 
-	listTalk(0, sid, code);
+	listTalk(0, StockSid, StockCode);
 	$("#comment-text").val("");
 }
 
+function getTalkPage(p){
+	
+	listTalk(p, StockSid, StockCode);
+}
+
 function listTalk(p, sid, code) {
-	$
-			.ajax({
+	StockCode = code;
+	StockSid = sid;
+	$.ajax({
 				url : "/etomc2/listtalk?jsoncallback=?",
 				contentType : 'text/html;charset=utf-8',
 				data : {
@@ -101,15 +145,9 @@ function listTalk(p, sid, code) {
 					// console.log("option:" + option);
 					var Json = JSON.parse(option);
 					StockInfoData = Json["StockInfo"];
-					
-					console.log("page:" + Json['page']);
-					if(Json['page'].length == 0){
-						$("#talkPage").html("");
-					}else{
-						$("#talkPage").html(Json['page']);
-					}
-					var talkData = Json['data'];
-					
+				
+					// var talkData = Json['data'];
+
 					var ListHtml = "";
 
 					for (i = 0; i < Json['data'].length; i++) {
@@ -123,7 +161,7 @@ function listTalk(p, sid, code) {
 
 						ListHtml += "<li class='media'>"
 								+ "<a class='media-left' href='blog-single.html#'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
-								+ "</a>" + "<div class='media-body'>"
+								+ "</a><div class='media-body'>"
 								+ "	<h4 class='media-heading comment-author'>"
 								+ "		<a href='#'>"
 								+ Json['data'][i]['nickname'] + "</a>"
@@ -134,7 +172,20 @@ function listTalk(p, sid, code) {
 					}
 
 					if (sid != 0) {
-						$("#talkStra").html(ListHtml);
+						var strDesc =  "";
+						if(p==0 || p ==1){
+							strDesc = "<li class='media'>"
+							+ "<a class='media-left' href='blog-single.html#'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
+							+ "</a><div class='media-body'>"
+							+ "	<h4 class='media-heading comment-author'>"
+							+ "		<a href='#'>站长</a>"
+							+ "	</h4>"
+							+ "	<span class='timestamp text-muted'>" 
+							+ "</span>" + "	<p>" + straListData[nowTId]['sdesc']
+							+ "</p>	<hr>" + "</div>" + "</li>"; 													
+						}
+						
+						$("#talkStra").html(strDesc+ListHtml);
 					} else {
 						var infoList = sInfo();
 						var liHtml = "";
@@ -176,8 +227,12 @@ function listTalk(p, sid, code) {
 
 						$("#talkCode").html(codeHtml + ListHtml);
 						infoshow("basics", code);
-						$("#comment-code").val(code);
+						$("#comment-code").val(code);						
 					}
+					
+					console.log("page:" + Json['page']);
+					
+					$("#talkListPage").html(Json['page']);
 				}
 			});
 }
@@ -188,24 +243,23 @@ function infoshow(k, c) {
 	$("#tdName").html(infoList[k + "_name"] + " (属性)");
 
 	var td = "";
-	
+
 	for ( var ik in infoList[k]) {
-		
+
 		var db = "--";
-		
-		td += "<tr>" + "<th scope='row'>" + infoList[k][ik] + "</th>"
-				+ "<td>" + db
+
+		td += "<tr>" + "<th scope='row'>" + infoList[k][ik] + "</th>" + "<td>"
+				+ db
 		"</td>" + "</tr>";
 	}
-	
-	
+
 	for (var i = 0; i < StockInfoData.length; i++) {
-		
-		if (StockInfoData[i] === null) {			
+
+		if (StockInfoData[i] === null) {
 			continue;
 		}
 
-		if( StockInfoData[i][k] != undefined) {
+		if (StockInfoData[i][k] != undefined) {
 			td = "";
 			for ( var ik in infoList[k]) {
 

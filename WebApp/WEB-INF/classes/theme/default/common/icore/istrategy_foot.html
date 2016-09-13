@@ -3,10 +3,16 @@
 <script src="${static_js_uri}/plugins/talk.js"></script>
 <script src="${static_js_uri}/plugins/showChart.js"></script>
 <script src="${static_js_uri}/plugins/codeAutoTip.js"></script>
+<script src="${static_js_uri}/plugins/bookmark.js"></script>
 <script type="text/javascript">
 	// 基于准备好的dom，初始化echarts图表
-	
+
 	var StockData = "";
+	var talkListInit = 0;
+	
+	// 全局
+	var StockCodeName="";
+	
 	getStockData("hs300");
 
 	jQuery(function($) {
@@ -14,50 +20,52 @@
 
 		CodeAuto();
 
+		$("#listtab1").click(function() {
+			StockCode = "";
+			StockSid = straListData[nowTId]['id'];
+		});
+
+		$("#listtab2").click(function() {
+			StockCode = $("#code_num").val();			
+			StockSid = 0;
+		});
 	});
 
-	function addCode(o, n) {
-		$("#code_num").val(o);
+	
+	
+	function showStra(id){			
 		
-		$("#talkNameCode").html("<i class='fa fa-flask'></i>"+o+" "+n);
-		$("#talkNameCode").attr("class","");
-								
-		$( "#talkNameCode" ).focus();
-
-		console.log("code:" + o);
+		var htmlList = "<tr>"+
+							"<th scope='row'></th>"+
+							"<td>SMA 线</td>"+
+							"<td>10%</td>"+
+							"<td>5.6</td>"+
+							"<td><button title='Success' class='btn btn-outline btn-success' type='button'>"+
+							"<i class='fa fa-close'></i><span class='sr-only'>Success</span>"+
+							"</button></td>"+
+						"</tr>";
 		
-		// 获取股票的讨论内容
-		listTalk(0, 0, o);
 		
-		talkSelect(0);
+		$("#nowCodeStraList").html();
 	}
 	
-	function talkSelect(i){
-		var ariaCode = true;		
-		var activeCode = "active";
-		
-		var ariaStra = false;
-		var activeStra = "";
-		
-		if(i==1){
-			// stra
-			ariaCode = false;
-			activeCode = "";
-			
-			ariaStra = true;
-			activeStra = "active";
-			
-		}
-		
-		$("#talkNameCode").attr("aria-expanded",ariaCode);
-		$("#listtab2").attr("class", activeCode);
-		$("#chapter2").attr("class","tab-pane fade "+activeCode+" in");
-		
-		
-		$("#talkNameStra").attr("aria-expanded", ariaStra);			
-		$("#listtab1").attr("class",activeStra);				
-		$("#chapter1").attr("class","tab-pane fade "+activeStra+" in");
-		
+	
+	function addCode(o, n) {
+		$("#code_num").val(o);
+
+		$("#talkNameCode").html("<i class='fa fa-flask'></i>" + o + " " + n);
+		$("#talkNameCode").attr("class", "");
+
+		$("#talkNameCode").focus();
+
+		console.log("code:" + o);
+
+		// 获取股票的讨论内容
+		listTalk(0, 0, o);
+
+		talkSelect(0);
+		StockCode = o
+		StockCodeName = n;
 	}
 
 	function KChart() {
@@ -68,10 +76,9 @@
 		}
 
 		getStockData(code);
-		
-		
+
 	}
-	
+
 	function getStockData(code) {
 		$.ajax({
 			url : "/etomc2/stockdata?jsoncallback=?",
@@ -94,7 +101,7 @@
 			}
 		});
 	}
-	
+
 	var straListData = [];
 	var nowTId = 0;
 	function istrSelect(i) {
@@ -104,29 +111,29 @@
 
 		$("#select_" + i).attr("class", "fa fa-check");
 
-		
 		var name = straListData[i]['title'];
 		nowTId = i;
 		$("#strategy_name").html(name);
 
-		$("#talkNameStra").html("<i class='fa fa-flask'></i>"+name);
-		
+		$("#talkNameStra").html("<i class='fa fa-flask'></i>" + name);
+
 		$("#comment-sid").val(straListData[i]['id']);
 		//console.log("sid:" + straListData[i]['id']);
-		
+
 		// 获取策略的讨论内容
 		listTalk(0, straListData[i]['id'], "");
-		
+
 		talkSelect(1);
 	}
 
 	function getPage(p) {
-		$.ajax({
+		$
+				.ajax({
 					url : "/etomc2/strapage?jsoncallback=?",
 					contentType : 'text/html;charset=utf-8',
 
 					data : {
-						"cid" : 1,
+						"cid" : ${Step_strategy},
 						"p" : p
 					},
 					success : function(result) {
@@ -143,13 +150,17 @@
 						//console.log("option:" + Json['data']);
 
 						straListData = Json['data'];
-						listTalk(0, straListData[0]['id'], "");
-						
+						if (talkListInit == 0) {
+							listTalk(0, straListData[0]['id'], "");
+							talkListInit = 1;
+						}
+
 						var name = straListData[0]['title'];
-					
-						$("#talkNameStra").html("<i class='fa fa-flask'></i>"+name);
-						
-						var ListHtml = "";
+
+						$("#talkNameStra").html(
+								"<i class='fa fa-flask'></i>" + name);
+
+						var ListStrHtml = "";
 						for (i = 0; i < Json['data'].length; i++) {
 							var inte = Json['data'][i]['integral'];
 							var insval = "";
@@ -158,8 +169,8 @@
 							} else {
 								insval = inte + ' 积分';
 							}
-							
-							ListHtml += "<tr>"
+
+							ListStrHtml += "<tr>"
 									+ "<th scope='row'>"
 									+ (i + 1)
 									+ "</th>"
@@ -185,11 +196,10 @@
 									+ "	</button></td>" + "</tr>";
 						}
 
-						$("#straList").html(ListHtml);
+						$("#straList").html(ListStrHtml);
 					}
 				});
 	}
-
 
 	function Tactics() {
 		var code = $("#code_num").val();
@@ -297,6 +307,8 @@
 		});
 
 	}
+	
+
 </script>
 
 

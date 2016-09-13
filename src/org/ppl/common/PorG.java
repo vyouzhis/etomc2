@@ -165,11 +165,11 @@ public class PorG  extends function {
 		//value = value.replace(" ", "&nbsp;");
 		//value = value.replace("<", "&lt;");
 		//value = value.replaceAll(">", "&gt;");
-		pEsapi pe = new pEsapi();
-		String val = pe.encode(value, pe.ENC_JAVA_SCRIPT);
+		//pEsapi pe = new pEsapi();
+		//String val = pe.xss(value);
 		//val = pe.encode(val, pe.en);
 		
-		return val.trim();
+		return value.trim();
 	}
 
 	public String getContext_Path() {
