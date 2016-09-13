@@ -220,8 +220,11 @@
 				<div class="form-group">
 					<label for="comment-text" class="control-label sr-only">Comments</label>
 					<div class="col-sm-12">
-						<textarea class="form-control" name="comment-text" id="comment-text" rows="5" cols="30"<#if islogin == -1> disabled="disabled" </#if> 
-							placeholder=" <#if islogin == -1> 还没登录，请登录！ <#else> * 在这儿发言 </#if> "></textarea>
+					<#if islogin == -1>
+					<pre>还没登录，请<a href="">登录或注册！</a></pre>
+					<#else>				
+						<textarea rows="5" cols="30" name="comment-text" id="comment-text" placeholder="* 请在此发言" class="form-control"></textarea>			
+					</#if>
 					</div>
 				</div>
 
@@ -232,7 +235,7 @@
 						<input style="display: none;" type="text" id="comment-code" name="comment-code" value="" /> <input
 							style="display: none;" type="text" id="comment-sid" name="comment-sid" value="" />
 						<button type="button" onclick="saveTalk()"<#if islogin == -1> disabled="disabled" </#if> class="btn
-							btn-primary">Submit Comment</button>
+							btn-primary">发言</button>
 					</div>
 				</div>
 
