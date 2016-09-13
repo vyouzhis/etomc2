@@ -19,7 +19,7 @@ var StockCode = "";
 var StockSid = 0;
 
 
-function talkSelect(i){
+function talkSelect(i, sid){
 	var ariaCode = true;		
 	var activeCode = "active";
 	
@@ -39,7 +39,7 @@ function talkSelect(i){
 		activeStra = "active";		
 		
 		StockCode = "";
-		StockSid = straListData[nowTId]['id'];
+		StockSid = sid;
 	}
 	
 	$("#talkNameCode").attr("aria-expanded",ariaCode);
@@ -230,7 +230,7 @@ function listTalk(p, sid, code) {
 						$("#comment-code").val(code);						
 					}
 					
-					console.log("page:" + Json['page']);
+					//console.log("page:" + Json['page']);
 					
 					$("#talkListPage").html(Json['page']);
 				}

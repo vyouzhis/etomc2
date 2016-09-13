@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BaseiCore;
 
+import com.alibaba.fastjson.JSON;
+
 public class iBookMark extends BaseiCore {
 	private String className = null;
 
@@ -45,8 +47,9 @@ public class iBookMark extends BaseiCore {
 		String code = porg.getKey("code");
 		String name = porg.getKey("name");
 
-		if (code == null || code.length() == 0 || cid == 0 || sid == 0 || name == null || name.length() == 0) {
-			super.setHtml("-4");
+		if (code == null || code.length() == 0 || cid == 0 || sid == 0
+				|| name == null || name.length() == 0) {
+			super.setHtml("-1");
 			return;
 		}
 
@@ -57,29 +60,31 @@ public class iBookMark extends BaseiCore {
 				+ "( `uid`, `code`,`name`, `cid`, `sid`, `ctime`) "
 				+ "VALUES ( %d, '%s', '%s', '%d', '%d', '%d');";
 
-		String sql = String.format(format, uid, code,name, cid, sid, now);
+		String sql = String.format(format, uid, code, name, cid, sid, now);
 
-		List<Map<String, Object>> res = check(uid, cid, code);
+		List<Map<String, Object>> res = checksid(uid, cid, code);
 
 		if (res != null) {
-			if (res.size() == 3) {
-				super.setHtml("-1");
+			if (res.size() >= 3) {
+				super.setHtml("-2");
 				return;
 			} else {
 				for (Map<String, Object> k : res) {
 					if (toInt(k.get("sid").toString()) == sid) {
-						super.setHtml("-2");
+						super.setHtml("-3");
 						return;
 					}
 				}
 			}
 		}
 
-		int st = checkst(uid, cid);
-		if (st == 3) {
-			super.setHtml("-3");
+		int st = checkcount(uid, cid, code);
+
+		if (st >= 3) {
+			super.setHtml("-4");
 			return;
 		}
+
 		try {
 			insert(sql);
 		} catch (SQLException e) {
@@ -90,9 +95,9 @@ public class iBookMark extends BaseiCore {
 		super.setHtml("0");
 	}
 
-	private List<Map<String, Object>> check(int uid, int cid, String code) {
+	private List<Map<String, Object>> checksid(int uid, int cid, String code) {
 		String format = "SELECT sid FROM `stock_strategy`  "
-				+ "where uid=%d and isstop = 0 and cid = '%d' AND code = '%s'";
+				+ "where uid=%d and isstop = 0 and cid = '%d' AND code = '%s' ";
 
 		String sql = String.format(format, uid, cid, code);
 
@@ -107,10 +112,10 @@ public class iBookMark extends BaseiCore {
 		return res;
 	}
 
-	private int checkst(int uid, int cid) {
-		String format = "SELECT count(*) as st FROM `stock_strategy` WHERE isstop = 0 AND uid=%d and cid=%d GROUP by code limit 1";
+	private int checkcount(int uid, int cid, String code) {
+		String format = "select count(*) as st from (SELECT code FROM `stock_strategy` WHERE isstop = 0 AND uid=%d and cid=%d and code!='%s' GROUP by code) t";
 
-		String sql = String.format(format, uid, cid);
+		String sql = String.format(format, uid, cid, code);
 
 		Map<String, Object> res = FetchOne(sql);
 		if (res != null) {
@@ -121,13 +126,56 @@ public class iBookMark extends BaseiCore {
 	}
 
 	private void bmgetCode() {
-		String format = "SELECT s.id,s.code,s.sid FROM `stock_strategy` s WHERE s.uid=%d and s.cid=%d AND s.isstop = 0  ORDER BY s.code ";
-	}
-	
-	private void bmgetStra() {
+		int cid = toInt(porg.getKey("cid"));
+		int uid = igetUid();
+		
+		String format = "SELECT id, code,name FROM `stock_strategy` WHERE isstop=0 AND cid='%d' and uid=%d GROUP BY code ";
+		String sql = String.format(format, cid, uid);
+		
+		List<Map<String, Object>> res = null;
+		try {
+			res = FetchAll(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String json = "";
+		
+		if(res!=null){
+			json = JSON.toJSONString(res);
+		}
+		
+		super.setHtml(json);
 		
 	}
-	
+
+	private void bmgetStra() {
+		int cid = toInt(porg.getKey("cid"));
+		String code = porg.getKey("code");
+		int uid = igetUid();
+		
+		String format = "SELECT t.id, t.title FROM `stock_strategy` s, strategy_stock t"
+				+ " WHERE s.uid=%d and s.cid=%d and s.code='%s' AND s.isstop = 0 and t.id = s.sid  "
+				+ "order by s.ctime DESC";
+				
+		String sql = String.format(format,  uid, cid, code);
+		
+		List<Map<String, Object>> res = null;
+		try {
+			res = FetchAll(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String json = "";
+		
+		if(res!=null){
+			json = JSON.toJSONString(res);
+		}
+		
+		super.setHtml(json);
+	}
+
 	private void ListCodeStra() {
 		String format = "SELECT s.id,s.code,s.sid,t.title FROM `stock_strategy` s, strategy_stock t WHERE s.uid=%d and s.cid=%d AND s.isstop = 0 and t.id = s.sid ORDER BY s.code ";
 		int cid = mConfig.GetInt("Step.strategy");

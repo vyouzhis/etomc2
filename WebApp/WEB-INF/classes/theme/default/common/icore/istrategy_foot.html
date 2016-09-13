@@ -19,6 +19,8 @@
 		getPage(1);
 
 		CodeAuto();
+		
+		ListBookMarksCode(1, ${Step_strategy!1});
 
 		$("#listtab1").click(function() {
 			StockCode = "";
@@ -31,25 +33,6 @@
 		});
 	});
 
-	
-	
-	function showStra(id){			
-		
-		var htmlList = "<tr>"+
-							"<th scope='row'></th>"+
-							"<td>SMA 线</td>"+
-							"<td>10%</td>"+
-							"<td>5.6</td>"+
-							"<td><button title='Success' class='btn btn-outline btn-success' type='button'>"+
-							"<i class='fa fa-close'></i><span class='sr-only'>Success</span>"+
-							"</button></td>"+
-						"</tr>";
-		
-		
-		$("#nowCodeStraList").html();
-	}
-	
-	
 	function addCode(o, n) {
 		$("#code_num").val(o);
 
@@ -110,6 +93,10 @@
 		}
 
 		$("#select_" + i).attr("class", "fa fa-check");
+		
+		for (n = 0; n < 3; n++) {
+			$("#bmslist_" + n).attr("class", "fa fa-close");
+		}
 
 		var name = straListData[i]['title'];
 		nowTId = i;
@@ -123,8 +110,34 @@
 		// 获取策略的讨论内容
 		listTalk(0, straListData[i]['id'], "");
 
-		talkSelect(1);
+		talkSelect(1, straListData[nowTId]['id']);
 	}
+	
+	
+	function istrSelect2(name, sid, i) {
+		for (n = 0; n < 5; n++) {
+			$("#select_" + n).attr("class", "fa fa-close");
+		}
+		
+		for (n = 0; n < 3; n++) {
+			$("#bmslist_" + n).attr("class", "fa fa-close");
+		}
+		$("#bmslist_" + i).attr("class", "fa fa-check");
+		
+
+		$("#strategy_name").html(name);
+
+		$("#talkNameStra").html("<i class='fa fa-flask'></i>" + name);
+
+		$("#comment-sid").val(sid);
+		//console.log("sid:" + straListData[i]['id']);
+
+		// 获取策略的讨论内容
+		listTalk(0, sid, "");
+
+		talkSelect(1, sid);
+	}
+	
 
 	function getPage(p) {
 		$
@@ -133,7 +146,7 @@
 					contentType : 'text/html;charset=utf-8',
 
 					data : {
-						"cid" : ${Step_strategy},
+						"cid" : ${Step_strategy!1},
 						"p" : p
 					},
 					success : function(result) {
@@ -197,6 +210,7 @@
 						}
 
 						$("#straList").html(ListStrHtml);
+						istrSelect(0);
 					}
 				});
 	}

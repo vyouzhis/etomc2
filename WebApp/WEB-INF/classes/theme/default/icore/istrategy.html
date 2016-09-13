@@ -102,7 +102,7 @@
 
 <!-- END LATEST NEWS -->
 <!-- 用户信息 登录后才显示 -->
-<section>
+
 	<div class="container <#if islogin == -1> hide </#if> ">
 
 		<div class="panel panel-default">
@@ -131,23 +131,8 @@
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody>
-										<#if strategy_list ??>
-											<#list strategy_list as item>
-											<tr>
-												<th scope="row">${item?index+1}</th>
-												<th><a href=""> <code>
-															<i class="fa fa-star"></i> ${item['code']}
-														</code>
-												</a></th>
-												<td>10000</td>
-												<td>5.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button" onclick="showStra(${item?index})">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
-										    </#list>
-										</#if>
+										<tbody id="bookMarkCodeList" name="bookMarkCodeList">
+
 										</tbody>
 									</table>
 
@@ -161,7 +146,7 @@
 									<!-- 列出当前类型的策略 -->
 									<h4 id="nowCode">
 										当前股票
-										<code>600432</code>
+										<code id="CodeAndName" name="CodeAndName"></code>
 										策略
 									</h4>
 									<table class="table table-striped">
@@ -184,7 +169,7 @@
 														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
 													</button></td>
 											</tr>
-											
+
 										</tbody>
 									</table>
 
@@ -197,7 +182,6 @@
 		</div>
 	</div>
 
-</section>
 <!-- 用户信息 -->
 <!-- comments -->
 <section>
@@ -209,14 +193,11 @@
 					<h3 class="section-heading">讨论区</h3>
 
 					<ul role="tablist" class="nav nav-pills tabs-iconized" id="talkUl" name="talkUl">
-						<li id="listtab1" name="listtab1" class="active">
-							<a id="talkNameStra" name="talkNameStra" data-toggle="tab" role="tab" href="ui-tabs-accordion.html#chapter1" aria-expanded="true"><i
-								class="fa fa-flask"></i> </a>
-						</li>
-						<li id="listtab2" name="listtab2" class="">
-							<a id="talkNameCode" name="talkNameCode" data-toggle="tab" class="hide" role="tab" href="ui-tabs-accordion.html#chapter2" aria-expanded="false"><i
-								class="fa fa-bar-chart-o"></i> 002597 金禾实业</a>
-						</li>
+						<li id="listtab1" name="listtab1" class="active"><a id="talkNameStra" name="talkNameStra" data-toggle="tab"
+							role="tab" href="ui-tabs-accordion.html#chapter1" aria-expanded="true"><i class="fa fa-flask"></i> </a></li>
+						<li id="listtab2" name="listtab2" class=""><a id="talkNameCode" name="talkNameCode" data-toggle="tab"
+							class="hide" role="tab" href="ui-tabs-accordion.html#chapter2" aria-expanded="false"><i
+								class="fa fa-bar-chart-o"></i> 002597 金禾实业</a></li>
 
 					</ul>
 
@@ -226,7 +207,7 @@
 							</ul>
 						</div>
 						<div id="chapter2" class="tab-pane fade" id="talkCode" name="talkCode">
-							<ul class="media-list" id="talkCode" name="talkCode">							
+							<ul class="media-list" id="talkCode" name="talkCode">
 							</ul>
 						</div>
 					</div>
@@ -248,8 +229,8 @@
 
 					<div class="col-sm-12">
 						<hr />
-						<input style="display: none;" type="text" id="comment-code" name="comment-code" value="" />
-						<input style="display: none;" type="text" id="comment-sid" name="comment-sid" value="" />
+						<input style="display: none;" type="text" id="comment-code" name="comment-code" value="" /> <input
+							style="display: none;" type="text" id="comment-sid" name="comment-sid" value="" />
 						<button type="button" onclick="saveTalk()"<#if islogin == -1> disabled="disabled" </#if> class="btn
 							btn-primary">Submit Comment</button>
 					</div>
@@ -257,67 +238,67 @@
 
 			</div>
 			<div class="col-sm-6 col-xs-6">
-				<!-- 策略选出的股票列表 -->
-				<div class="x_panel">
+				<div class="widget">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
 
-					<div class="x_content">
-						<!-- search form -->
-						<div class="widget">
-							<table class="table table-striped">
-								<thead>
-									<tr>
-										<th></th>
-										<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">股票代码:</th>
+								<td>
+									<div class="btn-group" id="masked-input-demo">
+										<input type="text" placeholder="hs300" id="code_num" name="code_num" data-toggle="dropdown" aria-expanded="true"
+											class="form-control">
+										<ul role="menu" class="dropdown-menu dropdown-menu-right country-selector" id="codeMenu" name="codeMenu">
+										</ul>
+									</div>
 
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<th scope="row">股票代码:</th>
-										<td>
-											<div class="btn-group" id="masked-input-demo">
-												<input type="text" placeholder="hs300" id="code_num" name="code_num" data-toggle="dropdown"
-													aria-expanded="true" class="form-control">
-												<ul role="menu" class="dropdown-menu dropdown-menu-right country-selector" id="codeMenu" name="codeMenu">
-												</ul>
-											</div>
+								</td>
 
-										</td>
+							</tr>
+							<tr>
+								<th></th>
+								<td></td>
 
-									</tr>
-									<tr>
-										<th></th>
-										<td></td>
+							</tr>
+							<tr>
 
-									</tr>
-									<tr>
+								<th scope="row">策略:</th>
+								<td><h4>
+										<code id="strategy_name" name="strategy_name">${strategy_name!""}</code>
+									</h4></td>
+							</tr>
 
-										<th scope="row">策略:</th>
-										<td><h4>
-												<code id="strategy_name" name="strategy_name">${strategy_name!""}</code>
-											</h4></td>
-									</tr>
-
-								</tbody>
-							</table>
-							<div class="form-group">
-								<div class="col-sm-4">
-									<button class="btn btn-block btn-success" type="button" onclick="KChart()">
-										<i class="fa fa-asterisk"></i> K线图
-									</button>
-								</div>
-								<div class="col-sm-4">
-									<button class="btn btn-block btn-success" type="button" onclick="Tactics()">
-										<i class="fa fa-asterisk"></i> 回测
-									</button>
-								</div>
-								<div class="col-sm-4">
-									<button class="btn btn-block btn-success"
-										<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_strategy})" > <i class="fa fa-heart"></i> 加入我的策略
-										</button>
-								</div>
-							</div>
+						</tbody>
+					</table>
+					<div class="row">
+						<div class="col-sm-4">
+							<button class="btn btn-block btn-success" type="button" onclick="KChart()">
+								<i class="fa fa-asterisk"></i> K线图
+							</button>
 						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-block btn-success" type="button" onclick="Tactics()">
+								<i class="fa fa-asterisk"></i> 回测
+							</button>
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-block btn-success"
+								<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_strategy!1})" > <i class="fa fa-heart"></i> 加入我的策略
+										</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- 策略选出的股票列表 -->
+					<div class="widget hide">
+						<!-- search form -->
+
 						<!-- end search form -->
 						<h2 class="section-heading">当前策略筛选</h2>
 						<table class="table table-striped">
@@ -369,7 +350,6 @@
 							</tbody>
 						</table>
 
-					</div>
 				</div>
 				<!-- 策略选出的股票列表 -->
 				<!-- SIDEBAR -->
