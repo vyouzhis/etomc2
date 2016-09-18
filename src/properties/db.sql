@@ -113,13 +113,13 @@ DROP TABLE IF EXISTS `strategy_stock`;
 CREATE TABLE IF NOT EXISTS `strategy_stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL COMMENT '策略 类型 id' ,  
-  `title` varchar(255) NOT NULL COMMENT '策略标题',
+  `title` varchar(254) NOT NULL COMMENT '策略标题',
   `uid` int(11) NOT NULL COMMENT 'login uid' ,
-  `sdesc` text default '' COMMENT '详细说明' ,  
-  `follow` INT(11) NOT NULL　DEFAULT '0'　COMMENT '当有人使用的时候记录一次' ;
+  `sdesc` text DEFAULT '' COMMENT '详细说明' ,
+  `follow` INT(11) NOT NULL　DEFAULT '0'　COMMENT '当有人使用的时候记录一次' ,
   `integral` int(11)  DEFAULT '0' COMMENT '0 免费 ',
-  `iid` int(11) NOT NULL COMMENT '策略 运行信息 id' ,
-  `path` text default '' COMMENT '策略路经' ,  
+  `iid` int(11) NOT NULL COMMENT '策略 运行信息 id',
+  `path` text DEFAULT '' COMMENT '策略路经' ,
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

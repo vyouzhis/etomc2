@@ -21,19 +21,22 @@
 			<div class="wizard checkout-wizard" id="checkout-wizard">
 				<div class="steps-container">
 					<ul class="list-inline steps" style="margin-left: -540px">
-						<li class="active" data-name="shopping-cart" data-step="1"><a href="strategy.html"> <!-- 选股 --> <span
+						<li class="active" data-name="shopping-cart" data-step="1">
+						<a href="${istrategy_url}"> <!-- 选股 --> <span
 								class="step-number">1</span><span class="title">量化选股</span>
-						</a></li>
-						<li class="active" data-name="shipping" data-step="2"><a href="trade.html"> <!-- 交易 买入  卖出--> <span
-								class="step-number">2</span><span class="title">算法交易</span>
-						</a></li>
-						<li class="active" data-name="payment" data-step="3"><a href="risk.html"> <!--  仓位控制 止损 10％  --> <span
-								class="step-number">3</span><span class="title">风险控制</span>
-						</a></li>
-						<li data-name="payment" data-step="4">
-							<!-- 计算最终 收益 --> <a href="arbitrage.html"> <span class="step-number">成功</span><span class="title">统计套利</span>
-						</li>
 						</a>
+						</li>
+						<li class="active" data-name="shipping" data-step="2"><a href="${itrade_url}"> <!-- 交易 买入 卖出 --> <span class="step-number">2</span><span
+								class="title">算法交易</span>
+						</a></li>
+						<li class="active" data-name="payment" data-step="3"><a href="${irisk_url}"> <!--  仓位控制止损 10％  --> <span class="step-number">3</span><span
+								class="title">风险控制</span>
+						</a></li>
+						<li data-name="payment" data-step="4"><a href="${iarbitrage_url}"> <!-- 计算最终 收益 --> <span class="step-number">成功</span><span
+								class="title">统计套利</span>
+								</a>
+						</li>
+						
 					</ul>
 
 				</div>
@@ -44,41 +47,49 @@
 		<!-- 其中一条线是当前会员关注的股票 -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2 class="panel-title section-heading no-margin">法码三因子选股</h2>
-				<i class="fa fa-heart red" data-unicode="f004"></i> (600898)
+				<h2 class="panel-title section-heading no-margin" id="tactics" name="tactics">法码三因子选股</h2>
+				<i class="fa fa-heart red" data-unicode="f004"></i> (<span id="icode" name="icode">600898</span>)
 
 			</div>
 			<div class="panel-body">
 				<div class="row">
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-plug pull-left"></i>
-							<p>
-								52.5% <span>年化收益率</span>
+							<p id="iprofit" name="iprofit">
+								0% <span>年化收益</span>
 							</p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-cubes pull-left"></i>
-							<p>
-								27.3% <span>阿尔法</span>
+							<p id="ialpha" name="ialpha">
+								0% <span>阿尔法</span>
 							</p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-star pull-left"></i>
-							<p>
-								16.8% <span>贝塔</span>
+							<p id="ibeta" name="ibeta">
+								0 <span>贝塔</span>
 							</p>
 						</div>
 					</div>
-					<div class="col-sm-3 col-xs-6">
+					<div class="col-sm-2 col-xs-6">
 						<div class="number-info horizontal">
 							<i class="fa fa-users pull-left"></i>
-							<p>
-								13.9% <span>夏普比率</span>
+							<p id="isharpe" name="isharpe">
+								0 <span>夏普比率</span>
+							</p>
+						</div>
+					</div>
+					<div class="col-sm-2 col-xs-6">
+						<div class="number-info horizontal">
+							<i class="fa fa-users pull-left"></i>
+							<p id="iMaxDrawDown" name="iMaxDrawDown">
+								0% <span>最大回撤</span>
 							</p>
 						</div>
 					</div>
@@ -86,76 +97,7 @@
 				<hr>
 				<div class="row">
 
-					<div style="height: 200px; padding: 0px; position: relative;" id="demo-flot-line">
-						<canvas class="flot-base"
-							style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1108px; height: 200px;" width="1108"
-							height="200"></canvas>
-						<div class="flot-text"
-							style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; font-size: smaller; color: rgb(84, 84, 84);">
-							<div class="flot-x-axis flot-x1-axis xAxis x1Axis"
-								style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 15px; text-align: center;"
-									class="flot-tick-label tickLabel">Jan.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 111px; text-align: center;"
-									class="flot-tick-label tickLabel">Feb.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 208px; text-align: center;"
-									class="flot-tick-label tickLabel">Mar.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 307px; text-align: center;"
-									class="flot-tick-label tickLabel">Apr.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 404px; text-align: center;"
-									class="flot-tick-label tickLabel">May</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 501px; text-align: center;"
-									class="flot-tick-label tickLabel">June</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 600px; text-align: center;"
-									class="flot-tick-label tickLabel">July</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 696px; text-align: center;"
-									class="flot-tick-label tickLabel">Aug.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 792px; text-align: center;"
-									class="flot-tick-label tickLabel">Sept.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 891px; text-align: center;"
-									class="flot-tick-label tickLabel">Oct.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 988px; text-align: center;"
-									class="flot-tick-label tickLabel">Nov.</div>
-								<div style="position: absolute; max-width: 92px; top: 183px; left: 1086px; text-align: center;"
-									class="flot-tick-label tickLabel">Dec.</div>
-							</div>
-							<div class="flot-y-axis flot-y1-axis yAxis y1Axis"
-								style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; display: block;">
-								<div style="position: absolute; top: 170px; left: 13px; text-align: right;" class="flot-tick-label tickLabel">0</div>
-								<div style="position: absolute; top: 146px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">100</div>
-								<div style="position: absolute; top: 123px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">200</div>
-								<div style="position: absolute; top: 99px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">300</div>
-								<div style="position: absolute; top: 75px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">400</div>
-								<div style="position: absolute; top: 51px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">500</div>
-								<div style="position: absolute; top: 28px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">600</div>
-								<div style="position: absolute; top: 4px; left: 1px; text-align: right;" class="flot-tick-label tickLabel">700</div>
-							</div>
-						</div>
-						<canvas class="flot-overlay"
-							style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1108px; height: 200px;" width="1108"
-							height="200"></canvas>
-						<div class="legend">
-							<div
-								style="position: absolute; width: 54px; height: 32px; left: 39px; background-color: rgb(255, 255, 255); opacity: 0.85;">
-							</div>
-							<table style="position: absolute; top: NaNpx; left: 39px;; font-size: smaller; color: #545454">
-								<tbody>
-									<tr>
-										<td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-												<div style="width: 4px; height: 0; border: 5px solid rgb(55, 188, 155); overflow: hidden"></div>
-											</div></td>
-										<td class="legendLabel">上证指数</td>
-									</tr>
-									<tr>
-										<td class="legendColorBox"><div style="border: 1px solid #ccc; padding: 1px">
-												<div style="width: 4px; height: 0; border: 5px solid rgb(246, 187, 66); overflow: hidden"></div>
-											</div></td>
-										<td class="legendLabel">深证成指</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
+					<div id="echart_k" name="echart_k" style="height: 400px"></div>
 				</div>
 			</div>
 		</div>
@@ -164,8 +106,8 @@
 
 <!-- END LATEST NEWS -->
 <!-- 用户信息 登录后才显示 -->
-<section>
-	<div class="container">
+
+	<div class="container <#if islogin == -1> hide </#if> ">
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -193,42 +135,8 @@
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<th scope="row">1</th>
-												<th><a href=""> <code>
-															<i class="fa fa-star"></i> 600432
-														</code>
-												</a></th>
-												<td>10000</td>
-												<td>5.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<th><a href=""> <code>
-															<i class="fa fa-star"></i> 600432
-														</code>
-												</a></th>
-												<td>20000</td>
-												<td>7.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<th><a href=""> <span class="label label-danger label-main-nav"><i class="fa fa-star"></i>
-															600432</span>
-												</a></th>
-												<td>15000</td>
-												<td>6.9%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
+										<tbody id="bookMarkCodeList" name="bookMarkCodeList">
+
 										</tbody>
 									</table>
 
@@ -242,7 +150,7 @@
 									<!-- 列出当前类型的策略 -->
 									<h4 id="nowCode">
 										当前股票
-										<code>600432</code>
+										<code id="CodeAndName" name="CodeAndName"></code>
 										策略
 									</h4>
 									<table class="table table-striped">
@@ -255,7 +163,7 @@
 												<th>操作</th>
 											</tr>
 										</thead>
-										<tbody>
+										<tbody id="nowCodeStraList" name="nowCodeStraList">
 											<tr>
 												<th scope="row">1</th>
 												<td>SMA 线</td>
@@ -265,24 +173,7 @@
 														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
 													</button></td>
 											</tr>
-											<tr>
-												<th scope="row">2</th>
-												<td>黄金分割</td>
-												<td>9%</td>
-												<td>7.6%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
-											<tr>
-												<th scope="row">3</th>
-												<td>MACE 线</td>
-												<td>45%</td>
-												<td>6.9%</td>
-												<td><button title="Success" class="btn btn-outline btn-success" type="button">
-														<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-													</button></td>
-											</tr>
+
 										</tbody>
 									</table>
 
@@ -295,7 +186,6 @@
 		</div>
 	</div>
 
-</section>
 <!-- 用户信息 -->
 <!-- comments -->
 <section>
@@ -305,139 +195,171 @@
 			<div class="col-sm-6 col-xs-6">
 				<article class="comments">
 					<h3 class="section-heading">讨论区</h3>
-					<ul class="media-list">
-						<li class="media"><a class="media-left" href="blog-single.html#"> <img alt="avatar" class="avatar"
-								src="assets/img/user1.png">
-						</a>
-							<div class="media-body">
-								<h4 class="media-heading comment-author">
-									<a href="blog-single.html#">John Doe</a>
-								</h4>
-								<span class="timestamp text-muted">Dec 11, 2014 12:30 PM</span>
-								<p>Conveniently administrate prospective e-tailers via global initiatives. Appropriately transition
-									market-driven internal or "organic" sources and turnkey synergy. Appropriately aggregate extensible technologies
-									with high-payoff functionalities. Intrinsicly deliver emerging initiatives via cross functional niches.
-									Interactively embrace enterprise human capital before an expanded array of growth strategies. Rapidiously
-									network.</p>
-								<p>
-									<a href="blog-single.html#"><i class="fa fa-reply"></i> Reply</a>
-								</p>
-								<hr>
-								<div class="media comment-by-author">
-									<a class="media-left" href="blog-single.html#"> <img alt="avatar" class="avatar" src="assets/img/user2.png">
-									</a>
-									<div class="media-body">
-										<h4 class="media-heading comment-author">
-											<a href="blog-single.html#">Antonius</a>
-										</h4>
-										<span class="timestamp text-muted">Dec 12, 2014 18:40 PM</span>
-										<p>Energistically empower seamless systems rather than granular web-readiness. Conveniently foster accurate
-											total linkage vis-a-vis timely interfaces. Synergistically repurpose visionary.</p>
-										<p>
-											<a href="blog-single.html#"><i class="fa fa-reply"></i> Reply</a>
-										</p>
-										<hr>
-									</div>
-								</div>
-							</div>
-							<div class="media child">
-								<a class="media-left" href="blog-single.html#"> <span class="avatar anonymous"><i class="fa fa-user"></i></span>
-								</a>
-								<div class="media-body">
-									<h4 class="media-heading comment-author">
-										<a href="blog-single.html#">Anonymous</a>
-									</h4>
-									<span class="timestamp text-muted">8 hours ago</span>
-									<p>Compellingly incentivize pandemic products for holistic total linkage. Holisticly facilitate bleeding-edge
-										"outside the box" thinking rather than an expanded array of schemas. Phosfluorescently harness empowered
-										infomediaries via strategic growth strategies. Collaboratively innovate proactive products rather than intuitive
-										relationships. Professionally redefine cooperative technology rather than.</p>
-									<p>
-										<a href="blog-single.html#"><i class="fa fa-reply"></i> Reply</a>
-									</p>
-								</div>
-							</div></li>
+
+					<ul role="tablist" class="nav nav-pills tabs-iconized" id="talkUl" name="talkUl">
+						<li id="listtab1" name="listtab1" class="active"><a id="talkNameStra" name="talkNameStra" data-toggle="tab"
+							role="tab" href="ui-tabs-accordion.html#chapter1" aria-expanded="true"><i class="fa fa-flask"></i> </a></li>
+						<li id="listtab2" name="listtab2" class=""><a id="talkNameCode" name="talkNameCode" data-toggle="tab"
+							class="hide" role="tab" href="ui-tabs-accordion.html#chapter2" aria-expanded="false"><i
+								class="fa fa-bar-chart-o"></i> 002597 金禾实业</a></li>
+
 					</ul>
-					<ul class="pagination borderless">
-						<li><a href="ui-pagination.html#"><i class="fa fa-angle-left"></i></a></li>
-						<li><a href="ui-pagination.html#">1</a></li>
-						<li><a href="ui-pagination.html#">2</a></li>
-						<li class="active"><a href="ui-pagination.html#">3</a></li>
-						<li><a href="ui-pagination.html#">4</a></li>
-						<li><a href="ui-pagination.html#">5</a></li>
-						<li><a href="ui-pagination.html#"><i class="fa fa-angle-right"></i></a></li>
-					</ul>
+
+					<div class="tab-content">
+						<div id="chapter1" class="tab-pane fade active in">
+							<ul class="media-list" id="talkStra" name="talkStra">
+							</ul>
+							<ul class="pagination borderless" id="talkListPageStra" name="talkListPageStra">
+							</ul>
+						</div>
+						<div id="chapter2" class="tab-pane fade" id="talkCode" name="talkCode">
+							<ul class="media-list" id="talkCode" name="talkCode">
+							</ul>
+							<ul class="pagination borderless" id="talkListPageCode" name="talkListPageCode">
+							</ul>
+						</div>
+					</div>
+					
 				</article>
 				<!-- end comments -->
 				<!-- 注册之后才可以留言 -->
-				<form class="form-horizontal comment-form" role="form">
 
-					<div class="form-group">
-						<label for="comment-text" class="control-label sr-only">Comments</label>
-						<div class="col-sm-12">
-							<textarea class="form-control" name="comment-text" id="comment-text" rows="5" cols="30"
-								placeholder="* Your comments"></textarea>
-						</div>
+				<div class="form-group">
+					<label for="comment-text" class="control-label sr-only">Comments</label>
+					<div class="col-sm-12">
+					<#if islogin == -1>
+					<pre>还没登录，请<a href="">登录或注册！</a></pre>
+					<#else>				
+						<textarea rows="5" cols="30" name="comment-text" id="comment-text" placeholder="* 请在此发言" class="form-control"></textarea>			
+					</#if>
 					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary">Submit Comment</button>
-						</div>
+				</div>
+
+				<div class="form-group">
+
+					<div class="col-sm-12">
+						<hr />
+						<input style="display: none;" type="text" id="comment-code" name="comment-code" value="" /> <input
+							style="display: none;" type="text" id="comment-sid" name="comment-sid" value="" />
+						<button type="button" onclick="saveTalk()"<#if islogin == -1> disabled="disabled" </#if> class="btn
+							btn-primary">发言</button>
 					</div>
-				</form>
+				</div>
+
 			</div>
 			<div class="col-sm-6 col-xs-6">
-				<!-- 策略选出的股票列表 -->
-				<div class="x_panel">
+				<div class="widget">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
 
-					<div class="x_content">
-						<!-- search form -->
-						<div class="widget">
-							<form role="form" class="form-horizontal">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th></th>
-											<th></th>
-
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<th scope="row">股票代码:</th>
-											<td><input type="text" placeholder="Code" class="form-control"></td>
-
-										</tr>
-										<tr>
-											<th scope="row">策略:</th>
-											<td><h4>
-													<code>简易 MACD</code>
-												</h4></td>
-
-										</tr>
-
-									</tbody>
-								</table>
-								<div class="form-group">
-									<div class="col-sm-6">
-										<button class="btn btn-block btn-success" type="submit">
-											<i class="fa fa-asterisk"></i> 回测
-										</button>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">股票代码:</th>
+								<td>
+									<div class="btn-group" id="masked-input-demo">
+										<input type="text" placeholder="hs300" id="code_num" name="code_num" data-toggle="dropdown" aria-expanded="true"
+											class="form-control">
+										<ul role="menu" class="dropdown-menu dropdown-menu-right country-selector" id="codeMenu" name="codeMenu">
+										</ul>
 									</div>
-									<div class="col-sm-6">
-										<button class="btn btn-block btn-success" type="submit">
-											<i class="fa fa-heart"></i> 加入我的策略
-										</button>
-									</div>
-								</div>
 
+								</td>
 
-							</form>
+							</tr>
+							<tr>
+								<th></th>
+								<td></td>
+
+							</tr>
+							<tr>
+
+								<th scope="row">策略:</th>
+								<td><h4>
+										<code id="strategy_name" name="strategy_name">${strategy_name!""}</code>
+									</h4></td>
+							</tr>
+
+						</tbody>
+					</table>
+					<div class="row">
+						<div class="col-sm-4">
+							<button class="btn btn-block btn-success" type="button" onclick="KChart()">
+								<i class="fa fa-asterisk"></i> K线图
+							</button>
 						</div>
-						<!-- end search form -->
-
-
+						<div class="col-sm-4">
+							<button class="btn btn-block btn-success" type="button" onclick="Tactics()">
+								<i class="fa fa-asterisk"></i> 回测
+							</button>
+						</div>
+						<div class="col-sm-4">
+							<button class="btn btn-block btn-success"
+								<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_strategy!1})" > <i class="fa fa-heart"></i> 加入我的策略
+										</button>
+						</div>
 					</div>
+				</div>
+
+				<!-- 策略选出的股票列表 -->
+					<div class="widget hide">
+						<!-- search form -->
+
+						<!-- end search form -->
+						<h2 class="section-heading">当前策略筛选</h2>
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>股票名称</th>
+									<th>阿尔法</th>
+									<th>夏普比率</th>
+									<th>贝塔</th>
+									<th>年化收益</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th scope="row">1</th>
+									<td>600432</td>
+									<td>10%</td>
+									<td>10%</td>
+									<td>10%</td>
+									<td>5.6%</td>
+									<td><button title="Success" class="btn btn-outline btn-success" type="button">
+											<i class="fa fa-check"></i> <span class="sr-only">Success</span>
+										</button></td>
+								</tr>
+								<tr>
+									<th scope="row">2</th>
+									<td>000898</td>
+									<td>9%</td>
+									<td>10%</td>
+									<td>10%</td>
+									<td>7.6%</td>
+									<td><button title="Success" class="btn btn-outline btn-success" type="button">
+											<i class="fa fa-close"></i> <span class="sr-only">Success</span>
+										</button></td>
+								</tr>
+								<tr>
+									<th scope="row">3</th>
+									<td>600392</td>
+									<td>45%</td>
+									<td>10%</td>
+									<td>10%</td>
+									<td>6.9%</td>
+									<td><button title="Success" class="btn btn-outline btn-success" type="button">
+											<i class="fa fa-close"></i> <span class="sr-only">Success</span>
+										</button></td>
+								</tr>
+							</tbody>
+						</table>
+
 				</div>
 				<!-- 策略选出的股票列表 -->
 				<!-- SIDEBAR -->
@@ -451,63 +373,33 @@
 							<tr>
 								<th>#</th>
 								<th>策略名称</th>
-								<th>择要</th>
-								<th><a href="order by ">年化收益</a></th>
+								<th><a href="order by">使用次数</a></th>
+								<!-- <th><a href="order by ">年化收益</a></th>  -->
 								<th><a href="order by">使用方式</a></th>
 								<th>作者</th>
 								<th>操作</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">1</th>
-								<td>SMB</td>
-								<td>smb 说明在这儿有详述的说明</td>
-								<td>10%</td>
-								<td>免费</td>
-								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button">
-										<i class="fa fa-check"></i> <span class="sr-only">Success</span>
-									</button></td>
-							</tr>
-							<tr>
-								<th scope="row">2</th>
-								<td>简要MACD</td>
-								<td>简单说明</td>
-								<td>10%</td>
-								<td>免费</td>
-								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button">
-										<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-									</button></td>
-							</tr>
-							<tr>
-								<th scope="row">3</th>
-								<td>黄金分割线</td>
-								<td>简单说明</td>
-								<td>10%</td>
-								<td>10个XX币</td>
-								<td>本站</td>
-								<td><button title="Success" class="btn btn-outline btn-success" type="button">
-										<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-									</button></td>
-							</tr>
+						<tbody id="straList" name="straList">
+
 						</tbody>
 					</table>
+					<ul class="pagination borderless" id="straPage" name="straPage">
 
+					</ul>
 				</div>
 				<!-- end categories -->
 				<!-- tabbed content 用户登录后才显示 -->
-				<div class="widget hide">
-					<div class="tabpanel">
+				<div class="widget  <#if islogin == -1> hide </#if> ">
+					<div class="tabpanel hide">
 						<!-- nav tabs -->
 						<ul role="tablist" class="nav nav-tabs">
 							<li class="active" role="presentation"><a data-toggle="tab" role="tab" aria-controls="content-popular"
-								href="blog-single.html#content-popular">我的策略</a></li>
+								href="#content-popular">我的策略</a></li>
 							<li role="presentation"><a data-toggle="tab" role="tab" aria-controls="content-recents"
-								href="blog-single.html#content-recents">策略收藏</a></li>
+								href="#content-recents">策略收藏</a></li>
 							<li role="presentation"><a data-toggle="tab" role="tab" aria-controls="content-recent-comments"
-								href="blog-single.html#content-recent-comments"><i class="fa fa-comments"></i></a></li>
+								href="#content-recent-comments"><i class="fa fa-comments"></i></a></li>
 						</ul>
 						<!-- end nav tabs -->
 						<!-- tab panes -->
@@ -516,28 +408,27 @@
 								<ul class="list-unstyled blogposts popular">
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Monotonectally Underwhelm Sustainable Outsourcing</a>
+											<a href="#">Monotonectally Underwhelm Sustainable Outsourcing</a>
 										</h4> <span class="text-muted">Nov 4, 2014 | by John Doe</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Seamlessly Repurpose Equity Invested Intellectual Capital</a>
+											<a href="#">Seamlessly Repurpose Equity Invested Intellectual Capital</a>
 										</h4> <span class="text-muted">Nov 23, 2014 | by George</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Efficiently Aggregate Multidisciplinary Markets With Professional
-												Functionalities</a>
+											<a href="#">Efficiently Aggregate Multidisciplinary Markets With Professional Functionalities</a>
 										</h4> <span class="text-muted">Nov 9, 2014 | by Jane</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Collaboratively Actualize Revolutionary Total Linkage</a>
+											<a href="#">Collaboratively Actualize Revolutionary Total Linkage</a>
 										</h4> <span class="text-muted">Nov 9, 2014 | by Smith</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Credibly Disintermediate Client-centered Applications</a>
+											<a href="#">Credibly Disintermediate Client-centered Applications</a>
 										</h4> <span class="text-muted">Nov 9, 2014 | by Barbara</span>
 									</li>
 								</ul>
@@ -546,28 +437,27 @@
 								<ul class="list-unstyled blogposts latest">
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Assertively Streamline Error-free Quality</a>
+											<a href="#">Assertively Streamline Error-free Quality</a>
 										</h4> <span class="text-muted">Dec 9, 2014 | by John Doe</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Proactively Monetize Long-term High-impact Architectures After Value-added
-												Experiences</a>
+											<a href="#">Proactively Monetize Long-term High-impact Architectures After Value-added Experiences</a>
 										</h4> <span class="text-muted">Dec 12, 2014 | by George</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Efficiently Repurpose Enterprise-wide Processes For Granular Applications</a>
+											<a href="#">Efficiently Repurpose Enterprise-wide Processes For Granular Applications</a>
 										</h4> <span class="text-muted">Dec 29, 2014 | by Jane</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Monotonectally Underwhelm Sustainable Outsourcing</a>
+											<a href="#">Monotonectally Underwhelm Sustainable Outsourcing</a>
 										</h4> <span class="text-muted">Nov 4, 2014 | by John Doe</span>
 									</li>
 									<li>
 										<h4 class="post-title">
-											<a href="blog-single.html#">Seamlessly Repurpose Equity Invested Intellectual Capital</a>
+											<a href="#">Seamlessly Repurpose Equity Invested Intellectual Capital</a>
 										</h4> <span class="text-muted">Nov 23, 2014 | by George</span>
 									</li>
 								</ul>
@@ -576,12 +466,10 @@
 								<ul class="list-unstyled recent-comments">
 									<li>
 										<div class="media">
-											<a class="media-left" href="blog-single.html#"><img alt="Avatar" class="img-circle"
-												src="assets/img/user1.png"></a>
+											<a class="media-left" href="#"><img alt="Avatar" class="img-circle" src="assets/img/user1.png"></a>
 											<div class="media-body">
 												<h4 class="media-heading">
-													<a href="blog-single.html#">Antonio</a> in <a href="blog-single.html#">Holisticly Unleash Enabled
-														Information Via Customized Value</a>
+													<a href="#">Antonio</a> in <a href="#">Holisticly Unleash Enabled Information Via Customized Value</a>
 												</h4>
 												<p class="text-muted">Interactively grow cross-media customer service through B2C paradigms. Continually
 													monetize magnetic sources rather than ...</p>
@@ -590,12 +478,10 @@
 									</li>
 									<li>
 										<div class="media">
-											<a class="media-left" href="blog-single.html#"><img alt="Avatar" class="img-circle"
-												src="assets/img/user2.png"></a>
+											<a class="media-left" href="#"><img alt="Avatar" class="img-circle" src="assets/img/user2.png"></a>
 											<div class="media-body">
 												<h4 class="media-heading">
-													<a href="blog-single.html#">Michael</a> in <a href="blog-single.html#">Holisticly Unleash Enabled
-														Information Via Customized Value</a>
+													<a href="#">Michael</a> in <a href="#">Holisticly Unleash Enabled Information Via Customized Value</a>
 												</h4>
 												<p class="text-muted">Objectively disseminate customer directed e-commerce with prospective partnerships.
 													Collaboratively actualize ...</p>
@@ -604,12 +490,10 @@
 									</li>
 									<li>
 										<div class="media">
-											<a class="media-left" href="blog-single.html#"><img alt="Avatar" class="img-circle"
-												src="assets/img/user3.png"></a>
+											<a class="media-left" href="#"><img alt="Avatar" class="img-circle" src="assets/img/user3.png"></a>
 											<div class="media-body">
 												<h4 class="media-heading">
-													<a href="blog-single.html#">Laura</a> in <a href="blog-single.html#">Holisticly Unleash Enabled
-														Information Via Customized Value</a>
+													<a href="#">Laura</a> in <a href="#">Holisticly Unleash Enabled Information Via Customized Value</a>
 												</h4>
 												<p class="text-muted">Continually monetize magnetic sources rather than leveraged outsourcing ...</p>
 											</div>
@@ -617,12 +501,10 @@
 									</li>
 									<li>
 										<div class="media">
-											<a class="media-left" href="blog-single.html#"><img alt="Avatar" class="img-circle"
-												src="assets/img/user4.png"></a>
+											<a class="media-left" href="#"><img alt="Avatar" class="img-circle" src="assets/img/user4.png"></a>
 											<div class="media-body">
 												<h4 class="media-heading">
-													<a href="blog-single.html#">Diana</a> in <a href="blog-single.html#">Holisticly Unleash Enabled
-														Information Via Customized Value</a>
+													<a href="#">Diana</a> in <a href="#">Holisticly Unleash Enabled Information Via Customized Value</a>
 												</h4>
 												<p class="text-muted">Objectively disseminate customer directed e-commerce with prospective partnerships.
 													Collaboratively actualize ...</p>
@@ -631,12 +513,10 @@
 									</li>
 									<li>
 										<div class="media">
-											<a class="media-left" href="blog-single.html#"><img alt="Avatar" class="img-circle"
-												src="assets/img/user5.png"></a>
+											<a class="media-left" href="#"><img alt="Avatar" class="img-circle" src="assets/img/user5.png"></a>
 											<div class="media-body">
 												<h4 class="media-heading">
-													<a href="blog-single.html#">Henry</a> in <a href="blog-single.html#">Holisticly Unleash Enabled
-														Information Via Customized Value</a>
+													<a href="#">Henry</a> in <a href="#">Holisticly Unleash Enabled Information Via Customized Value</a>
 												</h4>
 												<p class="text-muted">Proactively reinvent team building customer service with ethical e-markets.
 													Professionally utilize mission-critical ...</p>
@@ -652,7 +532,7 @@
 				<!-- end tabbed content -->
 
 				<!-- text widget -->
-				<div class="widget hide">
+				<div class="widget <#if islogin == -1> hide </#if>">
 					<h4 class="widget-title">信息列表</h4>
 					<ul class="list-unstyled blogposts latest">
 						<li>

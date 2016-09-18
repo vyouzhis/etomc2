@@ -1,6 +1,7 @@
 package com.lib.icore;
 
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.etc.UrlClassList;
 
 public class istrategy extends BaseSurface {
 	private String className = null;
@@ -16,16 +17,22 @@ public class istrategy extends BaseSurface {
 		// TODO Auto-generated method stub
 
 		int islogin = isLogin();
-		
+		UrlClassList ucl = UrlClassList.getInstance();
+
 		// echo("islogin:"+islogin);
 		setRoot("islogin", islogin);
 
 		setRoot("strategy_name", "default strategy");
 
-		setRoot("Step_strategy", mConfig.GetInt("Step.strategy"));
-		
+		setRoot("Step_strategy", mConfig.GetInt("Step.trade"));
+
+		setRoot("istrategy_url", ucl.Url("strategy"));
+		setRoot("itrade_url", ucl.Url("trade"));
+		setRoot("irisk_url", ucl.Url("risk"));
+		setRoot("iarbitrage_url", ucl.Url("arbitrage"));
+		setRoot("iarbitrage_url", ucl.BuildUrl("iarbitrage", ""));
+
 		super.View();
 	}
 
-	
 }
