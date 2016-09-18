@@ -30,8 +30,7 @@ public class istrategy extends BaseSurface {
 		setRoot("itrade_url", ucl.Url("trade"));
 		setRoot("irisk_url", ucl.Url("risk"));
 		setRoot("iarbitrage_url", ucl.Url("arbitrage"));
-		setRoot("iarbitrage_url", ucl.BuildUrl("iarbitrage", ""));
-
+		
 		super.View();
 	}
 

@@ -18,10 +18,10 @@ public class home extends BaseSurface{
 		// TODO Auto-generated method stub
 		UrlClassList ucl = UrlClassList.getInstance();
 		
-		setRoot("trade", ucl.Url("trade"));
-		setRoot("risk", ucl.Url("risk"));
-		setRoot("arbitrage", ucl.Url("arbitrage"));
-		setRoot("strategy", ucl.Url("strategy"));
+		setRoot("istrategy_url", ucl.Url("strategy"));
+		setRoot("itrade_url", ucl.Url("trade"));
+		setRoot("irisk_url", ucl.Url("risk"));
+		setRoot("iarbitrage_url", ucl.Url("arbitrage"));
 		
 		
 		setRoot("root_var", "var a=1;");
