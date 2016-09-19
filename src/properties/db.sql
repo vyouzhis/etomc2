@@ -109,17 +109,16 @@ CREATE TABLE IF NOT EXISTS `stock_user_talk` (
 
 
 --- 股票类策略, 策略时间为 两年
-DROP TABLE IF EXISTS `strategy_stock`;
-CREATE TABLE IF NOT EXISTS `strategy_stock` (
+CREATE TABLE `strategy_stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NOT NULL COMMENT '策略 类型 id' ,  
-  `title` varchar(254) NOT NULL COMMENT '策略标题',
-  `uid` int(11) NOT NULL COMMENT 'login uid' ,
-  `sdesc` text DEFAULT '' COMMENT '详细说明' ,
-  `follow` INT(11) NOT NULL　DEFAULT '0'　COMMENT '当有人使用的时候记录一次' ,
-  `integral` int(11)  DEFAULT '0' COMMENT '0 免费 ',
+  `cid` int(11) NOT NULL COMMENT '策略 类型 id',
+  `title` varchar(255) NOT NULL COMMENT '策略标题',
+  `uid` int(11) NOT NULL COMMENT 'login uid',
+  `sdesc` text COMMENT '详细说明',
+  `integral` int(11) DEFAULT '0' COMMENT '0 免费 ',
   `iid` int(11) NOT NULL COMMENT '策略 运行信息 id',
-  `path` text DEFAULT '' COMMENT '策略路经' ,
+  `path` text COMMENT '策略路经',
+  `follow` int(11) NOT NULL COMMENT '当有人使用的时候记录一次',
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -162,7 +161,6 @@ CREATE TABLE IF NOT EXISTS `stock_strategy` (
 
 create index  `index_uid_isstop` on `stock_strategy` (`uid`,`isstop`);
 --ALTER TABLE `stock_strategy` ADD UNIQUE `unique_index`(`uid`, `isstop`, `code`，`sid`);
-
 
 
 ---- 是单独给与 SQLErrorLog 类使用，专门记录出错的日志

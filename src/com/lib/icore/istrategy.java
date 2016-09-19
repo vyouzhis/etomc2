@@ -24,7 +24,7 @@ public class istrategy extends BaseSurface {
 
 		setRoot("strategy_name", "default strategy");
 
-		setRoot("Step_strategy", mConfig.GetInt("Step.trade"));
+		setRoot("Step_Type", mConfig.GetInt("Step.strategy"));
 
 		setRoot("istrategy_url", ucl.Url("strategy"));
 		setRoot("itrade_url", ucl.Url("trade"));

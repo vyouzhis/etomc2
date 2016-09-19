@@ -28,8 +28,22 @@ public class getTuShare extends BaseSurface {
 			super.setHtml("");
 			return;
 		}
-
+		Map<String, Object> d = new HashMap<>();
 		String Json = "";
+		List<Map<String, Object>> Data = getData(code);
+		if (!code.equals("hs300")) {
+			List<Map<String, Object>> Datahfp = getData(code + "_hfq");
+			d.put("hfq", Datahfp);
+		}
+
+		d.put("data", Data);
+
+		Json = JSON.toJSONString(d);
+
+		super.setHtml(Json);
+	}
+
+	private List<Map<String, Object>> getData(String code) {
 		MGDB mgdb = new MGDB();
 		mgdb.DBEnd();
 		mgdb.SetCollection("stockDB");
@@ -38,19 +52,22 @@ public class getTuShare extends BaseSurface {
 		cMap.put(mgdb.exists, 1);
 
 		Map<String, Object> wMap = new HashMap<>();
-		wMap.put(code, cMap);
+		wMap.put(code, cMap);		
 		String JsonMap = JSON.toJSONString(wMap);
 		mgdb.JsonWhere(JsonMap);
-		
+
+		Map<String, Object> _idMap = new HashMap<>();
+		_idMap.put("_id", 0);
+		String Jsonid = JSON.toJSONString(_idMap);
+		mgdb.JsonColumn(Jsonid);
+				
 		boolean s = mgdb.FetchList();
+		List<Map<String, Object>> res = null;
 		if (s) {
-			List<Map<String, Object>> res = mgdb.GetValue();
-									
-			Json = JSON.toJSONString(res.get(0));
+			res = mgdb.GetValue();
 		}
 
 		mgdb.Close();
-
-		super.setHtml(Json);
+		return res;
 	}
 }

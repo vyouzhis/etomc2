@@ -29,7 +29,7 @@
 		
 		CodeAuto();
 		
-		ListBookMarksCode(1, ${Step_strategy!1});
+		ListBookMarksCode(1, ${Step_Type!1});
 
 		$("#listtab1").click(function() {
 			StockCode = "";
@@ -59,41 +59,6 @@
 		StockCode = o
 		StockCodeName = n;
 	}
-
-	function KChart() {
-		var code = $("#code_num").val();
-		if (code.length == 0) {
-			alert("请填写代码");
-			return;
-		}
-		$("#icode").html(code);
-		getStockData(code);
-
-	}
-
-	function getStockData(code) {
-		$.ajax({
-			url : "/etomc2/stockdata?jsoncallback=?",
-			contentType : 'text/html;charset=utf-8',
-
-			data : {
-				"code" : code,
-			},
-			success : function(result) {
-				//console.log("success" + result);
-			},
-			error : function(request, textStatus, errorThrown) {
-				//alert(textStatus);
-			},
-			complete : function(request, textStatus) { //for additional info
-				var option = request.responseText;
-				//console.log("option:" + option);
-				StockData = option;
-				showChart(StockData);
-			}
-		});
-	}
-
 	
 	function istrSelect(i) {
 		for (n = 0; n < 5; n++) {
@@ -156,7 +121,7 @@
 					contentType : 'text/html;charset=utf-8',
 
 					data : {
-						"cid" : ${Step_strategy!1},
+						"cid" : ${Step_Type!1},
 						"p" : p
 					},
 					success : function(result) {
@@ -326,8 +291,9 @@
 
 					oldOption['legend']['data'] = legendName;
 					oldOption['series'] = seriesList;
-					console.log("oldOption:"
-							+ JSON.stringify(oldOption['legend']['data']));
+					
+					//console.log("oldOption:"
+					//		+ JSON.stringify(oldOption['legend']['data']));
 
 					//  console.log("JsonOpton:" +JSON.stringify(oldOption)  );
 

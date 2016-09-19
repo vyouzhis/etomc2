@@ -96,7 +96,7 @@ function ListBookMarksStra(code, name, cid, i){
 								"</button></td>"+
 							"</tr>";
 			}
-			$("#bmlist_"+i).attr("class", "btn btn-outline btn-success");
+//			$("#bmlist_"+i).attr("class", "fa fa-check");
 			$("#nowCodeStraList").html(htmlList);						
 		}
 	});
@@ -126,6 +126,19 @@ function addBookMark(i, cid) {
 		complete : function(request, textStatus) {
 			var option = request.responseText;
 			console.log("option:" + option);
+			var i = parseInt(option);
+			var msg = "添加成功!";
+			if(i==-1){
+				msg = "参数有问题";
+			}else if(i==-2){
+				msg = "策略已达组合最大值";
+			}else if(i==-3){
+				msg = "策略已存在，不必再次添加";
+			}else if(i==-4){
+				msg = "股票数量已达组合最大值";
+			}
+									
+			BellNotifi(msg);
 		},
 		error : function(response) {
 			// console.log(response);

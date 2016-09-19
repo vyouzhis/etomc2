@@ -78,7 +78,7 @@ public class iBookMark extends BaseiCore {
 			}
 		}
 
-		int st = checkcount(uid, cid, code);
+		int st = checkcount(uid, code);
 
 		if (st >= 3) {
 			super.setHtml("-4");
@@ -100,7 +100,7 @@ public class iBookMark extends BaseiCore {
 				+ "where uid=%d and isstop = 0 and cid = '%d' AND code = '%s' ";
 
 		String sql = String.format(format, uid, cid, code);
-
+		echo(sql);
 		List<Map<String, Object>> res = null;
 		try {
 			res = FetchAll(sql);
@@ -112,10 +112,10 @@ public class iBookMark extends BaseiCore {
 		return res;
 	}
 
-	private int checkcount(int uid, int cid, String code) {
-		String format = "select count(*) as st from (SELECT code FROM `stock_strategy` WHERE isstop = 0 AND uid=%d and cid=%d and code!='%s' GROUP by code) t";
+	private int checkcount(int uid, String code) {
+		String format = "select count(*) as st from (SELECT code FROM `stock_strategy` WHERE isstop = 0 AND uid=%d and code!='%s' GROUP by code) t";
 
-		String sql = String.format(format, uid, cid, code);
+		String sql = String.format(format, uid, code);
 
 		Map<String, Object> res = FetchOne(sql);
 		if (res != null) {
@@ -126,11 +126,11 @@ public class iBookMark extends BaseiCore {
 	}
 
 	private void bmgetCode() {
-		int cid = toInt(porg.getKey("cid"));
+		
 		int uid = igetUid();
 		
-		String format = "SELECT id, code,name FROM `stock_strategy` WHERE isstop=0 AND cid='%d' and uid=%d GROUP BY code ";
-		String sql = String.format(format, cid, uid);
+		String format = "SELECT id, code,name FROM `stock_strategy` WHERE isstop=0  and uid=%d GROUP BY code ";
+		String sql = String.format(format, uid);
 		
 		List<Map<String, Object>> res = null;
 		try {

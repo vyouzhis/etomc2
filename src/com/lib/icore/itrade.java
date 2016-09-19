@@ -30,7 +30,7 @@ public class itrade extends BaseiCore {
 			setRoot("itrade_url", ucl.Url("trade"));
 			setRoot("irisk_url", ucl.Url("risk"));
 			setRoot("iarbitrage_url", ucl.Url("arbitrage"));
-			setRoot("Step_strategy", mConfig.GetInt("Step.strategy"));
+			setRoot("Step_Type", mConfig.GetInt("Step.trade"));
 			
 			super.View();
 		}
