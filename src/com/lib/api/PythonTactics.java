@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.io.DesEncrypter;
-import org.rosuda.REngine.Rserve.protocol.RTalk;
 
 import com.jcabi.ssh.SSHByPassword;
 import com.jcabi.ssh.Shell;

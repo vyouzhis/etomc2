@@ -52,6 +52,7 @@ function CodeAuto() {
 														+ "</a></li>";
 												if(keyOK == 1 && JsonList[i]['code'] == code){
 													addCode(code, JsonList[i]['name']);
+													KChart();
 												}
 											}
 											$("#codeMenu").html(html);

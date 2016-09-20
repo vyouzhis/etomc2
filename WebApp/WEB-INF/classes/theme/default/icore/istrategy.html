@@ -27,13 +27,12 @@
 						<li data-name="shipping" data-step="2"><a href="${itrade_url}"> <!-- 交易 买入 卖出 --> <span class="step-number">2</span><span
 								class="title">算法交易</span>
 						</a></li>
-						<li data-name="payment" data-step="3"><a href="${irisk_url}"> <!--  仓位控制止损 10％  --> <span class="step-number">3</span><span
-								class="title">风险控制</span>
+						<li data-name="payment" data-step="3"><a href="${irisk_url}"> <!--  仓位控制止损 10％  --> <span
+								class="step-number">3</span><span class="title">风险控制</span>
 						</a></li>
-						<li data-name="payment" data-step="4"><a href="${iarbitrage_url}"> <!-- 计算最终 收益 --> <span class="step-number">成功</span><span
-								class="title">统计套利</span>
-								</a>
-						</li>
+						<li data-name="payment" data-step="4"><a href="${iarbitrage_url}"> <!-- 计算最终 收益 --> <span
+								class="step-number">成功</span><span class="title">统计套利</span>
+						</a></li>
 					</ul>
 
 				</div>
@@ -104,68 +103,67 @@
 <!-- END LATEST NEWS -->
 <!-- 用户信息 登录后才显示 -->
 
-	<div class="container <#if islogin == -1> hide </#if> ">
+<div class="container <#if islogin == -1> hide </#if> ">
 
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4 class="panel-title">
-					<a class="" href="#collapseOne" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">我的策略 <i
-						class="fa fa-angle-down pull-right icon-collapsed"></i></a>
-				</h4>
-			</div>
-			<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true" style="">
-				<div class="panel-body">
-					<div class="row">
-						<div class="col-md-6 col-sm-6 col-xs-12">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a class="" href="#collapseOne" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">我的策略 <i
+					class="fa fa-angle-down pull-right icon-collapsed"></i></a>
+			</h4>
+		</div>
+		<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true" style="">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 col-xs-12">
 
-							<div class="x_panel">
+						<div class="x_panel">
 
-								<div class="x_content">
-									<h4>我的股票</h4>
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>股票代码</th>
-												<th>本金</th>
-												<th>年化收益</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody id="bookMarkCodeList" name="bookMarkCodeList">
+							<div class="x_content">
+								<h4>我的股票</h4>
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>股票代码</th>
+											<th>本金</th>
+											<th>年化收益</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="bookMarkCodeList" name="bookMarkCodeList">
 
-										</tbody>
-									</table>
+									</tbody>
+								</table>
 
-								</div>
 							</div>
 						</div>
-						<div class="col-md-6 col-sm-6 col-xs-12">
-							<div class="x_panel">
+					</div>
+					<div class="col-md-6 col-sm-6 col-xs-12">
+						<div class="x_panel">
 
-								<div class="x_content">
-									<!-- 列出当前类型的策略 -->
-									<h4 id="nowCode">
-										当前股票
-										<code id="CodeAndName" name="CodeAndName"></code>
-										策略
-									</h4>
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>策略名称</th>
-												<th>阿尔法</th>
-												<th>年化收益</th>
-												<th>操作</th>
-											</tr>
-										</thead>
-										<tbody id="nowCodeStraList" name="nowCodeStraList">
-										
-										</tbody>
-									</table>
+							<div class="x_content">
+								<!-- 列出当前类型的策略 -->
+								<h4 id="nowCode">
+									当前股票
+									<code id="CodeAndName" name="CodeAndName"></code>
+									策略
+								</h4>
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>策略名称</th>
+											<th>阿尔法</th>
+											<th>年化收益</th>
+											<th>操作</th>
+										</tr>
+									</thead>
+									<tbody id="nowCodeStraList" name="nowCodeStraList">
 
-								</div>
+									</tbody>
+								</table>
+
 							</div>
 						</div>
 					</div>
@@ -173,6 +171,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 <!-- 用户信息 -->
 <!-- comments -->
@@ -207,7 +206,7 @@
 							</ul>
 						</div>
 					</div>
-					
+
 				</article>
 				<!-- end comments -->
 				<!-- 注册之后才可以留言 -->
@@ -215,11 +214,12 @@
 				<div class="form-group">
 					<label for="comment-text" class="control-label sr-only">Comments</label>
 					<div class="col-sm-12">
-					<#if islogin == -1>
-					<pre>还没登录，请<a href="">登录或注册！</a></pre>
-					<#else>				
-						<textarea rows="5" cols="30" name="comment-text" id="comment-text" placeholder="* 请在此发言" class="form-control"></textarea>			
-					</#if>
+						<#if islogin == -1>
+						<pre>还没登录，请<a href="">登录或注册！</a>
+						</pre>
+						<#else>
+						<textarea rows="5" cols="30" name="comment-text" id="comment-text" placeholder="* 请在此发言" class="form-control"></textarea>
+						</#if>
 					</div>
 				</div>
 
@@ -249,25 +249,22 @@
 							<tr>
 								<th scope="row">股票代码:</th>
 								<td>
-								<div class="col-md-4">
-									<div class="btn-group" id="masked-input-demo">
-										<input type="text" placeholder="hs300" id="code_num" name="code_num" data-toggle="dropdown" aria-expanded="true"
-											class="form-control">
-										<ul role="menu" class="dropdown-menu dropdown-menu-right country-selector" id="codeMenu" name="codeMenu">
-										</ul>
+									<div class="col-md-4">
+										<div class="btn-group" id="masked-input-demo">
+											<input type="text" placeholder="hs300" id="code_num" name="code_num" data-toggle="dropdown"
+												aria-expanded="true" class="form-control">
+											<ul role="menu" class="dropdown-menu dropdown-menu-right country-selector" id="codeMenu" name="codeMenu">
+											</ul>
+										</div>
 									</div>
-									</div>
-								<div class="col-md-6">
-										
+									<div class="col-md-6">
+
 										<div class="form-group">
-										<label class="control-inline fancy-radio">
-											<input type="radio" checked="checked" name="inline-radio">
-											<span><i></i>复权</span>
-										</label>
-										<label class="control-inline fancy-radio">
-											<input type="radio" checked="checked" name="inline-radio">
-											<span><i></i>不复权</span>
-										</label>
+											<label class="control-inline fancy-radio"> <input type="radio" checked="checked" value="0" name="inline-radio"
+												id="stockRadio0"> <span><i></i>不复权</span>
+											</label> <label class="control-inline fancy-radio"> <input type="radio" value="1" name="inline-radio" id="stockRadio1">
+												<span><i></i>后复权</span>
+											</label>
 										</div>
 									</div>
 
@@ -309,59 +306,59 @@
 				</div>
 
 				<!-- 策略选出的股票列表 -->
-					<div class="widget hide">
-						<!-- search form -->
+				<div class="widget hide">
+					<!-- search form -->
 
-						<!-- end search form -->
-						<h2 class="section-heading">当前策略筛选</h2>
-						<table class="table table-striped">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>股票名称</th>
-									<th>阿尔法</th>
-									<th>夏普比率</th>
-									<th>贝塔</th>
-									<th>年化收益</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<th scope="row">1</th>
-									<td>600432</td>
-									<td>10%</td>
-									<td>10%</td>
-									<td>10%</td>
-									<td>5.6%</td>
-									<td><button title="Success" class="btn btn-outline btn-success" type="button">
-											<i class="fa fa-check"></i> <span class="sr-only">Success</span>
-										</button></td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>000898</td>
-									<td>9%</td>
-									<td>10%</td>
-									<td>10%</td>
-									<td>7.6%</td>
-									<td><button title="Success" class="btn btn-outline btn-success" type="button">
-											<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-										</button></td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>600392</td>
-									<td>45%</td>
-									<td>10%</td>
-									<td>10%</td>
-									<td>6.9%</td>
-									<td><button title="Success" class="btn btn-outline btn-success" type="button">
-											<i class="fa fa-close"></i> <span class="sr-only">Success</span>
-										</button></td>
-								</tr>
-							</tbody>
-						</table>
+					<!-- end search form -->
+					<h2 class="section-heading">当前策略筛选</h2>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>股票名称</th>
+								<th>阿尔法</th>
+								<th>夏普比率</th>
+								<th>贝塔</th>
+								<th>年化收益</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">1</th>
+								<td>600432</td>
+								<td>10%</td>
+								<td>10%</td>
+								<td>10%</td>
+								<td>5.6%</td>
+								<td><button title="Success" class="btn btn-outline btn-success" type="button">
+										<i class="fa fa-check"></i> <span class="sr-only">Success</span>
+									</button></td>
+							</tr>
+							<tr>
+								<th scope="row">2</th>
+								<td>000898</td>
+								<td>9%</td>
+								<td>10%</td>
+								<td>10%</td>
+								<td>7.6%</td>
+								<td><button title="Success" class="btn btn-outline btn-success" type="button">
+										<i class="fa fa-close"></i> <span class="sr-only">Success</span>
+									</button></td>
+							</tr>
+							<tr>
+								<th scope="row">3</th>
+								<td>600392</td>
+								<td>45%</td>
+								<td>10%</td>
+								<td>10%</td>
+								<td>6.9%</td>
+								<td><button title="Success" class="btn btn-outline btn-success" type="button">
+										<i class="fa fa-close"></i> <span class="sr-only">Success</span>
+									</button></td>
+							</tr>
+						</tbody>
+					</table>
 
 				</div>
 				<!-- 策略选出的股票列表 -->
