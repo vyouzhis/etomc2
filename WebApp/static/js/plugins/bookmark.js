@@ -26,7 +26,7 @@ function ListBookMarksCode(act, cid) {
 															// info
 					var option = request.responseText;
 					if(option.length < 5) return;
-					console.log("option:" + option);
+					//console.log("option:" + option);
 					var Json = JSON.parse(option);
 					var html="";
 					for(var i=0; i<Json.length; i++){
@@ -125,7 +125,7 @@ function addBookMark(i, cid) {
 		},
 		complete : function(request, textStatus) {
 			var option = request.responseText;
-			console.log("option:" + option);
+			//console.log("option:" + option);
 			var i = parseInt(option);
 			var msg = "添加成功!";
 			if(i==-1){

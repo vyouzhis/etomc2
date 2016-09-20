@@ -101,7 +101,7 @@ function saveTalk() {
 		},
 		complete : function(request, textStatus) {
 			var option = request.responseText;
-			console.log("option:" + option);
+			//console.log("option:" + option);
 		},
 		error : function(response) {
 			// console.log(response);
@@ -145,24 +145,28 @@ function listTalk(p, sid, code) {
 
 					var ListHtml = "";
 
-					for (i = 0; i < Json['data'].length; i++) {
-						var reply = "<p><a href='blog-single.html#'><i class='fa fa-reply'></i> Reply</a></p>"
+					for (var i = 0; i < Json['data'].length; i++) {
+						var reply = "<p><a href='javascript:void(0)' onclick='tReplay("+JSON.stringify(Json['data'][i])+")'><i class='fa fa-reply'></i> 转发</a></p>"
 						if (Json['data'][i]['reply'] == 1) {
 							reply = "";
 						}
 						var date = new Date(
 								parseInt(Json['data'][i]['ctime']) * 1000)
 								.toLocaleString().substr(0, 17);
-
-						ListHtml += "<li class='media'>"
-								+ "<a class='media-left' href='blog-single.html#'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
+						var msg = Json['data'][i]['msg'];
+						
+						msg = msg.replace(/@/g, "<a class='product-title' href='#'>@");
+						msg = msg.replace(/:/g, ":</a>");
+						
+						ListHtml += "<li class='media shopping-cart-table'>"
+								+ "<a class='media-left' href='javascript:void(0)'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
 								+ "</a><div class='media-body'>"
 								+ "	<h4 class='media-heading comment-author'>"
 								+ "		<a href='#'>"
 								+ Json['data'][i]['nickname'] + "</a>"
 								+ "	</h4>"
 								+ "	<span class='timestamp text-muted'>" + date
-								+ "</span>" + "	<p>" + Json['data'][i]['msg']
+								+ "</span>" + "	<p>" + msg
 								+ "</p>" + reply + "	<hr>" + "</div>" + "</li>";
 					}
 
@@ -170,7 +174,7 @@ function listTalk(p, sid, code) {
 						var strDesc =  "";
 						if(p==0 || p ==1){
 							strDesc = "<li class='media'>"
-							+ "<a class='media-left' href='blog-single.html#'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
+							+ "<a class='media-left' href='javascript:void(0)'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
 							+ "</a><div class='media-body'>"
 							+ "	<h4 class='media-heading comment-author'>"
 							+ "		<a href='#'>站长</a>"
@@ -235,6 +239,12 @@ function listTalk(p, sid, code) {
 					
 				}
 			});
+}
+
+function tReplay(o){
+	console.log("replay:" + JSON.stringify(o));
+	var val = "@"+o['nickname']+":"+o['msg'];
+	$("#comment-text").val(val);
 }
 
 function infoshow(k, c) {

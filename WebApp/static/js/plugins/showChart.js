@@ -27,7 +27,7 @@ function InitStockData(JsonData) {
 	// console.log(JSON.stringify(JsonList));
 	// var JsonData = JsonList;
 	for ( var cn in JsonData) {
-		console.log("cn:" + cn);
+		//console.log("cn:" + cn);
 		if (cn == "_id")
 			continue;
 		var Json = JsonData[cn];
