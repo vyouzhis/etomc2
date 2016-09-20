@@ -170,7 +170,7 @@ function hfqStockData(dtype) {
 	var oldOption = getChartOption();
 
 	for ( var cn in JsonData) {
-		console.log("cn:" + cn);
+	//	console.log("cn:" + cn);
 		if (cn == "_id")
 			continue;
 		var Json = JsonData[cn];
@@ -213,7 +213,7 @@ function AddmaData() {
 		var hsData = [];
 
 		for ( var cn in JsonData) {
-			console.log("cn:" + cn);
+			//console.log("cn:" + cn);
 			if (cn == "_id")
 				continue;
 			var Json = JsonData[cn];

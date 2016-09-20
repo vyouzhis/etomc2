@@ -3,6 +3,8 @@ package com.lib.api;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.jws.soap.SOAPBinding;
+
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.io.DesEncrypter;
 
@@ -34,20 +36,21 @@ public class PythonTactics extends BaseSurface {
 
 		String code = porg.getKey("code");
 		
-		String path = porg.getKey("path");
-		echo("python /root/macd/"
-				+ path +" "+code);
+		int id = toInt(porg.getKey("id"));
+		Map<String, Object> si = getScriptInfo(id);
+				
+		if(si==null){
+			super.setHtml("");
+			return;
+		}
+				
+		String path = si.get("path").toString();
+
 		try {
-			Map<String, Object> pMap = findPyRun();
-			if(pMap==null){
-				super.setHtml("");
-				return;
-			}
-			
-			
-			String ip = pMap.get("ip").toString();
-			String user = pMap.get("name").toString();
-			String pwd = pMap.get("passwd").toString();
+							
+			String ip = si.get("ip").toString();
+			String user = si.get("name").toString();
+			String pwd = si.get("passwd").toString();
 			try {
 				DesEncrypter de = new DesEncrypter();
 				pwd = de.decrypt(pwd);
@@ -60,10 +63,10 @@ public class PythonTactics extends BaseSurface {
 
 			String stdout = new Shell.Plain(shell).exec("python /root/macd/"
 					+ path +" "+code);
-			stdout += "@";
-			
-			stdout += new Shell.Plain(shell).exec("python /root/macd/"
-					+ path +" hs300");
+//			stdout += "@";
+//			
+//			stdout += new Shell.Plain(shell).exec("python /root/macd/"
+//					+ path +" hs300");
 			
 			super.setHtml(stdout);
 
@@ -73,14 +76,23 @@ public class PythonTactics extends BaseSurface {
 		}
 	}
 	
-	private Map<String, Object> findPyRun() {
-		String iid = porg.getKey("iid");
-		String format = "SELECT * FROM `strategy_info`  where id='%s' limit 1";
+	private Map<String, Object> findPyRun(int iid) {
+		
+		String format = "SELECT * FROM `strategy_info`  where id='%d' limit 1";
 		String sql = String.format(format, iid);
 		
 		Map<String, Object> res = FetchOne(sql);
 		
 		return res;
 		
+	}
+	
+	private Map<String, Object> getScriptInfo(int id) {
+		String format = "SELECT s.path, i.*  FROM `strategy_stock` s, strategy_info i where i.id = s.iid AND s.id=%s limit 1";
+		String sql = String.format(format, id);
+		
+		Map<String, Object> res = FetchOne(sql);
+		
+		return res;
 	}
 }

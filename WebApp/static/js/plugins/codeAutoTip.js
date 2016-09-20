@@ -51,10 +51,13 @@ function CodeAuto() {
 														+ JsonList[i]['name']
 														+ "</a></li>";
 												if(keyOK == 1 && JsonList[i]['code'] == code){
+													$("#StockStradiv").attr("class", "panel-heading");
 													addCode(code, JsonList[i]['name']);
+													
 													KChart();
 												}
 											}
+											
 											$("#codeMenu").html(html);
 										} else {
 											console.log("option:" + option);
@@ -64,4 +67,22 @@ function CodeAuto() {
 
 					});
 
+}
+
+function addCode(o, n) {
+	$("#code_num").val(o);
+
+	$("#talkNameCode").html("<i class='fa fa-bar-chart-o'></i>" + o + " " + n);
+	$("#talkNameCode").attr("class", "");
+
+	$("#talkNameCode").focus();
+
+	//console.log("code:" + o);
+
+	// 获取股票的讨论内容
+	listTalk(0, 0, o);
+
+	talkSelect(0);
+	StockCode = o
+	StockCodeName = n;		
 }

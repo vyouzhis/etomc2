@@ -14,7 +14,6 @@ symbols += loAZ;
 symbols += "{|}~";
 
 
-
 function talkSelect(i, sid){
 	var ariaCode = true;		
 	var activeCode = "active";
