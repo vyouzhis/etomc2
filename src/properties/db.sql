@@ -66,6 +66,13 @@ CREATE TABLE IF NOT EXISTS `stock_user_info` (
   `etime` int(11)  DEFAULT '0' COMMENT 'edit time',  
   `ltime` int(11) NOT NULL DEFAULT '1' COMMENT 'last login time',  
   `phone` varchar(11) NOT NULL DEFAULT '0' COMMENT 'user phone',
+  `addr` varchar(254) NOT NULL DEFAULT '' COMMENT 'addr',
+  `rdes` varchar(254) NOT NULL DEFAULT '' COMMENT 'desc',
+  
+  `slogo` varchar(254) NOT NULL DEFAULT '' COMMENT 'source logo',
+  `logo` varchar(254) NOT NULL DEFAULT '' COMMENT 'logo',
+  
+  `sex` int(1) NOT NULL DEFAULT '0' COMMENT '0 man 1 woman',
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'defaule 1 enable 0 disable',  
   `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
   `error` int(1) NOT NULL DEFAULT '0' COMMENT 'passwd error count',

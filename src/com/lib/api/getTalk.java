@@ -78,7 +78,7 @@ public class getTalk extends BaseSurface {
 	}
 
 	private List<Map<String, Object>> talks() {
-		String format = "SELECT t.id,t.pid,t.sid,t.code,t.msg,t.ctime,t.reply,t.top,i.nickname FROM `stock_user_talk` t, stock_user_info i "
+		String format = "SELECT t.id,t.pid,t.sid,t.code,t.msg,t.ctime,t.reply,t.top,i.nickname,i.logo FROM `stock_user_talk` t, stock_user_info i "
 				+ " WHERE  %s  AND i.uid = t.uid ORDER BY t.top DESC,t.ctime DESC limit %d, %d";
 		int p = toInt(porg.getKey("p"));
 

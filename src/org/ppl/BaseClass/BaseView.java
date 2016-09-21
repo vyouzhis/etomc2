@@ -21,7 +21,7 @@ public class BaseView extends ACLControl {
 
 	public BaseView() {
 		// TODO Auto-generated constructor stub
-		
+
 	}
 
 	public void View() {
@@ -41,7 +41,6 @@ public class BaseView extends ACLControl {
 		// echo("html path:"+path);
 		this.baseView(path);
 
-		
 	}
 
 	public void baseView(String path) {
@@ -106,7 +105,7 @@ public class BaseView extends ACLControl {
 		}
 		root.put(key, obj);
 	}
-	
+
 	public void addRoot(Map<String, Object> Root) {
 		root = Root;
 	}
@@ -128,13 +127,32 @@ public class BaseView extends ACLControl {
 	public String igetName() {
 		return getUinfo("nickname");
 	}
-	
+
 	public String igetKey(String k) {
 		return getUinfo(k);
 	}
 
-	@SuppressWarnings("unchecked")
 	private String getUinfo(String key) {
+
+		Map<String, Object> res = UnPackUinfo();
+		if (res == null)
+			return null;
+		if(!res.containsKey(key)) return null;
+		
+		return res.get(key).toString();
+	}
+
+	public void PackUinfo(Map<String, Object> res) {
+		Encrypt ec = Encrypt.getInstance();
+		String info_json = JSON.toJSONString(res);
+		echo(info_json);
+		String hex = ec.toHex(info_json);
+
+		cookieAct.SetCookie(globale_config.Uinfo, hex);
+	}
+
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> UnPackUinfo() {
 		String uinfo = cookieAct.GetCookie(globale_config.Uinfo);
 		if (uinfo == null)
 			return null;
@@ -142,8 +160,7 @@ public class BaseView extends ACLControl {
 		String hex = en.hexToString(uinfo);
 
 		Map<String, Object> res = JSON.parseObject(hex, Map.class);
-		if (res == null)
-			return null;
-		return res.get(key).toString();
+		return res;
 	}
+
 }

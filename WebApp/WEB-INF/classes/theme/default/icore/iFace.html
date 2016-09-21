@@ -1,0 +1,71 @@
+
+
+<!-- LATEST NEWS -->
+<div class="container">
+	<br />
+	<div class="col-md-3">
+
+		<ul class="sidebar-nav margin-bottom-30px" id="sidebar-nav">
+
+			<li class="list-group-item "><a href="${icore}">个人信息</a></li>
+			<li class="list-group-item "><a href="${balance}">设置本金</a></li>
+			<li class="list-group-item current"><a href="${face}">我的头像</a></li>
+
+		</ul>
+	</div>
+	<div class="col-md-9">
+
+		<h2 class="section-heading">我的头像</h2>
+		<div class="col-md-6 col-sm-3 col-xs-12 profile_left">
+			<div class="form-horizontal">
+				<form id="simg" name="simg" role="form" class="form-horizontal" action="${facenimg}" enctype="multipart/form-data"
+					method="post">
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="phone">上传图片</label>
+						<div class="col-md-9">
+							<div class="input-group" id="masked-input-demo">
+
+								<input type="file" accept="image/*" id="images" name="images">
+							</div>
+						</div>
+					</div>
+				</form>
+				<form role="form" class="form-horizontal" action="${facelogo}" enctype="multipart/form-data" method="post"
+					onsubmit="return checkCoords();">
+					<div class="form-group">
+						<label class="col-md-3 control-label">头像预览</label>
+						<div class="col-md-9">
+							<img src="${slogo!''}" id="ulogo" name="ulogo" alt="[Jcrop Example]" /> <input type="hidden" id="x" name="x" /> <input
+								type="hidden" id="y" name="y" /> <input type="hidden" id="w" name="w" /> <input type="hidden" id="h" name="h" />
+
+							
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="exampleInputFile">现在头像</label>
+						<div class="col-md-9">
+							<img src="${rlogo!''}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+
+							<button class="btn btn-primary btn-block" type="submit">
+								<i class="fa fa-check-circle"></i> 保存
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- END LATEST NEWS -->
+
+

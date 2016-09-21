@@ -14,7 +14,7 @@
 		</ul>
 	</div>
 	<div class="col-md-9">
-		<form role="form" class="form-horizontal" action="${register_action_uri}" enctype="multipart/form-data" method="post">
+		<form role="form" class="form-horizontal" action="${icore_action}" enctype="multipart/form-data" method="post">
 			<h2 class="section-heading">个人信息</h2>
 			<div class="col-md-6 col-sm-3 col-xs-12 profile_left">
 				<div class="form-horizontal">
@@ -27,22 +27,22 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label" for="exampleInputFile">昵称</label>
 						<div class="col-md-9">
-							<input type="text" placeholder='${nickname!""}' class="form-control input-lg">
+							<input type="text" placeholder='${nickname!""}'  id="nickname" name="nickname" class="form-control input-lg">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-md-3 control-label" for="exampleInputFile">居住地</label>
 						<div class="col-md-9">
-							<input type="text" placeholder='${addree!""}' class="form-control">
+							<input type="text" placeholder='${addree!""}'  id="addree" name="addree" class="form-control">
 						</div>
 					</div>
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">性别</label>
 						<div class="col-md-9">
-							<select class="form-control input-lg">
-								<option value="cheese">男</option>
-								<option value="tomatoes">女</option>
+							<select class="form-control input-lg" id="sex" name="sex">
+								<option value="0" <#if sex==0>  selected = "selected" </#if> >男</option>
+								<option value="1" <#if sex==1>  selected = "selected" </#if> >女</option>
 							</select>
 						</div>
 					</div>
@@ -59,7 +59,7 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">个人简介</label>
 						<div class="col-md-9">
-							<textarea rows="4" placeholder="新人" class="form-control"></textarea>
+							<textarea rows="4" placeholder="" class="form-control" id="rdesc" name="rdesc">${rdesc}</textarea>
 						</div>
 					</div>
 

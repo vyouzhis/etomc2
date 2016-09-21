@@ -158,7 +158,8 @@ function listTalk(p, sid, code) {
 						msg = msg.replace(/:/g, ":</a>");
 						
 						ListHtml += "<li class='media shopping-cart-table'>"
-								+ "<a class='media-left' href='javascript:void(0)'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
+								+ "<a class='media-left' href='javascript:void(0)'> " +
+										"<span class='avatar anonymous'><img alt='Avatar' class='img-circle' height='42' width='42' src=\"Data/"+Json['data'][i]['logo']+"\"></span>"
 								+ "</a><div class='media-body'>"
 								+ "	<h4 class='media-heading comment-author'>"
 								+ "		<a href='#'>"
