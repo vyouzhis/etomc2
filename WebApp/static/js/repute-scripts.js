@@ -356,6 +356,7 @@ $(document).ready( function() {
 		$('#code_num').mask('999999');
 	}
 
+
 	
 	/*--------------------------------/
 	/* DATE PICKER

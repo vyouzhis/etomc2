@@ -128,6 +128,10 @@ public class BaseView extends ACLControl {
 	public String igetName() {
 		return getUinfo("nickname");
 	}
+	
+	public String igetKey(String k) {
+		return getUinfo(k);
+	}
 
 	@SuppressWarnings("unchecked")
 	private String getUinfo(String key) {

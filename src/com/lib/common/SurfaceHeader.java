@@ -25,7 +25,7 @@ public class SurfaceHeader extends BaseModule {
 		setRoot("index", ucl.Url(""));
 		setRoot("register", ucl.Url("register"));
 		setRoot("login", ucl.Url("login"));
-		setRoot("icore", ucl.Url("icore"));
+		setRoot("icore", ucl.BuildUrl("icore", time() + ""));
 
 		setRoot("trade", ucl.Url("trade"));
 		setRoot("risk", ucl.Url("risk"));

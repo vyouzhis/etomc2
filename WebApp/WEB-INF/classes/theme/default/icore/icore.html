@@ -1,148 +1,82 @@
 
 
-            <!-- LATEST NEWS -->
-            <div class="container">
-                <br />
-                <div class="col-md-3">
-                    
-                    <ul class="sidebar-nav margin-bottom-30px" id="sidebar-nav">
+<!-- LATEST NEWS -->
+<div class="container">
+	<br />
+	<div class="col-md-3">
+
+		<ul class="sidebar-nav margin-bottom-30px" id="sidebar-nav">
+
+			<li class="list-group-item current"><a href="${icore}">个人信息</a></li>
+			<li class="list-group-item "><a href="${balance}">设置本金</a></li>
+			<li class="list-group-item "><a href="${face}">我的头像</a></li> 
+
+		</ul>
+	</div>
+	<div class="col-md-9">
+		<form role="form" class="form-horizontal" action="${register_action_uri}" enctype="multipart/form-data" method="post">
+			<h2 class="section-heading">个人信息</h2>
+			<div class="col-md-6 col-sm-3 col-xs-12 profile_left">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">登录名</label>
+						<div class="col-sm-9">
+							<p class="form-control-static">${email!""}</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="exampleInputFile">昵称</label>
+						<div class="col-md-9">
+							<input type="text" placeholder='${nickname!""}' class="form-control input-lg">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="exampleInputFile">居住地</label>
+						<div class="col-md-9">
+							<input type="text" placeholder='${addree!""}' class="form-control">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">性别</label>
+						<div class="col-md-9">
+							<select class="form-control input-lg">
+								<option value="cheese">男</option>
+								<option value="tomatoes">女</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 control-label" for="phone">电话</label>
+						<div class="col-md-9">
+							<div class="input-group" id="masked-input-demo">
+								<span class="input-group-addon"><i class="fa fa-phone"></i></span> <input type="text" class="form-control"
+									id="phone" name="phone" placeholder='${phone!""}'>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">个人简介</label>
+						<div class="col-md-9">
+							<textarea rows="4" placeholder="新人" class="form-control"></textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-9">
+							<button class="btn btn-primary btn-block" type="submit">
+								<i class="fa fa-check-circle"></i> 保存
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
+<!-- END LATEST NEWS -->
 
 
-                        <li class="list-group-item "><a href="ui-numbers-charts.html">个人信息</a></li>
-                        <li class="list-group-item "><a href="ui-boxed-contents.html">设置本金</a></li>
-                        <li class="list-group-item "><a href="ui-testimonials.html">我的留言</a></li>
-                        
-                    </ul>
-                </div>
-                <div class="col-md-9">
-                    <h2 class="section-heading">个人信息</h2>
-                   <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
-
-                      <div class="profile_img">
-
-                        <!-- end of image cropping -->
-                        <div id="crop-avatar">
-                          <!-- Current avatar -->
-                          <img title="Change the avatar" alt="Avatar" src="assets/img/user2.png" class="img-responsive avatar-view">
-
-                          <!-- Cropping modal -->
-                          <div tabindex="-1" role="dialog" aria-labelledby="avatar-modal-label" aria-hidden="true" id="avatar-modal" class="modal fade">
-                            <div class="modal-dialog modal-lg">
-                              <div class="modal-content">
-                                <form method="post" enctype="multipart/form-data" action="https://colorlib.com/polygon/gentelella/crop.php" class="avatar-form">
-                                  <div class="modal-header">
-                                    <button type="button" data-dismiss="modal" class="close">×</button>
-                                    <h4 id="avatar-modal-label" class="modal-title">Change Avatar</h4>
-                                  </div>
-                                  <div class="modal-body">
-                                    <div class="avatar-body">
-
-                                      <!-- Upload image and data -->
-                                      <div class="avatar-upload">
-                                        <input type="hidden" name="avatar_src" class="avatar-src">
-                                        <input type="hidden" name="avatar_data" class="avatar-data">
-                                        <label for="avatarInput">Local upload</label>
-                                        <input type="file" name="avatar_file" id="avatarInput" class="avatar-input">
-                                      </div>
-
-                                      <!-- Crop and preview -->
-                                      <div class="row">
-                                        <div class="col-md-9">
-                                          <div class="avatar-wrapper"></div>
-                                        </div>
-                                        <div class="col-md-3">
-                                          <div class="avatar-preview preview-lg"></div>
-                                          <div class="avatar-preview preview-md"></div>
-                                          <div class="avatar-preview preview-sm"></div>
-                                        </div>
-                                      </div>
-
-                                      <div class="row avatar-btns">
-                                        <div class="col-md-9">
-                                          <div class="btn-group">
-                                            <button title="Rotate -90 degrees" type="button" data-option="-90" data-method="rotate" class="btn btn-primary">Rotate Left</button>
-                                            <button type="button" data-option="-15" data-method="rotate" class="btn btn-primary">-15deg</button>
-                                            <button type="button" data-option="-30" data-method="rotate" class="btn btn-primary">-30deg</button>
-                                            <button type="button" data-option="-45" data-method="rotate" class="btn btn-primary">-45deg</button>
-                                          </div>
-                                          <div class="btn-group">
-                                            <button title="Rotate 90 degrees" type="button" data-option="90" data-method="rotate" class="btn btn-primary">Rotate Right</button>
-                                            <button type="button" data-option="15" data-method="rotate" class="btn btn-primary">15deg</button>
-                                            <button type="button" data-option="30" data-method="rotate" class="btn btn-primary">30deg</button>
-                                            <button type="button" data-option="45" data-method="rotate" class="btn btn-primary">45deg</button>
-                                          </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                          <button type="submit" class="btn btn-primary btn-block avatar-save">Done</button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <!-- <div class="modal-footer">
-                                                    <button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
-                                                  </div> -->
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- /.modal -->
-
-                          <!-- Loading state -->
-                          <div tabindex="-1" role="img" aria-label="Loading" class="loading"></div>
-                        </div>
-                        <!-- end of image cropping -->
-
-                      </div>
-                      <h3>XX股民</h3>
-
-                      <ul class="list-unstyled user_data">
-                        <li><i class="fa fa-map-marker user-profile-icon"></i>广东 深圳市罗湖区 
-                        </li>
-
-                        <li>
-                          <i class="fa fa-briefcase user-profile-icon"></i> 外贸行业
-                        </li>
-
-                        
-                      </ul>
-
-                      <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>修改信息</a>
-                      <br>
-
-                      <!-- start skills -->
-                      <h4>策略</h4>
-                      <ul class="list-unstyled user_data">
-                        <li>
-                          <p>量化选股</p>
-                          <div class="progress progress_sm">
-                            <div data-transitiongoal="50" role="progressbar" class="progress-bar bg-green" style="width: 50%;" aria-valuenow="49"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <p>算法交易</p>
-                          <div class="progress progress_sm">
-                            <div data-transitiongoal="70" role="progressbar" class="progress-bar bg-green" style="width: 70%;" aria-valuenow="69"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <p>风险控制</p>
-                          <div class="progress progress_sm">
-                            <div data-transitiongoal="30" role="progressbar" class="progress-bar bg-green" style="width: 30%;" aria-valuenow="29"></div>
-                          </div>
-                        </li>
-                        <li>
-                          <p>积分</p>
-                          <div class="progress progress_sm">
-                            <div data-transitiongoal="50" role="progressbar" class="progress-bar bg-green" style="width: 50%;" aria-valuenow="49"></div>
-                          </div>
-                        </li>
-                      </ul>
-                      <!-- end of skills -->
-
-                    </div> 
-                </div>
-            </div>
-
-            <!-- END LATEST NEWS -->
-            
-           

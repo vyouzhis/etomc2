@@ -195,7 +195,7 @@ public class PorG  extends function {
 	public String GetIP() {
 		String ip = "";
 		//String stdClass="PorG";
-		
+		System.setProperty("java.net.preferIPv4Stack" , "true");
 		//Logger log = Logger.getLogger(stdClass);
 
 		for (String header : HEADERS_TO_TRY) {

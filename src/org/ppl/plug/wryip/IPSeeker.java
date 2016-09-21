@@ -7,6 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.spec.ECField;
 
 public class IPSeeker {
 	final ByteBuffer buffer;
@@ -36,6 +37,9 @@ public class IPSeeker {
 	}
 
 	public IPLocation getIP(String ipString) {
+		
+		if(ipString.split(":").length >1) return null;
+		
 		String[] ips = ipString.split("\\.");
 		
 		int ip1 = Integer.valueOf(ips[0]);
