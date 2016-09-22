@@ -3,6 +3,7 @@ package com.lib.common;
 import java.io.File;
 
 import org.ppl.BaseClass.BaseModule;
+import org.ppl.etc.UrlClassList;
 import org.ppl.io.ProjectPath;
 
 public class SurfaceFooter extends BaseModule {
@@ -35,6 +36,13 @@ public class SurfaceFooter extends BaseModule {
 
 			setRoot("ClazzFoot", content);
 		}
+		
+		UrlClassList ucl = UrlClassList.getInstance();
+		setRoot("istrategy_url", ucl.Url("strategy"));
+		setRoot("itrade_url", ucl.Url("trade"));
+		setRoot("irisk_url", ucl.Url("risk"));
+		setRoot("iarbitrage_url", ucl.Url("arbitrage"));
+		
 		super.View();
 	}
 

@@ -52,7 +52,7 @@ public class RunQuartz extends function {
 					if (clazz.getSuperclass().equals(CronQuartz.class)) {
 						String name = SliceName(ps);
 						// JobKey jobKey = new JobKey(name);
-						echo("name====:" + name);
+						//echo("name====:" + name);
 						runquartz = (CronQuartz) injector.getInstance(Key.get(
 								CronQuartz.class, Names.named(name)));
 						String GroupName = "Group_" + name;
@@ -153,16 +153,17 @@ public class RunQuartz extends function {
 	// }
 
 	@SuppressWarnings("unchecked")
-	public void SimpleQuartz(String ThreadName, Object message) {
+	public void SimpleQuartz(String ThreadName, String JsonMsg) {
 		SimpleQuartz Simquartz = null;
 		Injector injector = globale_config.injector;
 		Simquartz = (SimpleQuartz) injector.getInstance(Key.get(
 				SimpleQuartz.class, Names.named(ThreadName)));
-
+				
+				
 		JobDetail job = (JobDetail) JobBuilder
 				.newJob((Class<? extends Job>) Simquartz.getClass())
+				.usingJobData(Simquartz.getArg(), JsonMsg)
 				.withIdentity(ThreadName + time(), Simquartz.getGroup())
-
 				.build();
 
 		Trigger trigger = TriggerBuilder
@@ -175,12 +176,13 @@ public class RunQuartz extends function {
 								.withIntervalInSeconds(
 										Simquartz.withIntervalInSeconds()))
 				.build();
-
+				
 		try {
 			globale_config.scheduler.scheduleJob(job, trigger);
 		} catch (SchedulerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			echo("SimpleQuartz:"+ThreadName+". "+e.getMessage());
 		}
 	}
 

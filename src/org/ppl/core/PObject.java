@@ -1,7 +1,5 @@
 package org.ppl.core;
 
-import java.nio.channels.SelectableChannel;
-
 import org.ppl.common.CookieAction;
 import org.ppl.common.PorG;
 import org.ppl.common.SessionAction;
@@ -66,10 +64,10 @@ public class PObject extends function{
 		return false;
 	}
 
-	public void TellPostMan(String ThreadName, Object message) {
+	public void TellPostMan(String ThreadName, String JsonMsg) {
 
 		RunQuartz rq = new RunQuartz();
-		rq.SimpleQuartz(ThreadName, message);
+		rq.SimpleQuartz(ThreadName, JsonMsg);
 	}
 
 	public long myThreadId() {

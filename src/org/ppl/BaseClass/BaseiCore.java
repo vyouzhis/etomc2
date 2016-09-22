@@ -68,7 +68,11 @@ public class BaseiCore extends BaseSurface {
 		// echo("check_pawd:"+check_passd + " pwd:"+pwd);
 		if (!check_passd.equals(pwd))
 			return -4;
-
+		
+		if(toInt(res.get("active")) == 0){
+			return -5;
+		}
+		
 		PackUinfo(res);
 
 		return 0;

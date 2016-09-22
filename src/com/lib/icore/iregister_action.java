@@ -1,12 +1,20 @@
 package com.lib.icore;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.mail.Message.RecipientType;
+import javax.print.attribute.HashAttributeSet;
 
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 import org.ppl.etc.globale_config;
+import org.ppl.net.MailSender;
+
+import com.alibaba.fastjson.JSON;
 
 public class iregister_action extends BaseSurface {
 	private String className = null;
@@ -40,7 +48,7 @@ public class iregister_action extends BaseSurface {
 			if (isOK) {
 				smsg.ShowMsg(ucl.Url("register_ok/" + salt));
 			} else {
-				smsg.ShowMsg(ucl.Url("register_error"+ salt+"?arg=1" ));
+				smsg.ShowMsg(ucl.Url("register_error/"+ salt+"?arg=1" ));
 			}
 		} else {
 			if (rmc.get(0).equals("register_ok")) {
@@ -75,10 +83,23 @@ public class iregister_action extends BaseSurface {
 			//echo(e.getMessage());
 			//isOK = false;
 		}
-		echo(getErrorMsg());
+		//echo(getErrorMsg());
 		// echo("++");
 		if (getErrorMsg() == null) {
 			isOK = true;
 		}
+		
+		ActiveEmail(porg.getKey("email"));
+	}
+	
+	private void ActiveEmail(String email) {
+		Map<String, Object> message = new HashMap<>();
+		message.put("email", email);
+		message.put("subject", _MLang("EmailSubject"));
+		message.put("text", "text");
+		String json = JSON.toJSONString(message);
+		
+		TellPostMan("ActiveEmail", json);
+		
 	}
 }

@@ -38,6 +38,8 @@ public class ilogin extends BaseSurface {
 		setRoot("irisk_url", ucl.Url("risk"));
 		setRoot("iarbitrage_url", ucl.Url("arbitrage"));
 		
+		setRoot("register", ucl.Url("register"));
+		
 		setRoot("ilogin_action_uri", ucl.Url("loginAction"));
 		super.View();
 	}

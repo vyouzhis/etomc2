@@ -26,6 +26,7 @@ public class SurfaceHeader extends BaseModule {
 		setRoot("register", ucl.Url("register"));
 		setRoot("login", ucl.Url("login"));
 		setRoot("icore", ucl.BuildUrl("icore", time() + ""));
+		setRoot("ilogout", ucl.Url("logout"));
 
 		setRoot("trade", ucl.Url("trade"));
 		setRoot("risk", ucl.Url("risk"));
@@ -49,6 +50,9 @@ public class SurfaceHeader extends BaseModule {
 			setRoot("ClazzHeader", content);
 		}
 
+		int islogin = isLogin();
+		setRoot("islogin", islogin);
+		
 		super.View();
 	}
 

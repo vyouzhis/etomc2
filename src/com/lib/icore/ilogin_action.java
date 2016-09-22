@@ -24,6 +24,10 @@ public class ilogin_action extends BaseiCore {
 			String ok_url = ucl.BuildUrl("icore", time() + "");
 
 			TipMessage(ok_url, _CLang("ok_welcome"));
+		}else if(act == -5) {
+			String err_url = ucl.Url("login");
+			
+			TipMessage(err_url, _CLang("error_user_active"));
 		}
 		else {
 			String err_url = ucl.Url("login");

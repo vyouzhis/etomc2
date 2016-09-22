@@ -79,11 +79,14 @@ ${ClazzHeader!""}
 							class="dropdown-toggle" href="#">用户 <i
 								class="fa fa-angle-down"></i></a>
 							<ul role="menu" class="dropdown-menu">
-
+								<#if islogin == -1>  
 								<li><a href="${register}">用户注册</a></li>
 								<li><a href="${login}">用户登录</a></li>
+								
+								<#else>
 								<li><a href="${icore}">用户中心</a></li>
-
+								<li><a href="${ilogout}">我要退出</a></li>
+								</#if>
 							</ul></li>
 						<!--
 						<li class="dropdown ">

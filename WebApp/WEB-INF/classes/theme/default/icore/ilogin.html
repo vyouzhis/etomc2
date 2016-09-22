@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-sm-5 col-sm-offset-1 col-lg-4 col-lg-offset-2">
 				<div class="account-box login-box box-with-help">
-					<h1>Log in to your account</h1>
+					<h1>登录用户中心</h1>
 					<form role="form" class="form-horizontal" action="${ilogin_action_uri}" enctype="multipart/form-data" method="post">
 						<div class="form-group">
 							<label class="control-label sr-only" for="inputEmail">Email</label>
@@ -20,14 +20,15 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label sr-only" for="inputPassword">Password</label>
+							<label class="control-label sr-only" for="inputPassword">密码</label>
 							<div class="col-sm-12">
 								<div class="input-group">
 									<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-									<input type="password" placeholder="Password" id="Password" name="Password" class="form-control">
+									<input type="password" placeholder="密码" id="Password" name="Password" class="form-control">
 								</div>
 							</div>
 						</div>
+						<!-- 
 						<div class="form-group">
 							<div class="col-sm-12">
 								<label class="fancy-checkbox">
@@ -36,25 +37,26 @@
 								</label>
 							</div>
 						</div>
+						 -->
 						<div class="form-group">
 							<div class="col-xs-7">
 							   <input style="display:none;" type="text" id="salt" name="salt" value="${Salt}" />
-								<button class="btn btn-primary btn-block" type="submit"><i class="fa fa-sign-in"></i> Sign in</button>
+								<button class="btn btn-primary btn-block" type="submit"><i class="fa fa-sign-in"></i> 登录</button>
 							</div>
 							<div class="col-xs-5 text-right">
-								<a href="shop-login.html#"><em>forgot password?</em></a>
+								<a href="shop-login.html#"><em>忘记密码?</em></a>
 							</div>
 						</div>
 					</form>
-					<p><em>Don't have an account yet?</em> <a href="shop-register.html"><strong>Sign Up</strong></a></p>
+					<p><em>还没有账号?</em> <a href="${register}"><strong>注册</strong></a></p>
 					<button class="btn btn-link btn-login-help" type="button" data-original-title="" title=""><i title="Click for help" class="fa fa-question-circle"></i></button>
 				</div>
 			</div>
 			<div class="col-sm-5 col-lg-4">
 				<div class="login-copytext">
-					<h2><i class="fa fa-lock"></i> Secure Login</h2>
-					<p>Completely strategize mission-critical human capital before installed base intellectual capital. Proactively fashion ubiquitous architectures and value-added solutions.</p>
-					<h2><i class="fa fa-user"></i> We protect your privacy</h2>
+					<h2><i class="fa fa-lock"></i> 安全登录</h2>
+					<p> 基于ECC的安全登录：ECC是一种能够实现“错误检查和纠正”的技术，这将使整个系统在工作时更趋于安全稳定。</p>
+					<h2><i class="fa fa-user"></i>保护你的隐私</h2>
 					<p>Appropriately customize enabled process improvements via resource maximizing methods of empowerment. Dramatically maintain interactive e-commerce before process-centric resources.</p>
 				</div>
 			</div>
