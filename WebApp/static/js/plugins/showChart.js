@@ -8,13 +8,17 @@
 
 var myChart = echarts.init(document.getElementById('echart_k'));
 var StockJsonDBHFQ = "";
+var StockMd=0;
+var ToolTip=true;
 
 function showChart(dt) {
 	if (dt.length > 10) {
 		// console.log("JsonList:" + dt );
 		StockJsonDBHFQ = JSON.parse(dt);
 		InitStockData(StockJsonDBHFQ['data'][0]);
-		AddmaData();
+		if(StockMd==0){
+			AddmaData();
+		}
 	}
 }
 
@@ -32,10 +36,19 @@ function InitStockData(JsonData) {
 			continue;
 		var Json = JsonData[cn];
 		// console.log("Json:" + Json );
-		legendName.push(cn);
+		if(cn=="hs300"){
+			legendName.push("沪深300指数");
+		}else{
+			legendName.push(cn);
+		}
 		var seriesData = {};
 		var shList = [];
-		seriesData['name'] = cn;
+		if(cn=="hs300"){			
+			seriesData['name'] = "沪深300指数";
+		}else{
+			seriesData['name'] = cn;
+		}
+		
 		seriesData['type'] = "k";
 
 		for ( var k in Json) {
@@ -94,20 +107,20 @@ function InitStockData(JsonData) {
 			data : legendName
 		},
 		toolbox : {
-			show : true,
+			show : ToolTip,
 			feature : {
 				mark : {
-					show : true
+					show : ToolTip
 				},
 				dataZoom : {
-					show : true
+					show : ToolTip
 				},
 				magicType : {
-					show : true,
+					show : ToolTip,
 					type : [ 'line', 'bar' ]
 				},
 				restore : {
-					show : true
+					show : ToolTip
 				}
 
 			}
@@ -278,7 +291,7 @@ function KChart() {
 		return;
 	}
 	$("#icode").html(code);
-	getStockData(code);
+	getStockData(code);	
 }
 
 function getStockData(code) {

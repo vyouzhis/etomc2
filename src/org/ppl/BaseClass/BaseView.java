@@ -49,7 +49,8 @@ public class BaseView extends ACLControl {
 			echo("root is null");
 			return;
 		}
-
+		setRoot("StaticVer", globale_config.allStaticVer);
+		
 		InitStatic();
 
 		FMConfig fmc = FMConfig.getInstance();
@@ -145,7 +146,7 @@ public class BaseView extends ACLControl {
 	public void PackUinfo(Map<String, Object> res) {
 		Encrypt ec = Encrypt.getInstance();
 		String info_json = JSON.toJSONString(res);
-		echo(info_json);
+		
 		String hex = ec.toHex(info_json);
 
 		cookieAct.SetCookie(globale_config.Uinfo, hex);

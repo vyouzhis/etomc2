@@ -77,10 +77,24 @@ CREATE TABLE IF NOT EXISTS `stock_user_info` (
   `isdelete` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 normal 1 delete',
   `error` int(1) NOT NULL DEFAULT '0' COMMENT 'passwd error count',
   `active` int(1) NOT NULL DEFAULT '0' COMMENT '0 no , 1 yes',
+  `salt` varchar(33) NOT NULL DEFAULT '' COMMENT 'active salt',
+  `atime` int(11) NOT NULL DEFAULT '1' COMMENT 'active time', 
   `ip` varchar(16) NOT NULL DEFAULT '' COMMENT '第一次注册的IP',  
   PRIMARY KEY (`uid`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `phone` (`phone`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--- 模板html
+DROP TABLE IF EXISTS `theme_html`;
+CREATE TABLE IF NOT EXISTS `theme_html` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `html` text NOT NULL COMMENT 'html body',
+  `types` varchar(16) NOT NULL DEFAULT '' COMMENT '类型',
+  `tdesc` varchar(16) NOT NULL DEFAULT '' COMMENT '说明', 
+  PRIMARY KEY (`id`),
+  key(`types`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --- 股票用户的基本信息
@@ -137,6 +151,7 @@ CREATE TABLE IF NOT EXISTS `strategy_stock_style` (
   `name` varchar(255) NOT NULL COMMENT 'style name',
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 -- 策略运行信息, 策略 在某一个地方运行的

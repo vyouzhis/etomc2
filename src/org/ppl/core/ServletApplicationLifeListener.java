@@ -49,6 +49,8 @@ public class ServletApplicationLifeListener extends PObject implements
 			RunQuartz rq = new RunQuartz();
 			rq.CronQuartz();
 		}
+		
+		globale_config.allStaticVer = time();
 
 	}
 

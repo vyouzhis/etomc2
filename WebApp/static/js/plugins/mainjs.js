@@ -13,13 +13,14 @@ var StockCode = "";
 var StockSid = 0;
 
 jQuery(function($) {
-
+	
+	
 	getStockData("hs300");
 
 	getPage(1);
 
 	CodeAuto();
-
+	
 	ListBookMarksCode(1, StockCid);
 
 	$("#listtab1").click(function() {
@@ -32,3 +33,4 @@ jQuery(function($) {
 		StockSid = 0;
 	});
 });
+

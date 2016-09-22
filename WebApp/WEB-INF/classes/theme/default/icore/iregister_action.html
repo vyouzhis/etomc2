@@ -74,6 +74,61 @@
 		</div>
 	</div>
 </div>
+<#elseif isOK==3>
+<div class="page-content page-error text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>激活信息出错</h1>
+				<h2>OOPS! PAGE NOT FOUND</h2>
+				<hr>
+				<div class="error-description">
+					<p>The page you were looking for could not be found, use search form below to find the page you are looking for</p>
+				</div>
+				<form class="form-horizontal">
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<span class="input-group-btn">
+						<input type="submit" value="SEARCH" class="btn btn-default">
+					</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<#elseif isOK==4>
+<div class="page-content page-error text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>已激活过，不必重新激活</h1>
+				<h2>OOPS! PAGE NOT FOUND</h2>
+				<hr>
+				<div class="error-description">
+					<a href="${login}">用户登录</a>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<#elseif isOK==5>
+<div class="page-content page-error text-center">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>激活信息成功</h1>
+				<h2>OOPS! PAGE NOT FOUND</h2>
+				<hr>
+				<div class="error-description">
+					<a href="${login}">用户登录</a>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
 <#else>
 <div class="page-content page-error text-center">
 	<div class="container">

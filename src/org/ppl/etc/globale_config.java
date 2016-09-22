@@ -58,6 +58,8 @@ public class globale_config {
 	
 	//Quartz
 	public static Scheduler scheduler = null;
+	
+	public static int allStaticVer = 0;
 				
 	public static globale_config getInstance() {
 		if (config == null) {
