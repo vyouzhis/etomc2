@@ -12,6 +12,8 @@ var StockInfoData;
 var StockCode = "";
 var StockSid = 0;
 
+var DomainUrl="";
+
 jQuery(function($) {
 	
 	

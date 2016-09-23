@@ -188,6 +188,10 @@ public class PorG  extends function {
 		return rmc;
 	}
 	
+	public String getHttpHeader(String key) {
+		return request.getHeader(key.toLowerCase());
+	}
+	
 	public Map<String, String> getAllpg() {
 		return sporg;
 	}

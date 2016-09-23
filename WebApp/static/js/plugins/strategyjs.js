@@ -62,7 +62,7 @@ function istrSelect2(name, sid, i) {
 function getPage(p) {
 	
 	$.ajax({
-				url : "/etomc2/strapage?jsoncallback=?",
+				url : DomainUrl+"/strapage?jsoncallback=?",
 				contentType : 'text/html;charset=utf-8',
 
 				data : {

@@ -77,7 +77,7 @@ public class iFace extends BaseiCore {
 
 		UrlClassList ucl = UrlClassList.getInstance();
 		ShowMessage sm = ShowMessage.getInstance();
-		sm.ShowMsg(ucl.Url("face"));
+		sm.Redirect(ucl.Url("face"));
 	}
 
 	private void saveSlogo(String slogo) {
@@ -116,7 +116,7 @@ public class iFace extends BaseiCore {
 
 		int width = (int) toFloat(porg.getKey("w"));
 		if (width == 0) {
-			sm.ShowMsg(ucl.Url("face"));
+			sm.Redirect(ucl.Url("face"));
 			return;
 		}
 
@@ -156,7 +156,7 @@ public class iFace extends BaseiCore {
 			e.printStackTrace();
 		}
 
-		sm.ShowMsg(ucl.Url("face"));
+		sm.Redirect(ucl.Url("face"));
 
 	}
 

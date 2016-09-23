@@ -53,6 +53,9 @@ public class SurfaceHeader extends BaseModule {
 
 		int islogin = isLogin();
 		setRoot("islogin", islogin);
+		if (islogin>0) {
+			setRoot("UserName", igetName());
+		}
 		
 		super.View();
 	}

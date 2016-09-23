@@ -89,7 +89,7 @@ function saveTalk() {
 	//console.log(dataList);
 
 	$.ajax({
-		url : "/etomc2/italk?jsoncallback=?",
+		url : DomainUrl+"/italk?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data : dataList,
 		type : 'POST',
@@ -120,7 +120,7 @@ function listTalk(p, sid, code) {
 	StockCode = code;
 	StockSid = sid;
 	$.ajax({
-				url : "/etomc2/listtalk?jsoncallback=?",
+				url : DomainUrl+"/listtalk?jsoncallback=?",
 				contentType : 'text/html;charset=utf-8',
 				data : {
 					"sid" : sid,

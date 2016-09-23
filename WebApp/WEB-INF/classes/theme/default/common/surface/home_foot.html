@@ -1,14 +1,34 @@
 <script src="${static_js_uri}/plugins/echart2/echarts-all.js?ver=${StaticVer}"></script>
 <script src="${static_js_uri}/plugins/showChart.js?ver=${StaticVer}"></script>
-	 
+<script src="${static_js_uri}/plugins/md5/jquery.md5.js?ver=${StaticVer}"></script>
 <script>
-StockMd = 1;
-ToolTip = false;
-getStockData("hs300");
+	StockMd = 1;
+	ToolTip = false;
+	var DomainUrl="";
+	getStockData("hs300");
+		
 
-/**
- *  测试在首页 的 变量
- */
-${root_var!""}
+	/**
+	 *  测试在首页 的 变量
+	 */
+	${root_var!""}
 
+	$(document).ready(function() {
+		$("form").submit(function(e) {
+			chkForm();
+		});
+	});
+
+	function chkForm() {
+		var passwd = $("#Password").val();
+		var salt = $("#salt").val();
+		var md5 = $.md5($.md5(passwd) + salt);
+		$("#Password").val(md5);
+	}
+
+	function changeCode() {
+		$('#kaptchaImage').attr('src',
+				'/etomc2/captcha_image?' + Math.floor(Math.random() * 100))
+				.fadeIn();
+	}
 </script>

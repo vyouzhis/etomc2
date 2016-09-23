@@ -38,15 +38,15 @@ public class iregister_action extends BaseSurface {
 		if (rmc.get(0).equals("register_act")) {
 
 			if (!checkSalt(salt)) {
-				smsg.ShowMsg(ucl.Url("register_error/" + salt + "?arg=0"));
+				smsg.Redirect(ucl.Url("register_error/" + salt + "?arg=0"));
 				return;
 			}
 
 			AddUser(salt);
 			if (isOK) {
-				smsg.ShowMsg(ucl.Url("register_ok/" + salt));
+				smsg.Redirect(ucl.Url("register_ok/" + salt));
 			} else {
-				smsg.ShowMsg(ucl.Url("register_error/" + salt + "?arg=1"));
+				smsg.Redirect(ucl.Url("register_error/" + salt + "?arg=1"));
 			}
 		} else {
 			if (rmc.get(0).equals("register_ok")) {
@@ -83,7 +83,7 @@ public class iregister_action extends BaseSurface {
 			// echo(e.getMessage());
 			// isOK = false;
 		}
-		 echo(getErrorMsg());
+		 //echo(getErrorMsg());
 		// echo("++");
 		if (getErrorMsg() == null) {
 			isOK = true;

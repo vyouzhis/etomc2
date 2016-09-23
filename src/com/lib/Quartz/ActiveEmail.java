@@ -50,8 +50,9 @@ public class ActiveEmail extends SimpleQuartz implements Job{
 			echo("msg is null");
 			return;
 		}
-			
+		
 		MailSender mSender = new MailSender();
+		mSender.setTls(false);
 		mSender.setSubject(Msg.get("subject").toString());
 		mSender.setText(Msg.get("text").toString());
 		mSender.To(Msg.get("email").toString());		

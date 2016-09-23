@@ -24,7 +24,7 @@ public class iregister extends BaseSurface {
 			ShowMessage ms = ShowMessage.getInstance();
 			String url = ucl.BuildUrl("icore", time() + "");
 
-			ms.ShowMsg(url);
+			ms.Redirect(url);
 						
 			return;
 		}

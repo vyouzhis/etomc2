@@ -10,7 +10,7 @@
 function ListBookMarksCode(act, cid) {
 	
 	$.ajax({
-				url : "/etomc2/bookmark?jsoncallback=?",
+				url : DomainUrl+"/bookmark?jsoncallback=?",
 				contentType : 'text/html;charset=utf-8',
 				data : {
 					"act" : act,
@@ -66,7 +66,7 @@ function ListBookMarksStra(code, name, cid, i){
 	addCode(code, name);
 		
 	$.ajax({
-		url : "/etomc2/bookmark?jsoncallback=?",
+		url : DomainUrl+"/bookmark?jsoncallback=?",
 		contentType : 'text/html;charset=utf-8',
 		data : {
 			"act" : 2,
@@ -114,7 +114,7 @@ function addBookMark(i, cid) {
 	var dataList = 'act=' + i+"&sid=" + straListData[nowTId]['id'] + "&code=" + code +"&name="+StockCodeName+"&cid="+cid ;
 		
 	$.ajax({
-		url : "/etomc2/bookmark?jsoncallback=?",
+		url : DomainUrl+"/bookmark?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data : dataList,
 		type : 'POST',

@@ -10,6 +10,7 @@ var myChart = echarts.init(document.getElementById('echart_k'));
 var StockJsonDBHFQ = "";
 var StockMd=0;
 var ToolTip=true;
+var SliceStock=60;
 
 function showChart(dt) {
 	if (dt.length > 10) {
@@ -50,9 +51,12 @@ function InitStockData(JsonData) {
 		}
 		
 		seriesData['type'] = "k";
-
-		for ( var k in Json) {
-			sdate = Json[k]['date'].replace(/ 00:00:00/g, "");
+		var start = Json.length-SliceStock;
+		
+		var Json_Slice = Json.slice(start);
+				
+		for ( var k in Json_Slice) {
+			sdate = Json_Slice[k]['date'].replace(/ 00:00:00/g, "");
 
 			if (bool == 0) {
 
@@ -61,10 +65,10 @@ function InitStockData(JsonData) {
 			// console.log("sdate:" +sdate );
 			var datalist = [];
 			// 开盘，收盘，最低，最高
-			datalist.push(Json[k]['open']);
-			datalist.push(Json[k]['close']);
-			datalist.push(Json[k]['low']);
-			datalist.push(Json[k]['high']);
+			datalist.push(Json_Slice[k]['open']);
+			datalist.push(Json_Slice[k]['close']);
+			datalist.push(Json_Slice[k]['low']);
+			datalist.push(Json_Slice[k]['high']);
 			shList.push(datalist);
 		}
 		bool = 1;
@@ -189,15 +193,17 @@ function hfqStockData(dtype) {
 		var Json = JsonData[cn];
 
 		var shList = [];
-
-		for ( var k in Json) {
+		var start = Json.length-SliceStock;
+		
+		var Json_Slice = Json.slice(start);
+		for ( var k in Json_Slice) {
 
 			var datalist = [];
 			// 开盘，收盘，最低，最高
-			datalist.push(Json[k]['open']);
-			datalist.push(Json[k]['close']);
-			datalist.push(Json[k]['low']);
-			datalist.push(Json[k]['high']);
+			datalist.push(Json_Slice[k]['open']);
+			datalist.push(Json_Slice[k]['close']);
+			datalist.push(Json_Slice[k]['low']);
+			datalist.push(Json_Slice[k]['high']);
 			shList.push(datalist);
 		}
 	}
@@ -232,9 +238,11 @@ function AddmaData() {
 			var Json = JsonData[cn];
 
 			var shList = [];
-
-			for ( var k in Json) {				
-				shList.push(Json[k][lk]);
+			var start = Json.length-SliceStock;
+			
+			var Json_Slice = Json.slice(start);
+			for ( var k in Json_Slice) {				
+				shList.push(Json_Slice[k][lk]);
 			}
 		}
 
@@ -296,7 +304,7 @@ function KChart() {
 
 function getStockData(code) {
 	$.ajax({
-		url : "/etomc2/stockdata?jsoncallback=?",
+		url : DomainUrl+"/stockdata?jsoncallback=?",
 		contentType : 'text/html;charset=utf-8',
 
 		data : {

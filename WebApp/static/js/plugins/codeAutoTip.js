@@ -20,7 +20,7 @@ function CodeAuto() {
 						}
 
 						$.ajax({
-									url : "/etomc2/stockcode?jsoncallback=?",
+									url : DomainUrl+"/stockcode?jsoncallback=?",
 									contentType : 'text/html;charset=utf-8',
 
 									data : {

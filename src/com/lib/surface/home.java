@@ -1,6 +1,7 @@
 package com.lib.surface;
 
 import org.ppl.BaseClass.BaseSurface;
+import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 
 public class home extends BaseSurface{
@@ -25,6 +26,19 @@ public class home extends BaseSurface{
 		
 		
 		setRoot("root_var", "var a=1;");
+		
+		int is = isLogin();
+		if(is<1){
+			setRoot("IndexTopBar", "1");
+			String salt = getSalt();
+			
+			setRoot("Salt", salt);
+			setRoot("ilogin_action_uri", ucl.Url("loginAction"));
+		}else {
+			ShowMessage sm = ShowMessage.getInstance();
+			
+			sm.Redirect("uindex");
+		}
 		
 		super.View();
 	}

@@ -25,15 +25,6 @@ public class ShowMessage {
 		response = res;
 	}
 	
-	public void ShowMsg(String url) {
-		try {
-			response.sendRedirect(url);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-	}
-	
 	public String SetMsg(String surl, String msg, int limittime) {
 		String url = surl;
 		
@@ -83,14 +74,23 @@ public class ShowMessage {
 		return msg;
 	}
 	
-	public void forward(String url) {
+	public void Forward(String url) {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(url);
-
+		
 		try {
 			dispatcher.forward(request, response);
 		} catch (ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+	public void Redirect(String url) {
+		try {
+			response.sendRedirect(url);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

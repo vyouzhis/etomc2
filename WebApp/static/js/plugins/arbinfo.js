@@ -11,7 +11,7 @@ var StockDescCode = "";
 function selling(c) {
 	var dataList = 'act=0&code=' + c;
 	$.ajax({
-		url : "/etomc2/arbinfo?jsoncallback=?",
+		url : DomainUrl+"/arbinfo?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data : dataList,
 		type : 'POST',
@@ -42,7 +42,7 @@ function showStockDesc(c, n) {
 function showStrategy() {
 	var dataList = 'act=1&code=' + StockDescCode;
 	$.ajax({
-		url : "/etomc2/arbinfo?jsoncallback=?",
+		url : DomainUrl+"/arbinfo?jsoncallback=?",
 		contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
 		data : dataList,
 		type : 'POST',

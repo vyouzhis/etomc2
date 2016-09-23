@@ -21,6 +21,6 @@ public class icore_logout extends BaseiCore {
 		UrlClassList ucl = UrlClassList.getInstance();
 		String url = ucl.BuildUrl("login", "");
 
-		ms.ShowMsg(url);
+		ms.Redirect(url);
 	}
 }

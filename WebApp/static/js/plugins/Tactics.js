@@ -14,7 +14,7 @@ function Tactics() {
 	}
 		
 	$.ajax({
-		url : "/etomc2/ptactics?jsoncallback=?",
+		url : DomainUrl+"/ptactics?jsoncallback=?",
 		contentType : 'text/html;charset=utf-8',
 
 		data : {
