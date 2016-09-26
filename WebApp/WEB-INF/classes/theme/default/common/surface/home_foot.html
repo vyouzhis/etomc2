@@ -1,12 +1,11 @@
-<script src="${static_js_uri}/plugins/echart2/echarts-all.js?ver=${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/showChart.js?ver=${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/md5/jquery.md5.js?ver=${StaticVer}"></script>
+<script src="${static_js_uri}/plugins/echart2/echarts-all.js${StaticVer}"></script>
+<script src="${static_js_uri}/plugins/showChart.js${StaticVer}"></script>
+<script src="${static_js_uri}/plugins/md5/jquery.md5.js${StaticVer}"></script>
 <script>
 	StockMd = 1;
 	ToolTip = false;
-	var DomainUrl="";
+	var DomainUrl = "";
 	getStockData("hs300");
-		
 
 	/**
 	 *  测试在首页 的 变量
@@ -30,5 +29,91 @@
 		$('#kaptchaImage').attr('src',
 				'/etomc2/captcha_image?' + Math.floor(Math.random() * 100))
 				.fadeIn();
+	}
+</script>
+
+<script type="text/javascript">
+	var webSocket;
+
+	openSocket();
+	function openSocket() {
+		// Ensures only one connection is open at a time
+		if (webSocket !== undefined
+				&& webSocket.readyState !== WebSocket.CLOSED) {
+			writeResponse("WebSocket is already opened.");
+			return;
+		}
+		// Create a new instance of the websocket
+		webSocket = new WebSocket("ws://w.etomc2.com:8080/etomc2");
+
+		/**
+		 * Binds functions to the listeners for the websocket.
+		 */
+		webSocket.onopen = function(event) {
+			// For reasons I can't determine, onopen gets called twice
+			// and the first time event.data is undefined.
+			// Leave a comment if you know the answer.
+			if (event.data === undefined)
+				return;
+
+			writeResponse(event.data);
+		};
+
+		webSocket.onmessage = function(event) {
+			writeResponse(event.data);
+		};
+
+		webSocket.onclose = function(event) {
+			writeResponse("Connection closed");
+		};
+	}
+
+	/**
+	 * Sends the value of the text input to the server
+	
+	function send(){
+	    var text = document.getElementById("messageinput").value;
+	    webSocket.send(text);
+	}
+	
+	function closeSocket(){
+	    webSocket.close();
+	}  */
+
+	function writeResponse(text) {
+		if(text.length < 30)return;
+		var sdb = text.replace(/u'/g, "'");
+		sdb = sdb.replace(/'/g, "\"");
+		
+		var StockJson = JSON.parse(sdb);
+		
+		console.log("code:"+ StockJson);
+		
+		var html = "";
+		for(var i=0; i<StockJson.length; i++){
+			
+			var val = StockJson[i]['price'] - StockJson[i]['pre_close'];
+			val = val.toFixed(2);
+			
+			var pec = val/StockJson[i]['open'] * 100;
+			pec = pec.toFixed(2);
+			
+			var isUp = "up";
+			if(val < 0){
+				isUp = "down";
+			}
+			html += "<div class='knowledge'>"+
+							"<h2>"+
+							"<a href='#' >"+ StockJson[i]['name']+ "<span class='pull-right "+isUp+"' >"+ StockJson[i]['price']+"</span></a>"+
+						"</h2>"+
+						"<ul class='list-unstyled "+isUp+"'>"+
+							"<li><i class='fa fa-long-arrow-"+isUp+" pull-left'></i>"+
+							"<h4 >"+ val +"</h4></li>"+
+							"<li><i class='fa fa-long-arrow-"+isUp+" pull-left'> </i>"+
+							"<h4 >"+pec+"%</h4></li>"+
+						"</ul>"+
+					"</div>";
+		}
+		$("#loop_data").html(html);
 	}
 </script>

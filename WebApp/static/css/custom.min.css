@@ -168,3 +168,64 @@ ul.notifications {
 .login-box .text-right {
     padding-top: 5px;
 }
+
+.features .featured-item-img {
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 252px;
+}
+.features .header h4 {
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 30px;
+}
+.featured-item .icon-style {
+    border: 1px solid #0099ff;
+    border-radius: 100%;
+    height: 60px;
+    padding: 15px 0;
+    text-align: center;
+    transition: all 0.5s ease 0s;
+    width: 60px;
+}
+.featured-item .icon i {
+    color: #0099ff;
+    font-size: 30px;
+    margin-top: 0;
+}
+.featured-item h3 {
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.featured-item p {
+    letter-spacing: 0.5px;
+    margin-bottom: 50px;
+}
+.featured-item .meta-text {
+    margin-left: 80px;
+}
+.featured-item .icon {
+    float: left;
+    height: 60px;
+    width: 60px;
+}
+.featured-item:hover .icon-style {
+    border-radius: 0;
+}
+.featured-item .icon i {
+    color: #0099ff;
+}
+.featured-item h3 {
+    color: #2e2e2e;
+}
+
+.up {
+    color: #c10;
+}
+
+.down {
+    color: #383;
+}

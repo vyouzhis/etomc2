@@ -1,7 +1,10 @@
 package org.ppl.etc;
 
 import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.websocket.Session;
 
 import org.quartz.Scheduler;
 
@@ -56,10 +59,12 @@ public class globale_config {
 	
 	public static MongoClient mongoClient = null;
 	
+	public static Map<String, Session> allSession = new HashMap<String, Session>();
+	
 	//Quartz
 	public static Scheduler scheduler = null;
 	
-	public static int allStaticVer = 0;
+	public static String allStaticVer = "";
 				
 	public static globale_config getInstance() {
 		if (config == null) {

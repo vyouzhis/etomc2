@@ -34,6 +34,9 @@ public class UpdateAllStockMarket extends CronQuartz implements Job {
 			String out = new Shell.Plain(shell).exec("python /root/tushare_pro/tushare_mongo.py");
 			
 			new Shell.Plain(shell).exec("python /root/tushare_pro/tushare_mongo.py hs300");
+			new Shell.Plain(shell).exec("python /root/tushare_pro/tushare_mongo.py sh");
+			new Shell.Plain(shell).exec("python /root/tushare_pro/tushare_mongo.py sz");
+			new Shell.Plain(shell).exec("python /root/tushare_pro/tushare_mongo.py sz50");
 			echo(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

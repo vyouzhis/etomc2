@@ -1,5 +1,9 @@
 package com.lib.surface;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
@@ -34,6 +38,8 @@ public class home extends BaseSurface{
 			
 			setRoot("Salt", salt);
 			setRoot("ilogin_action_uri", ucl.Url("loginAction"));
+			
+			listStrategy();
 		}else {
 			ShowMessage sm = ShowMessage.getInstance();
 			
@@ -41,5 +47,23 @@ public class home extends BaseSurface{
 		}
 		
 		super.View();
+	}
+	
+	private void listStrategy() {
+		String sql = "(SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=1 limit 2 )UNION "
+				+ "(SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=2 limit 2) UNION "
+				+ "(SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=3 limit 2)";
+		
+		List<Map<String, Object>> res = null;
+		
+		try {
+			res = FetchAll(sql);
+			if(res!=null){
+				setRoot("listStrategy", res);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
