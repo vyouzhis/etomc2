@@ -1,12 +1,28 @@
+<script src="${static_js_uri}/plugins/echart2/echarts-all.js${StaticVer}"></script>
+<script src="${static_js_uri}/plugins/etomc2_gather.js${StaticVer}"></script>
 <script type="text/javascript">
 	var StockCid = ${Step_Type!1};
-</script>
+		
 
-<script src="${static_js_uri}/plugins/echart2/echarts-all.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/talk.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/showChart.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/codeAutoTip.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/bookmark.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/strategyjs.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/mainjs.js${StaticVer}"></script>
-<script src="${static_js_uri}/plugins/Tactics.js${StaticVer}"></script>
+	jQuery(function($) {
+		
+		
+		getStockData("hs300");
+
+		getPage(1);
+
+		CodeAuto();
+		
+		ListBookMarksCode(1, StockCid);
+
+		$("#listtab1").click(function() {
+			StockCode = "";
+			StockSid = straListData[nowTId]['id'];
+		});
+
+		$("#listtab2").click(function() {
+			StockCode = $("#code_num").val();
+			StockSid = 0;
+		});
+	});
+</script>
