@@ -40,30 +40,45 @@ ${ClazzHeader!""}
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default " role="navigation">
 			<div class="container">
-			<#if IndexTopBar ??>			
+				<#if IndexTopBar ??>
+
 				<div class="topbar">
-				<form role="form" class="form-horizontal" action="${ilogin_action_uri}" enctype="multipart/form-data" method="post">
-					<ul class="list-inline top-nav">
-						
-						<li><p><em>还没有账号?</em> <a href="${register}"><strong>注册</strong></a></p></li>
-						<li><div class="input-group input-group-sm">
-								<span class="input-group-addon"><i class="fa fa-envelope"></i></span> <input type="email" placeholder="Email"
-									id="email" name="email" class="form-control"> </span>
-							</div></li>
-						<li>
+					<form role="form" class="form-horizontal" action="${ilogin_action_uri}" enctype="multipart/form-data" method="post">
+						<ul class="list-inline top-nav">
+
+
+							<li><p>
+									<em>还没有账号?</em> <a href="${register}"><strong>注册</strong></a>
+								</p></li>
+						</ul>
+
+
+						<div class="searchbox">
+
 							<div class="input-group input-group-sm">
-								<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-								<input type="password" placeholder="密码" id="Password" name="Password" class="form-control"> </span>
-								<span class="input-group-btn">
-									<button type="submit" class="btn btn-default"><i class="fa fa-sign-in"></i></button>
-								</span>								
-								<input style="display:none;" type="text" id="salt" name="salt" value="${Salt!''}" />
+								<input style="display: none;" type="text" id="salt" name="salt" value="${Salt!''}" /> <span
+									class="input-group-addon"><i class="fa fa-envelope"></i></span> <input type="email" placeholder="Email"
+									id="email" name="email" class="form-control"> </span>
 							</div>
-						</li>
-					</ul>
+
+						</div>
+						<div class="searchbox">
+							<form method="post">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon"><i class="fa fa-lock"></i></span> <input type="password" placeholder="密码"
+										id="Password" name="Password" class="form-control"> </span> <span class="input-group-btn">
+										<button class="btn btn-default" type="submit">
+											<i class="fa fa-search"></i>
+										</button>
+									</span>
+								</div>
+							</form>
+						</div>
 					</form>
 				</div>
+
 				</#if>
+
 				<!-- 用户登录进来 -->
 
 
@@ -87,8 +102,9 @@ ${ClazzHeader!""}
 
 
 							</ul></li>
-						<li class="dropdown "><a data-toggle="dropdown" class="dropdown-toggle" href="#"><#if UserName ??> ${UserName} <#else>用户 </#if> <i
-								class="fa fa-angle-down"></i></a>
+						<li class="dropdown "><a data-toggle="dropdown" class="dropdown-toggle" href="#"><#if UserName ??>
+								${UserName} <#else>用户 </#if> <i class="fa fa-angle-down"></i>
+						</a>
 							<ul role="menu" class="dropdown-menu">
 								<#if islogin == -1>
 								<li><a href="${register}">用户注册</a></li>
@@ -136,7 +152,7 @@ ${ClazzHeader!""}
 						</li> -->
 						<li class="dropdown mega-menu"><a href="index.html#" data-toggle="dropdown">关于 <i class="fa fa-angle-down"></i></a>
 							<ul class="dropdown-menu" role="menu">
-								<li><a href="${about}">关于我们</a></li>								
+								<li><a href="${about}">关于我们</a></li>
 							</ul></li>
 
 					</ul>

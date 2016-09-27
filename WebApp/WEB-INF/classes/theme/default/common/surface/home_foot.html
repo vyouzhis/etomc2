@@ -104,14 +104,14 @@
 			}
 			html += "<div class='knowledge'>"+
 							"<h2>"+
-							"<a href='#' >"+ StockJson[i]['name']+ "<span class='pull-right "+isUp+"' >"+ StockJson[i]['price']+"</span></a>"+
+							"<a href='#' >"+ StockJson[i]['name']+ "<span class='pull-right "+isUp+"' ><i class='fa fa-long-arrow-"+isUp+" pull-left'></i>"+ StockJson[i]['price']+"</span></a>"+
 						"</h2>"+
-						"<ul class='list-unstyled "+isUp+"'>"+
-							"<li><i class='fa fa-long-arrow-"+isUp+" pull-left'></i>"+
-							"<h4 >"+ val +"</h4></li>"+
-							"<li><i class='fa fa-long-arrow-"+isUp+" pull-left'> </i>"+
-							"<h4 >"+pec+"%</h4></li>"+
-						"</ul>"+
+						"<div class='row '>"+
+							"<div class= 'col-sm-6 col-xs-6'>"+
+							"<h4 class='"+isUp+"'>"+ val +"</h4></div>"+
+							"<div class= 'col-sm-6 col-xs-6 text-right'>"+
+							"<h4 class='"+isUp+"'>"+pec+"%</h4></div>"+
+						"</div>"+
 					"</div>";
 		}
 		$("#loop_data").html(html);

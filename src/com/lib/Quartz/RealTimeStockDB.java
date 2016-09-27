@@ -60,6 +60,10 @@ public class RealTimeStockDB extends CronQuartz implements Job {
 	}
 
 	private String getStockDB() {
+		
+		String nowTime = DateFormat((long)time(), "yyyy-MM-dd HH:mm:ss");
+		echo("RealTimeStockDB execute  ...."+nowTime);
+		
 		Shell shell = null;
 		String out = "";
 		try {
