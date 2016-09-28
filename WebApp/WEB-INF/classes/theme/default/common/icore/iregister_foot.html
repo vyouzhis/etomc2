@@ -12,17 +12,21 @@
 	function validateForm() {
 		
 		if(!validateEmail($("#email").val())){
+			$("#password").val("");
 			return false;
 		}
 		
 		if($("#nickname").val().length == 0){
+			$("#password").val("");
 			return false;
 		}
 		if($("#password").val().length == 0){
+			$("#password").val("");
 			return false;
 		}
 		
 		if($("#phone").val().length == 0){
+			$("#password").val("");
 			return false;
 		}
 		
@@ -42,7 +46,7 @@
 
 	function changeCode() {
 		$('#kaptchaImage').attr('src',
-				'/etomc2/captcha_image?' + Math.floor(Math.random() * 100))
+				'${captcha_image}?' + Math.floor(Math.random() * 100))
 				.fadeIn();
 	}
 
@@ -51,7 +55,7 @@
 		var verify = $("#verify").val();
 
 		$.ajax({
-			url : "/etomc2/captcha_check?jsoncallback=?",
+			url : "${captcha_check}?jsoncallback=?",
 			contentType : 'text/html;charset=utf-8',
 
 			data : {

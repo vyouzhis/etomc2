@@ -27,7 +27,7 @@ public class BaseView extends ACLControl {
 	public void View() {
 
 		if (root == null) {
-			echo("root is null");
+			echo("class Name: "+stdClass + " root is null");
 			return;
 		}
 
@@ -79,8 +79,8 @@ public class BaseView extends ACLControl {
 		setRoot("static_uri", porg.getContext_Path());
 		setRoot("static_css_uri", porg.getContext_Path() + "/static/css");
 		setRoot("static_js_uri", porg.getContext_Path() + "/static/js");
-		setRoot("static_avatars_uri", porg.getContext_Path()
-				+ "/static/ace/avatars");
+		setRoot("static_ico", porg.getContext_Path()
+				+ "/static/ico");
 		setRoot("data_uri",
 				mConfig.GetValue("data.imghost") + porg.getContext_Path()
 						+ "/Data/");

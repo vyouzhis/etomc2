@@ -1,6 +1,7 @@
 package com.lib.plug;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -74,7 +75,7 @@ public class EMC2WebSocketServer extends PObject {
 		Shell shell = null;
 		String out = "";
 		try {
-			shell = new SSHByPassword("192.168.122.151", 22, "root",
+			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22, mConfig.GetValue("pythonUser"),
 					"!@#qazwsx");
 
 			out = new Shell.Plain(shell)

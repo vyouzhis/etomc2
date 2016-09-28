@@ -67,7 +67,7 @@ public class RealTimeStockDB extends CronQuartz implements Job {
 		Shell shell = null;
 		String out = "";
 		try {
-			shell = new SSHByPassword("192.168.122.151", 22, "root",
+			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22, mConfig.GetValue("pythonUser"),
 					"!@#qazwsx");
 
 			out = new Shell.Plain(shell)

@@ -89,17 +89,14 @@ public class PorG  extends function {
 			String paramName = parameterNames.nextElement();
 			String[] paramValues = request.getParameterValues(paramName);
 			
-			String pres = Check(paramValues[0]);
-			
+			String pres = Check(paramValues[0]);			
 //			try {
 //				pres = new String(pres.getBytes("iso8859-1"),
 //						"UTF-8");				
 //			} catch (UnsupportedEncodingException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
-//			}
-			
-			
+//			}						
 			sporg.put(paramName, pres);
 		}
 		if (contentType != null
