@@ -54,7 +54,7 @@ function selling(c) {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
@@ -65,7 +65,7 @@ function selling(c) {
 			BellNotifi(msg);
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 }
@@ -85,7 +85,7 @@ function showStrategy() {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
@@ -111,7 +111,7 @@ function showStrategy() {
 			}
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 }
@@ -150,7 +150,7 @@ TabbedNotification = function(options) {
 			+ options.text + "</p></div>";
 
 	if (!document.getElementById('custom_notifications')) {
-		alert('doesnt exists');
+		BellNotifi('doesnt exists');
 	} else {
 		$('#custom_notifications ul.notifications')
 				.append(
@@ -228,7 +228,7 @@ function ListBookMarksCode(act, cid) {
 					"cid":cid
 				},
 				success : function(result) {
-					// console.log("success" + result);
+					// //console.log("success" + result);
 				},
 				error : function(request, textStatus, errorThrown) {
 					// alert(textStatus);
@@ -237,7 +237,7 @@ function ListBookMarksCode(act, cid) {
 															// info
 					var option = request.responseText;
 					if(option.length < 5) return;
-					//console.log("option:" + option);
+					////console.log("option:" + option);
 					var Json = JSON.parse(option);
 					var html="";
 					for(var i=0; i<Json.length; i++){
@@ -285,7 +285,7 @@ function ListBookMarksStra(code, name, cid, i){
 			"code": code
 		},
 		success : function(result) {
-			// console.log("success" + result);
+			// //console.log("success" + result);
 		},
 		error : function(request, textStatus, errorThrown) {
 			// alert(textStatus);
@@ -293,7 +293,7 @@ function ListBookMarksStra(code, name, cid, i){
 		complete : function(request, textStatus) { // for additional
 													// info
 			var option = request.responseText;
-			//console.log("option:" + option);
+			////console.log("option:" + option);
 			var Json = JSON.parse(option);
 			var htmlList="";
 			for(var i=0; i<Json.length; i++){
@@ -331,12 +331,12 @@ function addBookMark(i, cid) {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
 			var option = request.responseText;
-			//console.log("option:" + option);
+			////console.log("option:" + option);
 			var i = parseInt(option);
 			var msg = "添加成功!";
 			if(i==-1){
@@ -352,7 +352,7 @@ function addBookMark(i, cid) {
 			BellNotifi(msg);
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 }
@@ -386,7 +386,7 @@ function CodeAuto() {
 										"codeext" : code,
 									},
 									success : function(result) {
-										// console.log("success" + result);
+										// //console.log("success" + result);
 									},
 									error : function(request, textStatus,
 											errorThrown) {
@@ -394,7 +394,7 @@ function CodeAuto() {
 									},
 									complete : function(request, textStatus) {
 										var option = request.responseText;
-										// console.log("option:" + option);
+										// //console.log("option:" + option);
 										if (option.length > 2) {
 											var JsonList = JSON.parse(option);
 
@@ -420,7 +420,7 @@ function CodeAuto() {
 											
 											$("#codeMenu").html(html);
 										} else {
-											console.log("option:" + option);
+											//console.log("option:" + option);
 										}
 									}
 								});
@@ -437,7 +437,7 @@ function addCode(o, n) {
 
 	$("#talkNameCode").focus();
 
-	//console.log("code:" + o);
+	////console.log("code:" + o);
 
 	// 获取股票的讨论内容
 	listTalk(0, 0, o);
@@ -480,7 +480,7 @@ function getCookie(cname) {
 
 function showChart(dt) {
 	if (dt.length > 10) {
-		// console.log("JsonList:" + dt );
+		// //console.log("JsonList:" + dt );
 		StockJsonDBHFQ = JSON.parse(dt);
 		InitStockData(StockJsonDBHFQ['data'][0]);
 		if(StockMd==0){
@@ -495,14 +495,14 @@ function InitStockData(JsonData) {
 	var bool = 0;
 	var seriesList = [];
 
-	 console.log(JSON.stringify(JsonData));
+	 //console.log(JSON.stringify(JsonData));
 	// var JsonData = JsonList;
 	for ( var cn in JsonData) {
-		//console.log("cn:" + cn);
+		////console.log("cn:" + cn);
 		if (cn == "_id")
 			continue;
 		var Json = JsonData[cn];
-		// console.log("Json:" + Json );
+		// //console.log("Json:" + Json );
 		if(cn=="hs300"){
 			legendName.push("沪深300指数");
 		}else{
@@ -528,7 +528,7 @@ function InitStockData(JsonData) {
 
 				DateList.push(sdate);
 			}
-			// console.log("sdate:" +sdate );
+			// //console.log("sdate:" +sdate );
 			var datalist = [];
 			// 开盘，收盘，最低，最高
 			datalist.push(Json_Slice[k]['open']);
@@ -549,7 +549,7 @@ function InitStockData(JsonData) {
 		tooltip : {
 			trigger : 'axis',
 			formatter : function(params) {
-				//console.log("params:" +JSON.stringify(params) );
+				////console.log("params:" +JSON.stringify(params) );
 				var res = "";
 				for (var m = 0; m < params.length; m++) {
 					if (params[m]['series']['type'] == "k") {
@@ -626,7 +626,7 @@ function InitStockData(JsonData) {
 		series : seriesList
 	};
 
-	// console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
+	// //console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
 
 	ChartRefresh(JsonOpton);
 }
@@ -644,7 +644,7 @@ $(function() {
 
 function hfqStockData(dtype) {
 	if (StockJsonDBHFQ[dtype] == undefined) {
-		console.log("StockJsonDBHFQ null !");
+		//console.log("StockJsonDBHFQ null !");
 		return;
 	}
 
@@ -653,7 +653,7 @@ function hfqStockData(dtype) {
 	var oldOption = getChartOption();
 
 	for ( var cn in JsonData) {
-	//	console.log("cn:" + cn);
+	//	//console.log("cn:" + cn);
 		if (cn == "_id")
 			continue;
 		var Json = JsonData[cn];
@@ -681,7 +681,7 @@ function hfqStockData(dtype) {
 		}
 	}
 
-	// console.log("oldOption:" + JSON.stringify(oldOption));
+	// //console.log("oldOption:" + JSON.stringify(oldOption));
 
 	ChartRefresh(oldOption);
 }
@@ -698,7 +698,7 @@ function AddmaData() {
 		var hsData = [];
 
 		for ( var cn in JsonData) {
-			//console.log("cn:" + cn);
+			////console.log("cn:" + cn);
 			if (cn == "_id")
 				continue;
 			var Json = JsonData[cn];
@@ -719,7 +719,7 @@ function AddmaData() {
 function addChartLineData(isSelect, lname, hsData) {
 	var oldOption = getChartOption();
 	
-	//console.log("== oldOption:" + JSON.stringify(oldOption));
+	////console.log("== oldOption:" + JSON.stringify(oldOption));
 	
 	var legendName = oldOption['legend']['data'];
 
@@ -745,7 +745,7 @@ function addChartLineData(isSelect, lname, hsData) {
 	oldOption['legend']['data'] = legendName;
 	oldOption['series'] = seriesList;
 
-	// console.log("oldOption:" + JSON.stringify(oldOption));
+	// //console.log("oldOption:" + JSON.stringify(oldOption));
 
 	ChartRefresh(oldOption);
 }
@@ -763,7 +763,7 @@ function ChartRefresh(o) {
 function KChart() {
 	var code = $("#code_num").val();
 	if (code.length == 0) {
-		alert("请填写代码");
+		BellNotifi("请填写代码");
 		return;
 	}
 	$("#icode").html(code);
@@ -779,14 +779,14 @@ function getStockData(code) {
 			"code" : code,
 		},
 		success : function(result) {
-			// console.log("success" + result);
+			// //console.log("success" + result);
 		},
 		error : function(request, textStatus, errorThrown) {
 			// alert(textStatus);
 		},
 		complete : function(request, textStatus) { // for additional info
 			var option = request.responseText;
-			// console.log("option:" + option);
+			// //console.log("option:" + option);
 			StockData = option;
 			showChart(StockData);
 		}
@@ -820,7 +820,7 @@ function istrSelect(i) {
 	$("#talkNameStra").html("<i class='fa fa-flask'></i>" + name);
 
 	$("#comment-sid").val(straListData[i]['id']);
-	//console.log("sid:" + straListData[i]['id']);
+	////console.log("sid:" + straListData[i]['id']);
 
 	// 获取策略的讨论内容
 	listTalk(0, straListData[i]['id'], "");
@@ -846,7 +846,7 @@ function istrSelect2(name, sid, i) {
 	$("#talkNameStra").html("<i class='fa fa-flask'></i>" + name);
 
 	$("#comment-sid").val(sid);
-	//console.log("sid:" + straListData[i]['id']);
+	////console.log("sid:" + straListData[i]['id']);
 
 	// 获取策略的讨论内容
 	listTalk(0, sid, "");
@@ -865,17 +865,17 @@ function getPage(p) {
 					"p" : p
 				},
 				success : function(result) {
-					//console.log("success" + result);
+					////console.log("success" + result);
 				},
 				error : function(request, textStatus, errorThrown) {
 					//alert(textStatus);
 				},
 				complete : function(request, textStatus) { //for additional info
 					var option = request.responseText;
-					//console.log("option:" + option);
+					////console.log("option:" + option);
 					var Json = JSON.parse(option);
 					$("#straPage").html(Json['page']);
-					//console.log("option:" + Json['data']);
+					////console.log("option:" + Json['data']);
 																						
 					var ListStrHtml = "";
 					for (i = 0; i < Json['data'].length; i++) {
@@ -920,7 +920,7 @@ function getPage(p) {
 					}
 
 					$("#straList").html(ListStrHtml);
-					//console.log("talkListInit:" + talkListInit);
+					////console.log("talkListInit:" + talkListInit);
 					straListData = Json['data'];
 					var name = straListData[0]['title'];
 					
@@ -947,7 +947,7 @@ function getPage(p) {
 function Tactics() {
 	var code = $("#code_num").val();
 	if (code.length == 0) {
-		alert("请填写代码");
+		BellNotifi("请填写代码");
 		return;
 	}
 		
@@ -960,7 +960,7 @@ function Tactics() {
 			"id" : straListData[nowTId]['id'],
 		},
 		success : function(result) {
-			// console.log("success" + result);
+			// //console.log("success" + result);
 		},
 		error : function(request, textStatus, errorThrown) {
 			// alert(textStatus);
@@ -985,7 +985,7 @@ function tacticsChart(codeJson){
 	var cReturn = codeJson['returns'];
 	var cData = [];
 	for ( var k in cReturn) {
-		// console.log("hs300 k:" + cReturn[k]['time']);
+		// //console.log("hs300 k:" + cReturn[k]['time']);
 
 		cData.push(cReturn[k]['item']);
 	}
@@ -1089,13 +1089,15 @@ function toAscii(valueStr) {
 	return text;
 }
 
+function URLencode(sStr){  
+    return sStr.replace(/%/g, '%25');  
+} 
+
 function saveTalk() {
-	// var icore = getCookie("iCore");
 
 	var msg = $("#comment-text").val();
-
-	var dataList = 'msg=' + msg + "&sid=" + StockSid + "&code=" + StockCode + "&pid=" + 0;
-	//console.log(dataList);
+	
+	var dataList = 'msg=' + URLencode(msg) + "&sid=" + StockSid + "&code=" + StockCode + "&pid=" + 0;
 
 	$.ajax({
 		url : DomainUrl+"/italk?jsoncallback=?",
@@ -1104,15 +1106,15 @@ function saveTalk() {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
 			var option = request.responseText;
-			//console.log("option:" + option);
+			////console.log("option:" + option);
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 
@@ -1137,7 +1139,7 @@ function listTalk(p, sid, code) {
 					"p" : p
 				},
 				success : function(result) {
-					// console.log("success" + result);
+					// //console.log("success" + result);
 				},
 				error : function(request, textStatus, errorThrown) {
 					// alert(textStatus);
@@ -1145,7 +1147,7 @@ function listTalk(p, sid, code) {
 				complete : function(request, textStatus) { // for additional
 					// info
 					var option = request.responseText;
-					// console.log("option:" + option);
+					// //console.log("option:" + option);
 					var Json = JSON.parse(option);
 					StockInfoData = Json["StockInfo"];
 				
@@ -1238,7 +1240,7 @@ function listTalk(p, sid, code) {
 						$("#comment-code").val(code);						
 					}
 					
-					//console.log("page:" + Json['page']);
+					////console.log("page:" + Json['page']);
 					if(sid != 0){
 						$("#talkListPageStra").html(Json['page']);
 					}else{
@@ -1251,7 +1253,7 @@ function listTalk(p, sid, code) {
 }
 
 function tReplay(o){
-	console.log("replay:" + JSON.stringify(o));
+	//console.log("replay:" + JSON.stringify(o));
 	var val = "@"+o['nickname']+":"+o['msg'];
 	$("#comment-text").val(val);
 }

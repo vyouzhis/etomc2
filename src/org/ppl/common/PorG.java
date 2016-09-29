@@ -88,11 +88,13 @@ public class PorG  extends function {
 			
 			String paramName = parameterNames.nextElement();
 			String[] paramValues = request.getParameterValues(paramName);
-			
-			String pres = Check(paramValues[0]);			
+			echo("start:"+paramValues[0]);
+			String pres = Check(paramValues[0]);		
+			echo("end:"+pres);
 //			try {
 //				pres = new String(pres.getBytes("iso8859-1"),
-//						"UTF-8");				
+//						"UTF-8");		
+//			echo(o);
 //			} catch (UnsupportedEncodingException e) {
 //				// TODO Auto-generated catch block
 //				e.printStackTrace();
@@ -155,6 +157,7 @@ public class PorG  extends function {
 	}
 
 	private String Check(String value) {
+		//value = value.replace("%", "");
 		//value = value.replace("'", "&apos;");
 		//value = value.replaceAll("&", "&amp;");
 		//value = value.replace("\"", "&quot;");

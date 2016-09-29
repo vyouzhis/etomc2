@@ -3,6 +3,7 @@ package com.lib.api;
 import java.sql.SQLException;
 
 import org.ppl.BaseClass.BaseiCore;
+import org.ppl.common.Escape;
 
 public class iTalk extends BaseiCore {
 	private String className = null;
@@ -36,6 +37,7 @@ public class iTalk extends BaseiCore {
 		int sid = toInt(porg.getKey("sid"));
 		int uid = igetUid();
 		String msg = porg.getKey("msg");
+	
 		String code = porg.getKey("code");
 		if(code==null){
 			code="";
