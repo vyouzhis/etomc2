@@ -1,13 +1,13 @@
 package com.lib.plug;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
 
 import org.ppl.core.PObject;
 import org.ppl.etc.globale_config;
@@ -70,13 +70,13 @@ public class EMC2WebSocketServer extends PObject {
 		}
 		echo("Session " + session.getId() + " has ended");
 	}
-	
+
 	private String getStockDB() {
 		Shell shell = null;
 		String out = "";
 		try {
-			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22, mConfig.GetValue("pythonUser"),
-					"!@#qazwsx");
+			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22,
+					mConfig.GetValue("pythonUser"), "!@#qazwsx");
 
 			out = new Shell.Plain(shell)
 					.exec("python /root/tushare_pro/tushare_mongo_realtime.py");

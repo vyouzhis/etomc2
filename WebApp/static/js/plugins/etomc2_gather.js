@@ -30,7 +30,10 @@ var SliceStock=60;
 
 var StockDescCode = "";
 
-var myChart = echarts.init(document.getElementById('echart_k'));
+var myChart;
+if($('#echart_k').length > 0) {
+	myChart = echarts.init(document.getElementById('echart_k'));
+}
 
 /*
  *	############################################################################
@@ -1165,7 +1168,7 @@ function listTalk(p, sid, code) {
 						
 						ListHtml += "<li class='media shopping-cart-table'>"
 								+ "<a class='media-left' href='javascript:void(0)'> " +
-										"<span class='avatar anonymous'><img alt='Avatar' class='img-circle' height='42' width='42' src=\"Data/"+Json['data'][i]['logo']+"\"></span>"
+										"<span class='avatar '><img alt='Avatar' class='img-circle' height='42' width='42' src=\"Data/"+Json['data'][i]['logo']+"\"></span>"
 								+ "</a><div class='media-body'>"
 								+ "	<h4 class='media-heading comment-author'>"
 								+ "		<a href='#'>"
@@ -1265,8 +1268,7 @@ function infoshow(k, c) {
 		var db = "--";
 
 		td += "<tr>" + "<th scope='row'>" + infoList[k][ik] + "</th>" + "<td>"
-				+ db
-		"</td>" + "</tr>";
+				+ db+"</td>" + "</tr>";
 	}
 
 	for (var i = 0; i < StockInfoData.length; i++) {
@@ -1289,7 +1291,7 @@ function infoshow(k, c) {
 					db = "--";
 				}
 				td += "<tr>" + "<th scope='row'>" + infoList[k][ik] + "</th>"
-						+ "<td>" + db
+						+ "<td>" + db+
 				"</td>" + "</tr>";
 			}
 			break;

@@ -76,23 +76,28 @@ public class BaseView extends ACLControl {
 	}
 
 	private void InitStatic() {
-		setRoot("static_uri", porg.getContext_Path());
-		setRoot("static_css_uri", porg.getContext_Path() + "/static/css");
-		setRoot("static_js_uri", porg.getContext_Path() + "/static/js");
-		setRoot("static_ico", porg.getContext_Path()
+		
+		String StaticDoman = mConfig.GetValue("StaticDoman");
+		
+		if(StaticDoman == null || StaticDoman.length() == 0){
+			StaticDoman = porg.getContext_Path();
+		}
+		setRoot("static_uri", StaticDoman);
+		setRoot("static_css_uri", StaticDoman + "/static/css");
+		setRoot("static_js_uri", StaticDoman + "/static/js");
+		setRoot("static_ico", StaticDoman
 				+ "/static/ico");
 		setRoot("data_uri",
-				mConfig.GetValue("data.imghost") + porg.getContext_Path()
+				mConfig.GetValue("data.imghost") 
 						+ "/Data/");
-
-		setRoot("static_uri", porg.getContext_Path());
-		setRoot("surface_plugins", porg.getContext_Path()
+		
+		setRoot("surface_plugins", StaticDoman
 				+ "/static/surface/plugins");
-		setRoot("surface_static_css_uri", porg.getContext_Path()
+		setRoot("surface_static_css_uri", StaticDoman
 				+ "/static/surface/css");
-		setRoot("surface_static_js_uri", porg.getContext_Path()
+		setRoot("surface_static_js_uri", StaticDoman
 				+ "/static/surface/js");
-		setRoot("surface_static_images_uri", porg.getContext_Path()
+		setRoot("surface_static_images_uri", StaticDoman
 				+ "/static/images");
 	}
 

@@ -3,8 +3,6 @@ package com.lib.api;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.jws.soap.SOAPBinding;
-
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.io.DesEncrypter;
 
@@ -34,6 +32,13 @@ public class PythonTactics extends BaseSurface {
 		Shell shell = null;
 		super.setAjax(true);
 
+		int act = toInt(porg.getKey("act"));
+		if(act == 1){
+			String init = getStockDB();
+			super.setHtml(init);
+			return;
+		}
+		
 		String code = porg.getKey("code");
 		
 		int id = toInt(porg.getKey("id"));
@@ -63,10 +68,6 @@ public class PythonTactics extends BaseSurface {
 
 			String stdout = new Shell.Plain(shell).exec("python /root/macd/"
 					+ path +" "+code);
-//			stdout += "@";
-//			
-//			stdout += new Shell.Plain(shell).exec("python /root/macd/"
-//					+ path +" hs300");
 			
 			super.setHtml(stdout);
 
@@ -85,6 +86,23 @@ public class PythonTactics extends BaseSurface {
 		
 		return res;
 		
+	}
+	
+	private String getStockDB() {
+		Shell shell = null;
+		String out = "";
+		try {
+			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22,
+					mConfig.GetValue("pythonUser"), "!@#qazwsx");
+
+			out = new Shell.Plain(shell)
+					.exec("python /root/tushare_pro/tushare_mongo_realtime.py");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return out;
 	}
 	
 	private Map<String, Object> getScriptInfo(int id) {
