@@ -1,4 +1,4 @@
-package com.lib.Quartz;
+package com.lib.Quartz.Simple;
 
 import java.util.Map;
 

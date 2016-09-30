@@ -88,9 +88,9 @@ public class PorG  extends function {
 			
 			String paramName = parameterNames.nextElement();
 			String[] paramValues = request.getParameterValues(paramName);
-			echo("start:"+paramValues[0]);
+			
 			String pres = Check(paramValues[0]);		
-			echo("end:"+pres);
+			
 //			try {
 //				pres = new String(pres.getBytes("iso8859-1"),
 //						"UTF-8");		

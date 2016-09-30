@@ -1,4 +1,4 @@
-package com.lib.Quartz;
+package com.lib.Quartz.Cron;
 
 import org.ppl.plug.Quartz.CronQuartz;
 import org.quartz.Job;
