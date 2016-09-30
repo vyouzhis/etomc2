@@ -66,7 +66,7 @@ public class PythonTactics extends BaseSurface {
 			
 			shell = new SSHByPassword(ip, 22, user, pwd);
 
-			String stdout = new Shell.Plain(shell).exec("python /root/macd/"
+			String stdout = new Shell.Plain(shell).exec("python "+mConfig.GetValue("pythonPath")
 					+ path +" "+code);
 			
 			super.setHtml(stdout);
@@ -96,7 +96,7 @@ public class PythonTactics extends BaseSurface {
 					mConfig.GetValue("pythonUser"), "!@#qazwsx");
 
 			out = new Shell.Plain(shell)
-					.exec("python /root/tushare_pro/tushare_mongo_realtime.py");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo_realtime.py");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

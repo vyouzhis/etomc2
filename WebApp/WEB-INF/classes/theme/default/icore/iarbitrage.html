@@ -53,9 +53,9 @@
 				</thead>
 				<tbody>
 					<#if NowStockInfo0 ??> <#list NowStockInfo0 as item>
-					<tr>
+					<tr onclick="showStockDesc('${item.code}', '${item.name}')">
 						<th scope="row">${item?index+1}</th>
-						<th><a href="javascript:void(0)" onclick="showStockDesc('${item.code}', '${item.name}')"> <code>
+						<th ><a href="javascript:void(0)" > <code>
 									<i class="fa fa-star"></i> ${item.code} ${item.name}
 								</code>
 						</a></th>

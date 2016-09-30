@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSON;
  * 
  * @author vyouzhi
  * 
- * @see 用作注册激活发送邮件
+ * @see 用作注册激活发送邮件， iregister_action 类调用它
  */
 
 public class ActiveEmail extends SimpleQuartz implements Job{

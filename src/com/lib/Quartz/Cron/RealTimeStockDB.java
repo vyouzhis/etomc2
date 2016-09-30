@@ -71,7 +71,7 @@ public class RealTimeStockDB extends CronQuartz implements Job {
 					"!@#qazwsx");
 
 			out = new Shell.Plain(shell)
-					.exec("python /root/tushare_pro/tushare_mongo_realtime.py");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo_realtime.py");
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

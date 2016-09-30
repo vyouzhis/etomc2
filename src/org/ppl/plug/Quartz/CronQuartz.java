@@ -1,8 +1,8 @@
 package org.ppl.plug.Quartz;
 
-import org.ppl.core.PObject;
+import org.ppl.db.DBSQL;
 
-public abstract  class CronQuartz extends PObject {
+public abstract  class CronQuartz extends DBSQL {
 	
 	public abstract String getGroup();		
 	public abstract String cronSchedule();

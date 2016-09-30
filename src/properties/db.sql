@@ -125,7 +125,9 @@ CREATE TABLE IF NOT EXISTS `stock_user_talk` (
    `ip` varchar(16) NOT NULL DEFAULT '' COMMENT 'IP',
    `reply` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 可以 1 不可以回复',
    `top` tinyint(1) DEFAULT '0' COMMENT 'defaule 0 一般  1 置顶',
-  PRIMARY KEY (`id`)  
+  PRIMARY KEY (`id`),
+  KEY `code` (`code`),
+  KEY `sid` (`sid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
