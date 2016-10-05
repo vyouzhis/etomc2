@@ -30,14 +30,6 @@ public class PythonTactics extends BaseSurface {
 
 	private void Code() {
 		Shell shell = null;
-		super.setAjax(true);
-
-		int act = toInt(porg.getKey("act"));
-		if(act == 1){
-			String init = getStockDB();
-			super.setHtml(init);
-			return;
-		}
 		
 		String code = porg.getKey("code");
 		
@@ -77,33 +69,17 @@ public class PythonTactics extends BaseSurface {
 		}
 	}
 	
-	private Map<String, Object> findPyRun(int iid) {
-		
-		String format = "SELECT * FROM `strategy_info`  where id='%d' limit 1";
-		String sql = String.format(format, iid);
-		
-		Map<String, Object> res = FetchOne(sql);
-		
-		return res;
-		
-	}
-	
-	private String getStockDB() {
-		Shell shell = null;
-		String out = "";
-		try {
-			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22,
-					mConfig.GetValue("pythonUser"), "!@#qazwsx");
+//	private Map<String, Object> findPyRun(int iid) {
+//		
+//		String format = "SELECT * FROM `strategy_info`  where id='%d' limit 1";
+//		String sql = String.format(format, iid);
+//		
+//		Map<String, Object> res = FetchOne(sql);
+//		
+//		return res;
+//		
+//	}
 
-			out = new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo_realtime.py");
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return out;
-	}
 	
 	private Map<String, Object> getScriptInfo(int id) {
 		String format = "SELECT s.path, i.*  FROM `strategy_stock` s, strategy_info i where i.id = s.iid AND s.id=%s limit 1";

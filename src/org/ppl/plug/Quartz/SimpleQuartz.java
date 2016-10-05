@@ -4,7 +4,8 @@ import org.ppl.db.DBSQL;
 
 public abstract class SimpleQuartz extends DBSQL {
 	public SimpleQuartz() {
-		// TODO Auto-generated constructor stub		
+		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public abstract String getGroup();

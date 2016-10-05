@@ -5,8 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.DocFlavor.STRING;
-
+import org.ppl.db.HikariConnectionPool;
 import org.ppl.io.TimeClass;
 import org.ppl.plug.Quartz.CronQuartz;
 import org.quartz.Job;
@@ -31,6 +30,9 @@ public class TuShareNews extends CronQuartz implements Job {
 			throws JobExecutionException {
 		// TODO Auto-generated method stub
 
+		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
+		hcp.GetCon();
+		
 		String nowTime = DateFormat((long) time(), "yyyy-MM-dd HH:mm:ss");
 		echo("TuShareNews execute  ...." + nowTime);
 
@@ -44,8 +46,6 @@ public class TuShareNews extends CronQuartz implements Job {
 			
 			out = out.substring(out.indexOf("{"));
 			
-			// /
-			// {"classify":{"7":"证券"},"time":{"7":"09-30 09:27"},"title":{"7":"新世界发展名誉主席郑裕彤病逝 终年91岁"},"url":{"7":"http://cj.sina.com.cn/article/detail/5835524730/73499"}}
 			if (out != null && out.length() > 10) {
 				Map<String, Object> news = JSON.parseObject(out, Map.class);
 				String format = "('%d', '%d', '%s','%d', '%s', '%d')";
@@ -53,17 +53,33 @@ public class TuShareNews extends CronQuartz implements Job {
 				int sid = 0;
 				int uid = 7;
 				String Html = "";
+				
 				TimeClass tClass = TimeClass.getInstance();
 				String Year = DateFormat( tClass.time(), "yyyy");
 				String sql = "";
 				String RealTime = "";
+				
 				for (String key : news.keySet()) {
 
 					Map<String, List<String>> Cont = (Map<String, List<String>>) news
 							.get(key);
-
+					
+					if(Cont==null){
+						echo(news.get(key));
+						continue;
+					}
+					
+					if(!Cont.containsKey("url") || !Cont.containsKey("title") || !Cont.containsKey("content")){
+						echo(Cont);
+						continue;
+					}
+					
 					for (int i = 0; i < Cont.get("url").size(); i++) {
-						
+						if(Cont.get("url").get(i)==null || Cont.get("title").get(i)==null || Cont.get("content").get(i)==null){
+							echo(Cont);
+							continue;
+						}
+												
 						if (sql.length() > 0) {
 							sql += ",";
 						}
@@ -73,7 +89,7 @@ public class TuShareNews extends CronQuartz implements Job {
 								+ Cont.get("title").get(i) + "</h3></a><br>"
 								+ Cont.get("content").get(i).replace("\"", "\\\"");
 
-						
+						echo(Cont.get("title").get(i));
 						RealTime = Year+"-"+Cont.get("time").get(i)+":00";
 						
 						int now = Integer.valueOf(tClass.DateToTimeStamp(RealTime) + "");
@@ -91,8 +107,11 @@ public class TuShareNews extends CronQuartz implements Job {
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			echo("msg: "+e.getMessage());
+		} finally {
+			hcp.free();
 		}
+		echo("end ...");
 	}
 
 	@Override
@@ -119,6 +138,7 @@ public class TuShareNews extends CronQuartz implements Job {
 		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`,`code`, `uid`, `msg`, `ctime`) VALUES "
 				+ sql;
 		
+		echo(format);
 		try {
 			insert(format);
 			CommitDB();
