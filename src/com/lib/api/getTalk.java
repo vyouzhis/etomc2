@@ -114,7 +114,7 @@ public class getTalk extends BaseSurface {
 	private List<Map<String, Object>> StockInfo(String code) {
 		List<String> Info = new ArrayList<>();
 		List<Map<String, Object>> Infos = new ArrayList<>();
-		//Info.add("basics");
+		Info.add("basics");
 		Info.add("report");
 		Info.add("profit");
 		Info.add("operation");
@@ -124,61 +124,32 @@ public class getTalk extends BaseSurface {
 		
 	
 		for (int i = 0; i < Info.size(); i++) {
-			Infos.add(getInfo(Info.get(i), code));
+			Infos.add(getBasics(code, Info.get(i)));						
 		}
-		Infos.add(getBasics(code));
 		
 		return Infos;			
 	}
 	
-	private Map<String, Object> getInfo(String itype, String code) {
-		MGDB mgdb = new MGDB();
-		mgdb.DBEnd();
-		mgdb.SetCollection("stockInfo");
-
-		Map<String, String> wMap = new HashMap<>();
-		wMap.put(itype+".code", code);
-
-		String JsonMap = JSON.toJSONString(wMap);
-		
-		mgdb.JsonWhere(JsonMap);
-
-		Map<String, Integer> cMap = new HashMap<>();
-		cMap.put(itype+".$", 1);
-		cMap.put("_id", 0);
-
-		String JsonColu = JSON.toJSONString(cMap);
-		
-		mgdb.JsonColumn(JsonColu);
-
-		boolean s = mgdb.FetchList();
-		List<Map<String, Object>> res = null;
-		if (s) {
-			res = mgdb.GetValue();
-			
-		}else {
-			
-			mgdb.Close();
-			return null;
-		}
-		mgdb.Close();
-		
-		return res.get(0);			
-	}
-	
-	private Map<String, Object> getBasics(String code) {
+	private Map<String, Object> getBasics(String code, String types) {
 		MGDB mgdb = new MGDB();
 		mgdb.DBEnd();
 		mgdb.SetCollection("stockInfo");
 
 
 		Map<String, Integer> cMap = new HashMap<>();
-		cMap.put("basics."+code, 1);
+		cMap.put("Info."+types+"."+code, 1);
 		cMap.put("_id", 0);
 
 		String JsonColu = JSON.toJSONString(cMap);
 		
 		mgdb.JsonColumn(JsonColu);
+		
+		Map<String, Object> _sortMap = new HashMap<>();
+		_sortMap.put("ym", 1);		
+		String JsonSort = JSON.toJSONString(_sortMap);
+		mgdb.JsonSort(JsonSort);
+		
+		mgdb.setLimit(1);
 
 		boolean s = mgdb.FetchList();
 		List<Map<String, Object>> res = null;

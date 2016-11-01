@@ -10,14 +10,11 @@
 			<button data-dismiss="alert" class="close" type="button">
 				<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 			</button>
-			<p class="text-left">1. 具体选股方式：每周五计算每个股票的总市值*市净率，选出该值最小的五只股票，供您参考。</p>
-			<p class="text-left">2. 该选股方式复刻诺贝尔经济学奖获得者尤金法玛的三因子模型。该模型主要通过总市值、市净率等指标，选出兼具爆发力和安全边际的小盘价值股，论文原文链接。</p>
-			<p class="text-left">3. 经典模型，简单可靠，长期适用。.</p>
-			<p class="text-left">4. 默认值策略会从大盘中筛选出最具投资的3个股票</p>
+			${tips!""}
 		</div>
 		<!-- CHECKBOX AND RADIO BUTTON -->
 
-		<div class="fuelux">
+		<div class="fuelux hide">
 			<div class="wizard checkout-wizard" id="checkout-wizard">
 				<div class="steps-container">
 					<ul class="list-inline steps" style="margin-left: -540px">
@@ -41,7 +38,7 @@
 		</div>
 
 		<!-- 其中一条线是当前会员关注的股票 -->
-		<div class="panel panel-default">
+		<div class="panel ">
 
 			<div class="panel-body">
 				<div class="row hide" id="resultVal" name="resultVal">
@@ -122,8 +119,9 @@
 										<tr>
 											<th>#</th>
 											<th>股票代码</th>
-											<th>本金</th>
-											<th>年化收益</th>
+											<th>初始资金</th>
+											<th>成交价</th>
+											<th>收益率</th>
 											<th>操作</th>
 										</tr>
 									</thead>
@@ -334,18 +332,18 @@
 					<div class="row">
 
 						<div class="col-sm-4">
-							<button class="btn btn-block btn-success" type="button" onclick="KChart()">
+							<button class="btn btn-block btn-primary" type="button" onclick="KChart()">
 								<i class="fa fa-asterisk"></i> K线图
 							</button>
 						</div>
 
 						<div class="col-sm-4">
-							<button class="btn btn-block btn-success" type="button" onclick="Tactics()">
+							<button class="btn btn-block btn-primary" type="button" onclick="Tactics()">
 								<i class="fa fa-asterisk"></i> 回测
 							</button>
 						</div>
 						<div class="col-sm-4">
-							<button class="btn btn-block btn-success"
+							<button class="btn btn-block btn-primary"
 								<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_Type!1})" > <i class="fa fa-heart"></i> 加入我的策略
 										</button>
 						</div>

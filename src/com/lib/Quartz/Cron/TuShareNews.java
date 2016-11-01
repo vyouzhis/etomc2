@@ -33,8 +33,8 @@ public class TuShareNews extends CronQuartz implements Job {
 		HikariConnectionPool hcp = HikariConnectionPool.getInstance();
 		hcp.GetCon();
 		
-		String nowTime = DateFormat((long) time(), "yyyy-MM-dd HH:mm:ss");
-		echo("TuShareNews execute  ...." + nowTime);
+	//	String nowTime = DateFormat((long) time(), "yyyy-MM-dd HH:mm:ss");
+		//echo("TuShareNews execute  ...." + nowTime);
 
 		Shell shell = null;
 		try {
@@ -65,18 +65,18 @@ public class TuShareNews extends CronQuartz implements Job {
 							.get(key);
 					
 					if(Cont==null){
-						echo(news.get(key));
+						//echo(news.get(key));
 						continue;
 					}
 					
 					if(!Cont.containsKey("url") || !Cont.containsKey("title") || !Cont.containsKey("content")){
-						echo(Cont);
+						//echo(Cont);
 						continue;
 					}
 					
 					for (int i = 0; i < Cont.get("url").size(); i++) {
 						if(Cont.get("url").get(i)==null || Cont.get("title").get(i)==null || Cont.get("content").get(i)==null){
-							echo(Cont);
+							//echo(Cont);
 							continue;
 						}
 												
@@ -89,7 +89,7 @@ public class TuShareNews extends CronQuartz implements Job {
 								+ Cont.get("title").get(i) + "</h3></a><br>"
 								+ Cont.get("content").get(i).replace("\"", "\\\"");
 
-						echo(Cont.get("title").get(i));
+						//echo(Cont.get("title").get(i));
 						RealTime = Year+"-"+Cont.get("time").get(i)+":00";
 						
 						int now = Integer.valueOf(tClass.DateToTimeStamp(RealTime) + "");
@@ -107,11 +107,11 @@ public class TuShareNews extends CronQuartz implements Job {
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			echo("msg: "+e.getMessage());
+			//echo("msg: "+e.getMessage());
 		} finally {
 			hcp.free();
 		}
-		echo("end ...");
+		//echo("end ...");
 	}
 
 	@Override
@@ -137,8 +137,7 @@ public class TuShareNews extends CronQuartz implements Job {
 	private void Save(String sql) {
 		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`,`code`, `uid`, `msg`, `ctime`) VALUES "
 				+ sql;
-		
-		echo(format);
+				
 		try {
 			insert(format);
 			CommitDB();

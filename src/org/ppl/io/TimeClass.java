@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TimeClass {
 	public static TimeClass config = null;
-
+	public static int OneDaySceond=86400;
 	public static TimeClass getInstance() {
 
 		if (config == null) {

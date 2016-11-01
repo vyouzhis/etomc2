@@ -97,6 +97,16 @@ CREATE TABLE IF NOT EXISTS `theme_html` (
   key(`types`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+--- 一些名言
+DROP TABLE IF EXISTS `tips_info`;
+CREATE TABLE IF NOT EXISTS `tips_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tips` text NOT NULL COMMENT 'tips',  
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --- 股票用户的基本信息
 DROP TABLE IF EXISTS `stock_user_base`;
 CREATE TABLE IF NOT EXISTS `stock_user_base` ( 

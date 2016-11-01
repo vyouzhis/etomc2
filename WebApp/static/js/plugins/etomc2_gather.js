@@ -26,7 +26,7 @@ symbols += "{|}~";
 var StockJsonDBHFQ = "";
 var StockMd=0;
 var ToolTip=true;
-var SliceStock=60;
+var SliceStock=360;
 
 var StockDescCode = "";
 
@@ -478,18 +478,18 @@ function getCookie(cname) {
 
 
 
-function showChart(dt) {
+function showChart(dt, code) {
 	if (dt.length > 10) {
 		// //console.log("JsonList:" + dt );
 		StockJsonDBHFQ = JSON.parse(dt);
-		InitStockData(StockJsonDBHFQ['data'][0]);
+		InitStockData(StockJsonDBHFQ['data'], code);
 		if(StockMd==0){
-			AddmaData();
+			AddmaData(code);
 		}
 	}
 }
 
-function InitStockData(JsonData) {
+function InitStockData(JsonData, cn) {
 	var DateList = [];
 	var legendName = [];
 	var bool = 0;
@@ -497,11 +497,12 @@ function InitStockData(JsonData) {
 
 	 //console.log(JSON.stringify(JsonData));
 	// var JsonData = JsonList;
-	for ( var cn in JsonData) {
+	//for ( var cn in JsonData) {
 		////console.log("cn:" + cn);
-		if (cn == "_id")
-			continue;
-		var Json = JsonData[cn];
+	////	if (cn == "_id")
+		//	continue;
+		
+		var Json = JsonData;
 		// //console.log("Json:" + Json );
 		if(cn=="hs300"){
 			legendName.push("沪深300指数");
@@ -540,7 +541,7 @@ function InitStockData(JsonData) {
 		bool = 1;
 		seriesData['data'] = shList;
 		seriesList.push(seriesData);
-	}
+	//}
 
 	var JsonOpton = {
 		title : {
@@ -644,19 +645,19 @@ $(function() {
 
 function hfqStockData(dtype) {
 	if (StockJsonDBHFQ[dtype] == undefined) {
-		//console.log("StockJsonDBHFQ null !");
+		console.log("StockJsonDBHFQ null !"+dtype);
 		return;
 	}
 
-	var JsonData = StockJsonDBHFQ[dtype][0];
+	var JsonData = StockJsonDBHFQ[dtype];
 
 	var oldOption = getChartOption();
 
-	for ( var cn in JsonData) {
+	//for ( var cn in JsonData) {
 	//	//console.log("cn:" + cn);
-		if (cn == "_id")
-			continue;
-		var Json = JsonData[cn];
+		//if (cn == "_id")
+		//	continue;
+		var Json = JsonData;
 
 		var shList = [];
 		var start = Json.length-SliceStock;
@@ -672,7 +673,7 @@ function hfqStockData(dtype) {
 			datalist.push(Json_Slice[k]['high']);
 			shList.push(datalist);
 		}
-	}
+	//}
 
 	for (var m = 0; m < oldOption['series'].length; m++) {
 		if (oldOption['series'][m]['type'] == "k") {
@@ -686,8 +687,8 @@ function hfqStockData(dtype) {
 	ChartRefresh(oldOption);
 }
 
-function AddmaData() {
-	var JsonData = StockJsonDBHFQ['data'][0];
+function AddmaData(cn) {
+	var JsonData = StockJsonDBHFQ['data'];
 
 	var ln = {};
 	ln["ma5"] = "5日均价";
@@ -697,11 +698,11 @@ function AddmaData() {
 	for ( var lk in ln) {
 		var hsData = [];
 
-		for ( var cn in JsonData) {
+	//	for ( var cn in JsonData) {
 			////console.log("cn:" + cn);
-			if (cn == "_id")
-				continue;
-			var Json = JsonData[cn];
+		//	if (cn == "_id")
+		//		continue;
+			var Json = JsonData;
 
 			var shList = [];
 			var start = Json.length-SliceStock;
@@ -710,7 +711,7 @@ function AddmaData() {
 			for ( var k in Json_Slice) {				
 				shList.push(Json_Slice[k][lk]);
 			}
-		}
+	//	}
 
 		addChartLineData(0, ln[lk], shList);
 	}
@@ -788,7 +789,7 @@ function getStockData(code) {
 			var option = request.responseText;
 			// //console.log("option:" + option);
 			StockData = option;
-			showChart(StockData);
+			showChart(StockData, code);
 		}
 	});
 }
@@ -1259,6 +1260,7 @@ function tReplay(o){
 }
 
 function infoshow(k, c) {
+	
 	var infoList = sInfo();
 
 	$("#tdName").html(infoList[k + "_name"] + " (属性)");
@@ -1278,17 +1280,20 @@ function infoshow(k, c) {
 		if (StockInfoData[i] === null) {
 			continue;
 		}
-
-		if (StockInfoData[i][k] != undefined) {
+		if ( StockInfoData[i]['Info'][k] === undefined) {
+			continue;
+		}
+				
+		InfoCode =  StockInfoData[i]['Info'][k][c];
+		
+		if (InfoCode != undefined) {
 			td = "";
 			for ( var ik in infoList[k]) {
 
 				var db = "";
-				if (k == "basics") {
-					db = StockInfoData[i][k][c][ik];
-				} else {
-					db = StockInfoData[i][k][0][ik];
-				}
+				
+				db = InfoCode[ik];
+				
 				if (db === undefined) {
 					db = "--";
 				}

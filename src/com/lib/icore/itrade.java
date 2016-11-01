@@ -1,5 +1,7 @@
 package com.lib.icore;
 
+import java.util.Map;
+
 import org.ppl.BaseClass.BaseiCore;
 import org.ppl.etc.UrlClassList;
 
@@ -31,8 +33,17 @@ public class itrade extends BaseiCore {
 			setRoot("irisk_url", ucl.Url("risk"));
 			setRoot("iarbitrage_url", ucl.Url("arbitrage"));
 			setRoot("Step_Type", mConfig.GetInt("Step.trade"));
+			tips();
 			
 			super.View();
+		}
+	}
+	
+	private void tips() {
+		String sql = "SELECT tips FROM `tips_info` ORDER BY rand() LIMIT 1 ";
+		Map<String, Object> res = FetchOne(sql);
+		if (res != null) {
+			setRoot("tips", res.get("tips"));
 		}
 	}
 }

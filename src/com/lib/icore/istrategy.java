@@ -1,5 +1,7 @@
 package com.lib.icore;
 
+import java.util.Map;
+
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.etc.UrlClassList;
 
@@ -41,7 +43,16 @@ public class istrategy extends BaseSurface {
 			setRoot("ilogin_action_uri", ucl.Url("loginAction"));
 		}
 
+		tips();
 		super.View();
+	}
+	
+	private void tips() {
+		String sql = "SELECT tips FROM `tips_info` ORDER BY rand() LIMIT 1 ";
+		Map<String, Object> res = FetchOne(sql);
+		if (res != null) {
+			setRoot("tips", res.get("tips"));
+		}
 	}
 
 }
