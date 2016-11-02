@@ -78,15 +78,15 @@ public class getTuShare extends BaseSurface {
 
 		Map<String, Object> _idMap = new HashMap<>();
 		_idMap.put("_id", 0);
-		
+
 		String Jsonid = JSON.toJSONString(_idMap);
 		mgdb.JsonColumn(Jsonid);
 
 		Map<String, Object> _sortMap = new HashMap<>();
-		_sortMap.put(filed+".date", 1);		
+		_sortMap.put(filed + ".date", 1);
 		String JsonSort = JSON.toJSONString(_sortMap);
 		mgdb.JsonSort(JsonSort);
-		
+
 		boolean s = mgdb.FetchList();
 		if (s == false)
 			return null;
@@ -94,7 +94,7 @@ public class getTuShare extends BaseSurface {
 		String time = "", time2 = "";
 		List<Map<String, Object>> ok2 = new ArrayList<>();
 		Map<String, Object> map = null;
-		while ( (map = mgdb.GetValueLoop()) != null) {
+		while ((map = mgdb.GetValueLoop()) != null) {
 			List<Map<String, Object>> a = (List<Map<String, Object>>) map
 					.get(filed);
 			if (time.length() == 0) {
@@ -109,7 +109,7 @@ public class getTuShare extends BaseSurface {
 			ok2.addAll(a);
 
 		}
-		
+
 		mgdb.Close();
 		return ok2;
 	}

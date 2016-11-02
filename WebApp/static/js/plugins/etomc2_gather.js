@@ -241,18 +241,21 @@ function ListBookMarksCode(act, cid) {
 					var Json = JSON.parse(option);
 					var html="";
 					for(var i=0; i<Json.length; i++){
-						html += "<tr>"+
+						var price = Json[i]['price'];
+						var nprice = Json[i]['nowprice'];
+						var profit = (nprice - price)/price * 100;
+						profit = Math.round(profit*Math.pow(10, 2))/Math.pow(10, 2);  
+						html += "<tr id='bmlist_"+i+"' name='bmlist_"+i+"' onclick='ListBookMarksStra(\""+Json[i]['code']+"\",\""+Json[i]['name']+"\", "+cid+", "+i+")'>"+
 									"<th scope='row'>"+(i+1)+"</th>"+
 									"<td>"+"<a href=''><code>"+
 												"<i class='fa fa-star'></i>"+Json[i]['code']+" "+Json[i]['name']+
 											"</code>"+
 									"</a></td>"+
-									"<td>dd</td>"+
-									"<td>dd</td>"+
-									"<td><button title='Success' class='btn btn-outline btn-success' type='button'" +
-											" onclick='ListBookMarksStra(\""+Json[i]['code']+"\",\""+Json[i]['name']+"\", "+cid+", "+i+")'>"+
-											"<i class='fa fa-close'  id='bmlist_"+i+"' id='bmlist_"+i+"'></i><span class='sr-only'>Success</span>"+
-										"</button></td>"+
+									"<td>"+(price*1000)+"</td>"+
+									"<td>"+price+"</td>"+
+									"<td>"+nprice+"</td>"+
+									"<td>"+profit+"%</td>"+
+									
 								"</tr>";
 					}
 										
@@ -265,10 +268,10 @@ function ListBookMarksCode(act, cid) {
 function ListBookMarksStra(code, name, cid, i){		
 	
 	for (n = 0; n < 3; n++) {
-		$("#bmlist_" + n).attr("class", "fa fa-close");
+		$("#bmlist_" + n).attr("class", "");
 	}
 
-	$("#bmlist_" + i).attr("class", "fa fa-check");
+	$("#bmlist_" + i).attr("class", "text-primary leadtab");
 	
 	$("#code_num").val(code);
 	
@@ -285,7 +288,7 @@ function ListBookMarksStra(code, name, cid, i){
 			"code": code
 		},
 		success : function(result) {
-			// //console.log("success" + result);
+			// console.log("success" + result);
 		},
 		error : function(request, textStatus, errorThrown) {
 			// alert(textStatus);
@@ -293,18 +296,16 @@ function ListBookMarksStra(code, name, cid, i){
 		complete : function(request, textStatus) { // for additional
 													// info
 			var option = request.responseText;
-			////console.log("option:" + option);
+			//console.log("option:" + option);
 			var Json = JSON.parse(option);
 			var htmlList="";
 			for(var i=0; i<Json.length; i++){
-				 htmlList += "<tr>"+
-								"<th scope='row'></th>"+
+				 htmlList += "<tr id='bm_"+i+"' onclick='istrSelect2(\""+Json[i]['title']+"\", \""+Json[i]['id']+"\", "+i+")'>"+
+								"<th scope='row'>"+(i+1)+"</th>"+
 								"<td>"+Json[i]['title']+"</td>"+
 								"<td>10%</td>"+
 								"<td>5.6</td>"+
-								"<td><button title='Success' class='btn btn-outline btn-success' type='button' onclick='istrSelect2(\""+Json[i]['title']+"\", \""+Json[i]['id']+"\", "+i+")'>"+
-								"<i class='fa fa-close' id='bmslist_"+i+"' id='bmslist_"+i+"'></i><span class='sr-only'>Success</span>"+
-								"</button></td>"+
+								
 							"</tr>";
 			}
 //			$("#bmlist_"+i).attr("class", "fa fa-check");
@@ -350,6 +351,8 @@ function addBookMark(i, cid) {
 			}
 									
 			BellNotifi(msg);
+			
+			ListBookMarksCode(1, StockCid);
 		},
 		error : function(response) {
 			// //console.log(response);
@@ -804,10 +807,10 @@ function getStockData(code) {
 
 function istrSelect(i) {
 	for (n = 0; n < 5; n++) {
-		$("#select_" + n).attr("class", "fa fa-close");
+		$("#id_" + n).attr("class", "");
 	}
 
-	$("#select_" + i).attr("class", "fa fa-check");
+	$("#id_" + i).attr("class", "text-primary leadtab");
 	
 	for (n = 0; n < 3; n++) {
 		$("#bmslist_" + n).attr("class", "fa fa-close");
@@ -832,13 +835,13 @@ function istrSelect(i) {
 
 function istrSelect2(name, sid, i) {
 	for (n = 0; n < 5; n++) {
-		$("#select_" + n).attr("class", "fa fa-close");
+		$("#select_" + n).attr("class", "text-primary");
 	}
 	
 	for (n = 0; n < 3; n++) {
-		$("#bmslist_" + n).attr("class", "fa fa-close");
+		$("#bm_" + n).attr("class", "");
 	}
-	$("#bmslist_" + i).attr("class", "fa fa-check");
+	$("#bm_" + i).attr("class", "text-primary leadtab");
 	
 	selectStraId = sid;
 	
@@ -893,8 +896,22 @@ function getPage(p) {
 						} else {
 							insval = inte + ' 积分';
 						}
-
-						ListStrHtml += "<tr>"
+						
+						var cidVal = Json['data'][i]['cid'];
+						var cidName
+						if (cidVal == 1) {
+							cidName = '选股';
+						}else if (cidVal == 2){
+							cidName = "交易";
+						}
+						 else {
+							 cidName = '风控';
+						}
+						
+						
+						ListStrHtml += "<tr id=\"id_"+i+"\" onclick='istrSelect("
+								+ i
+								+ ")'>"
 								+ "<th scope='row'>"
 								+ (i + 1)
 								+ "</th>"
@@ -904,20 +921,16 @@ function getPage(p) {
 								+ "<td>"
 								+ Json['data'][i]['follow']
 								+ "</td>"
-								//+ "<td>"
-								//	+ Json['data'][i]['income']
-								//	+ "</td>"
+							   + "<td>"
+								+ cidName
+								+ "</td>"
 								+ "<td>"
 								+ insval
 								+ "</td>"
 								+ "<td>"
 								+ Json['data'][i]['nickname']
 								+ "</td>"
-								+ "<td><button title='Success' class='btn btn-outline btn-success' type='button' onclick='istrSelect("
-								+ i
-								+ ")'>"
-								+ "		<i class='fa "+fa+"' id='select_"+i+"' name='select_"+i+"'></i> <span class='sr-only'>Success</span>"
-								+ "	</button></td>" + "</tr>";
+								+ "</tr>";
 					}
 
 					$("#straList").html(ListStrHtml);

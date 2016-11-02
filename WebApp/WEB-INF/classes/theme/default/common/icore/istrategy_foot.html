@@ -1,13 +1,10 @@
 <script src="${static_js_uri}/plugins/echart2/echarts-all.js${StaticVer}"></script>
 <script src="${static_js_uri}/plugins/etomc2_gather.js${StaticVer}"></script>
-<script type="text/javascript">
-	var StockCid = ${Step_Type!1};
-	
-</script>
 
 <script src="${static_js_uri}/plugins/md5/jquery.md5.js${StaticVer}"></script>
 <script type="text/javascript">
 
+var StockCid = ${Step_Type!1};
 
 jQuery(function($) {
 	
@@ -19,7 +16,7 @@ jQuery(function($) {
 	CodeAuto();
 	
 	ListBookMarksCode(1, StockCid);
-
+	
 	$("#listtab1").click(function() {
 		StockCode = "";
 		StockSid = straListData[nowTId]['id'];
@@ -38,6 +35,14 @@ jQuery(function($) {
 		});
 	});
 
+	function LBMCloop(){
+		ListBookMarksCode(1, StockCid);
+	}
+	
+	//每隔2分钟，读取一次.
+   setTimeout('LBMCloop()', 120000);
+	
+	
 	function chkForm() {
 		var passwd = $("#Password").val();
 		var salt = $("#salt").val();

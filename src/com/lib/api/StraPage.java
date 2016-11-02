@@ -44,9 +44,9 @@ public class StraPage extends BaseSurface {
 	}
 
 	private List<Map<String, Object>> getStra() {
-		String format = "SELECT s.id, s.title,s.sdesc,s.integral, s.follow, i.nickname"
+		String format = "SELECT s.id, s.title,s.sdesc,s.integral, s.follow, i.nickname, s.cid"
 				+ " FROM `strategy_stock` s, stock_user_info i"
-				+ " where i.uid=s.uid and s.cid=%d   ORDER by s.integral limit %d, %d";
+				+ " where i.uid=s.uid  ORDER by s.integral limit %d, %d";
 		int p = toInt(porg.getKey("p"));
 
 		int offset = 0;
@@ -55,7 +55,7 @@ public class StraPage extends BaseSurface {
 			offset = (p - 1) * limit;
 		}
 
-		String sql = String.format(format, toInt(porg.getKey("cid")), offset, limit);
+		String sql = String.format(format, offset, limit);
 		
 		List<Map<String, Object>> res = null;
 		try {
@@ -70,11 +70,9 @@ public class StraPage extends BaseSurface {
 	}
 
 	private int getTol() {
-		String format = "SELECT count(*) as cou FROM `strategy_stock`  where cid=%d limit 1";
+		String format = "SELECT count(*) as cou FROM `strategy_stock` limit 1";
 
-		String sql = String.format(format, toInt(porg.getKey("cid")));
-
-		Map<String, Object> res = FetchOne(sql);
+		Map<String, Object> res = FetchOne(format);
 		if (res != null) {
 			return Integer.valueOf(res.get("cou").toString());
 		} else {

@@ -86,7 +86,7 @@ function ListBookMarksStra(code, name, cid, i){
 			var Json = JSON.parse(option);
 			var htmlList="";
 			for(var i=0; i<Json.length; i++){
-				 htmlList += "<tr>"+
+				 htmlList += "<tr id="+i+">"+
 								"<th scope='row'></th>"+
 								"<td>"+Json[i]['title']+"</td>"+
 								"<td>10%</td>"+

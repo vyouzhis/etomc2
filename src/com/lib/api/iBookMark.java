@@ -1,12 +1,18 @@
 package com.lib.api;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ppl.BaseClass.BaseiCore;
+import org.ppl.db.MGDB;
+import org.ppl.io.TimeClass;
 
 import com.alibaba.fastjson.JSON;
+import com.jcabi.ssh.SSHByPassword;
+import com.jcabi.ssh.Shell;
 
 public class iBookMark extends BaseiCore {
 	private String className = null;
@@ -57,10 +63,11 @@ public class iBookMark extends BaseiCore {
 		int now = time();
 
 		String format = "INSERT INTO `stock_strategy` "
-				+ "( `uid`, `code`,`name`, `cid`, `sid`, `ctime`) "
-				+ "VALUES ( %d, '%s', '%s', '%d', '%d', '%d');";
+				+ "( `uid`, `code`,`name`, `cid`, `sid`, `ctime`,`price`) "
+				+ "VALUES ( %d, '%s', '%s', '%d', '%d', '%d','%s');";
 
-		String sql = String.format(format, uid, code, name, cid, sid, now);
+		float price = getPrice(code);
+		String sql = String.format(format, uid, code, name, cid, sid, now, price);
 
 		List<Map<String, Object>> res = checksid(uid, cid, code);
 
@@ -87,6 +94,7 @@ public class iBookMark extends BaseiCore {
 
 		try {
 			insert(sql);
+			hotVal(sid);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -95,6 +103,19 @@ public class iBookMark extends BaseiCore {
 		super.setHtml("0");
 	}
 
+	private void hotVal(int sid) {
+		String format = "UPDATE `strategy_stock` SET `follow` = `follow` + '1' WHERE `strategy_stock`.`id` = %d;";
+		String sql = String.format(format, sid);
+		
+		try {
+			update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private List<Map<String, Object>> checksid(int uid, int cid, String code) {
 		String format = "SELECT sid FROM `stock_strategy`  "
 				+ "where uid=%d and isstop = 0 and cid = '%d' AND code = '%s' ";
@@ -129,12 +150,20 @@ public class iBookMark extends BaseiCore {
 		
 		int uid = igetUid();
 		
-		String format = "SELECT id, code,name FROM `stock_strategy` WHERE isstop=0  and uid=%d GROUP BY code ";
+		String format = "SELECT id, code,name,price FROM `stock_strategy` WHERE isstop=0  and uid=%d GROUP BY code ";
 		String sql = String.format(format, uid);
 		
 		List<Map<String, Object>> res = null;
 		try {
 			res = FetchAll(sql);
+			
+			for (int i = 0; i < res.size(); i++) {
+				Map<String, Object> map = res.get(i);
+				float price = getPrice(map.get("code").toString());
+				res.get(i).put("nowprice", price);
+			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -174,6 +203,29 @@ public class iBookMark extends BaseiCore {
 		}
 		
 		super.setHtml(json);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private float getPrice(String code) {
+		
+		Shell shell = null;
+		String price = "";
+		try {
+			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22,
+					mConfig.GetValue("pythonUser"), "!@#qazwsx");
+
+			String out = new Shell.Plain(shell)
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo_realtime.py "+code);
+			out = out.replace("u'", "'");
+			//echo(out);
+			List<Map<String, Object>> cInfo = JSON.parseObject(out, List.class);
+			price = cInfo.get(0).get("price").toString();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			echo(e.getMessage());
+		}
+		return toFloat(price);
 	}
 
 	private void ListCodeStra() {
