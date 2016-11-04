@@ -1413,7 +1413,14 @@ function NewsCode(code){
 						
 						msg = msg.replace(/@/g, "<a class='product-title' href='#'>@");
 						msg = msg.replace(/:/g, ":</a>");
-						
+						if(msg.length > 250){
+							pmsg = msg.substr(0, 250);
+							nmsg = msg.substr(250,msg.length);
+							
+							msg = pmsg+"<br><a href='javascript:void(0)' id='sname_"+i+"' name='sname_"+i+"' onclick='showFullNews("+i+")'>" +
+									"<i class='fa fa-arrows-v'></i>展开</a></br>" +
+									"<div id='fullid_"+i+"' name='fullid_"+i+"' style='display:none'>"+nmsg+"</div>";
+						}
 						ListHtml += "<li class='media shopping-cart-table'>"
 								+ "<a class='media-left' href='javascript:void(0)'> " +
 										" <span class='avatar'><img alt='Avatar' class='img-circle' height='42' width='42' src='Data/UserLogo/etomc2_144x144.png'></span>"
@@ -1431,6 +1438,17 @@ function NewsCode(code){
 					$("#newpList").attr("class","hide");
 				}
 			});
+}
+
+function showFullNews(i){
+	
+	if($("#fullid_"+i).css('display') == 'none'){ 
+	   $("#fullid_"+i).show();
+	   $("#sname_"+i).html("<i class='fa fa-arrows-v'></i>折叠"); 
+	} else { 
+	   $("#fullid_"+i).hide(); 
+	   $("#sname_"+i).html("<i class='fa fa-arrows-v'></i>展开");
+	}
 }
 
 function tReplay(o){
