@@ -1008,14 +1008,37 @@ function Tactics() {
 
 function showTable(o){
 	$("#ResNList").attr("class", "");
-
+	var codeJson = JSON.parse(o);
+	var columns = codeJson['columns'];
+	var th = "", td="";
+	for(var k in columns){
+		th += "<th>"+columns[k]+"</th>";
+	}
+	var data = codeJson['data'];
+	for(var d in data){
+		td+="<tr>";
+		for(var m in data[d]){
+			td += "<td>"+data[d][m]+"</td>";
+		}
+		td+="</tr>";
+	}
+	
+	var table = "<table class='table table-striped'>"
+		+ "<thead>"
+		+ "<tr>"
+		+ th
+		+ "</tr>" + "</thead>"
+		+ "<tbody id='infoshowtd' name='infoshowtd'>"
+		+ td + "</tbody>" + "</table>";
+	
+	
 	var codeHtml = "<li class='media'>"
 			+ "<a class='media-left' href='blog-single.html#'> <span class='avatar'>" +
 			"<img alt='Avatar' class='img-circle' height='42' width='42' src='Data/UserLogo/etomc2_144x144.png'></span>"
 			+ "</a><div class='media-body'>"
 			+ "<h4 class='media-heading comment-author'>"
-			+ "<a href='#'>站长</a></h4><pre>"
-			+ o + "</pre>	<hr>"
+			+ "<a href='#'>站长</a></h4>"
+			+ table + "<hr>"
 			+ "</div>" + "</li>";
 	
 	var html = $("#ResLists").html()
@@ -1072,36 +1095,6 @@ function tacticsChart(option){
 	console.log(cData);
 	
 	addChartLineData(0, name, cData);
-	
-//	
-//	var cData = [];
-//	
-//	var n=0;
-//
-//	var date = json[n]['date'];
-//	var price = json[n]['price'];
-//	
-//	for (var d in odate){
-//
-//		if (odate[d] == date){
-//			n++
-//			if(json[n] != undefined){
-//				date = json[n]['date'];
-//				price = json[n]['price'];
-//			}
-//			
-//		}
-//		else{
-//			console.log("d:"+odate[d]);
-//			cData.push(price);
-//		}
-//	}
-//		
-//		
-//	var name = straListData[nowTId]['title'];
-//	
-//	
-//	addChartLineData(0, name, cData);
 }
 
 function ShowResult(cJ){
