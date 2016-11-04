@@ -142,6 +142,7 @@ CREATE TABLE IF NOT EXISTS `stock_user_talk` (
 
 
 --- 股票类策略, 策略时间为 两年
+DROP TABLE IF EXISTS `strategy_stock`;
 CREATE TABLE `strategy_stock` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL COMMENT '策略 类型 id',
@@ -151,6 +152,7 @@ CREATE TABLE `strategy_stock` (
   `integral` int(11) DEFAULT '0' COMMENT '0 免费 ',
   `iid` int(11) NOT NULL COMMENT '策略 运行信息 id',
   `path` text COMMENT '策略路经',
+  `returns` tinyint(1) DEFAULT '0' COMMENT '返回类型 0 table , 1 chart,  2 aplah, 3 chart and table. 4... ',
   `follow` int(11) NOT NULL COMMENT '当有人使用的时候记录一次',
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

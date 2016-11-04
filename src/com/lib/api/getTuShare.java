@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSON;
 
 public class getTuShare extends BaseSurface {
 	private String className = null;
-	private int getStockDay = 360;
+	private int getStockDay = 660;
 
 	public getTuShare() {
 		// TODO Auto-generated constructor stub

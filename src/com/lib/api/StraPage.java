@@ -44,7 +44,7 @@ public class StraPage extends BaseSurface {
 	}
 
 	private List<Map<String, Object>> getStra() {
-		String format = "SELECT s.id, s.title,s.sdesc,s.integral, s.follow, i.nickname, s.cid"
+		String format = "SELECT s.id, s.title,s.sdesc,s.integral, s.follow, i.nickname, s.cid,s.returns"
 				+ " FROM `strategy_stock` s, stock_user_info i"
 				+ " where i.uid=s.uid  ORDER by s.integral limit %d, %d";
 		int p = toInt(porg.getKey("p"));

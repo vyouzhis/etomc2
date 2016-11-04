@@ -48,7 +48,7 @@ public class TuShareNews extends CronQuartz implements Job {
 			
 			if (out != null && out.length() > 10) {
 				Map<String, Object> news = JSON.parseObject(out, Map.class);
-				String format = "('%d', '%d', '%s','%d', '%s', '%d')";
+				String format = "('%d', '%d', '%s','%d', '%s', '%d', 1)";
 				int pid = 0;
 				int sid = 0;
 				int uid = 7;
@@ -135,7 +135,7 @@ public class TuShareNews extends CronQuartz implements Job {
 	}
 
 	private void Save(String sql) {
-		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`,`code`, `uid`, `msg`, `ctime`) VALUES "
+		String format = "INSERT INTO `stock_user_talk` (`pid`, `sid`,`code`, `uid`, `msg`, `ctime`, `news`) VALUES "
 				+ sql;
 				
 		try {

@@ -1,11 +1,13 @@
 package com.lib.api;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.io.DesEncrypter;
 
+import com.jcabi.ssh.SSH;
 import com.jcabi.ssh.SSHByPassword;
 import com.jcabi.ssh.Shell;
 
@@ -56,11 +58,12 @@ public class PythonTactics extends BaseSurface {
 				e.printStackTrace();
 			}
 			
-			shell = new SSHByPassword(ip, 22, user, pwd);
-
-			String stdout = new Shell.Plain(shell).exec("python "+mConfig.GetValue("pythonPath")
-					+ path +" "+code);
 			
+			shell = new SSHByPassword(ip, 22, user, pwd);
+			
+			String stdout = new Shell.Plain(shell).exec("export LC_CTYPE=zh_CN.utf8 && python "+mConfig.GetValue("pythonQuant")
+					+ path +" "+code);
+						
 			super.setHtml(stdout);
 
 		} catch (IOException e) {

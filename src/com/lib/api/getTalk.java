@@ -55,12 +55,13 @@ public class getTalk extends BaseSurface {
 	private int getTol() {
 
 		int sid = toInt(porg.getKey("sid"));
+		int isNews = toInt(porg.getKey("isNews"));
 		String code = porg.getKey("code");
 		String where = "";
 		if (sid != 0) {
 			where = "t.sid=" + sid;
 		} else if (code != null) {
-			where = "t.code=" + code;
+			where = "t.code=" + code +" and news="+isNews;
 		} else {
 			return 0;
 		}
@@ -87,19 +88,20 @@ public class getTalk extends BaseSurface {
 		if (p != 0) {
 			offset = (p - 1) * limit;
 		}
+		int isNews = toInt(porg.getKey("isNews"));
 		int sid = toInt(porg.getKey("sid"));
 		String code = porg.getKey("code");
 		String where = "";
 		if (sid != 0) {
 			where = "t.sid=" + sid;
-		} else if (code != null) {
-			where = "t.code=" + code;
+		} else if (code != null) {			
+			where = "t.code=" + code +" and news="+isNews;
 		} else {
 			return null;
 		}
 
 		String sql = String.format(format, where, offset, limit);
-
+		
 		List<Map<String, Object>> res = null;
 		try {
 			res = FetchAll(sql);
