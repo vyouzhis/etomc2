@@ -1,3 +1,4 @@
+
 /*
  *	############################################################################
  *	
@@ -19,7 +20,7 @@ TabbedNotification = function(options) {
 			+ options.text + "</p></div>";
 
 	if (!document.getElementById('custom_notifications')) {
-		alert('doesnt exists');
+		BellNotifi('doesnt exists');
 	} else {
 		$('#custom_notifications ul.notifications')
 				.append(

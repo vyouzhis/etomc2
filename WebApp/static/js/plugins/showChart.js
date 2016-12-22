@@ -1,3 +1,4 @@
+
 /*
  *	############################################################################
  *	
@@ -6,75 +7,61 @@
  *	############################################################################
  */
 
-var myChart = echarts.init(document.getElementById('echart_k'));
-var StockJsonDBHFQ = "";
-var StockMd=0;
-var ToolTip=true;
-var SliceStock=60;
 
-function showChart(dt) {
+function showChart(dt, code) {
 	if (dt.length > 10) {
-		// console.log("JsonList:" + dt );
+		// //console.log("JsonList:" + dt );
 		StockJsonDBHFQ = JSON.parse(dt);
-		InitStockData(StockJsonDBHFQ['data'][0]);
-		if(StockMd==0){
-			AddmaData();
-		}
+		InitStockData(StockJsonDBHFQ['data'], code);
+		//if(StockMd==0){
+		AddmaData(code);
+		//}
+		initExtChart();
 	}
 }
 
-function InitStockData(JsonData) {
+function InitStockData(JsonData, cn) {
 	var DateList = [];
 	var legendName = [];
 	var bool = 0;
 	var seriesList = [];
 
-	// console.log(JSON.stringify(JsonList));
-	// var JsonData = JsonList;
-	for ( var cn in JsonData) {
-		//console.log("cn:" + cn);
-		if (cn == "_id")
-			continue;
-		var Json = JsonData[cn];
-		// console.log("Json:" + Json );
-		if(cn=="hs300"){
-			legendName.push("沪深300指数");
-		}else{
-			legendName.push(cn);
-		}
-		var seriesData = {};
-		var shList = [];
-		if(cn=="hs300"){			
-			seriesData['name'] = "沪深300指数";
-		}else{
-			seriesData['name'] = cn;
-		}
-		
-		seriesData['type'] = "k";
-		var start = Json.length-SliceStock;
-		
-		var Json_Slice = Json.slice(start);
-				
-		for ( var k in Json_Slice) {
-			sdate = Json_Slice[k]['date'].replace(/ 00:00:00/g, "");
-
-			if (bool == 0) {
-
-				DateList.push(sdate);
-			}
-			// console.log("sdate:" +sdate );
-			var datalist = [];
-			// 开盘，收盘，最低，最高
-			datalist.push(Json_Slice[k]['open']);
-			datalist.push(Json_Slice[k]['close']);
-			datalist.push(Json_Slice[k]['low']);
-			datalist.push(Json_Slice[k]['high']);
-			shList.push(datalist);
-		}
-		bool = 1;
-		seriesData['data'] = shList;
-		seriesList.push(seriesData);
+	//console.log("Json:" + Json );
+	if(cn=="hs300"){
+		legendName.push("沪深300指数");
+	}else{
+		legendName.push(cn);
 	}
+	var seriesData = {};
+	var shList = [];
+	if(cn=="hs300"){			
+		seriesData['name'] = "沪深300指数";
+	}else{
+		seriesData['name'] = cn;
+	}
+	
+	seriesData['type'] = "k";
+			
+	for ( var k in JsonData) {
+		sdate = JsonData[k]['date'];
+
+		if (bool == 0) {
+
+			DateList.push(sdate);
+		}
+		// //console.log("sdate:" +sdate );
+		var datalist = [];
+		// 开盘，收盘，最低，最高
+		datalist.push(JsonData[k]['open']);
+		datalist.push(JsonData[k]['close']);
+		datalist.push(JsonData[k]['low']);
+		datalist.push(JsonData[k]['high']);
+		shList.push(datalist);
+	}
+	bool = 1;
+	seriesData['data'] = shList;
+	seriesList.push(seriesData);
+
 
 	var JsonOpton = {
 		title : {
@@ -83,7 +70,7 @@ function InitStockData(JsonData) {
 		tooltip : {
 			trigger : 'axis',
 			formatter : function(params) {
-				//console.log("params:" +JSON.stringify(params) );
+				////console.log("params:" +JSON.stringify(params) );
 				var res = "";
 				for (var m = 0; m < params.length; m++) {
 					if (params[m]['series']['type'] == "k") {
@@ -129,12 +116,13 @@ function InitStockData(JsonData) {
 
 			}
 		},
-		dataZoom : {
-			show : true,
-			realtime : true,
-			start : 50,
-			end : 100
-		},
+		
+		 grid: {
+		        x: 80,
+		        y: 40,
+		        x2:40,
+		        y2:25
+		    },
 		xAxis : [
 
 		{
@@ -160,7 +148,7 @@ function InitStockData(JsonData) {
 		series : seriesList
 	};
 
-	// console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
+	// //console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
 
 	ChartRefresh(JsonOpton);
 }
@@ -178,36 +166,27 @@ $(function() {
 
 function hfqStockData(dtype) {
 	if (StockJsonDBHFQ[dtype] == undefined) {
-		console.log("StockJsonDBHFQ null !");
+		//console.log("StockJsonDBHFQ null !"+dtype);
 		return;
 	}
 
-	var JsonData = StockJsonDBHFQ[dtype][0];
+	var JsonData = StockJsonDBHFQ[dtype];
 
 	var oldOption = getChartOption();
 
-	for ( var cn in JsonData) {
-	//	console.log("cn:" + cn);
-		if (cn == "_id")
-			continue;
-		var Json = JsonData[cn];
+	var shList = [];
 
-		var shList = [];
-		var start = Json.length-SliceStock;
-		
-		var Json_Slice = Json.slice(start);
-		for ( var k in Json_Slice) {
+	for ( var k in JsonData) {
 
-			var datalist = [];
-			// 开盘，收盘，最低，最高
-			datalist.push(Json_Slice[k]['open']);
-			datalist.push(Json_Slice[k]['close']);
-			datalist.push(Json_Slice[k]['low']);
-			datalist.push(Json_Slice[k]['high']);
-			shList.push(datalist);
-		}
+		var datalist = [];
+		// 开盘，收盘，最低，最高
+		datalist.push(JsonData[k]['open']);
+		datalist.push(JsonData[k]['close']);
+		datalist.push(JsonData[k]['low']);
+		datalist.push(JsonData[k]['high']);
+		shList.push(datalist);
 	}
-
+	
 	for (var m = 0; m < oldOption['series'].length; m++) {
 		if (oldOption['series'][m]['type'] == "k") {
 			oldOption['series'][m]['data'] = shList;
@@ -215,13 +194,13 @@ function hfqStockData(dtype) {
 		}
 	}
 
-	// console.log("oldOption:" + JSON.stringify(oldOption));
+	// //console.log("oldOption:" + JSON.stringify(oldOption));
 
 	ChartRefresh(oldOption);
 }
 
-function AddmaData() {
-	var JsonData = StockJsonDBHFQ['data'][0];
+function AddmaData(cn) {
+	var JsonData = StockJsonDBHFQ['data'];
 
 	var ln = {};
 	ln["ma5"] = "5日均价";
@@ -231,28 +210,21 @@ function AddmaData() {
 	for ( var lk in ln) {
 		var hsData = [];
 
-		for ( var cn in JsonData) {
-			//console.log("cn:" + cn);
-			if (cn == "_id")
-				continue;
-			var Json = JsonData[cn];
-
-			var shList = [];
-			var start = Json.length-SliceStock;
-			
-			var Json_Slice = Json.slice(start);
-			for ( var k in Json_Slice) {				
-				shList.push(Json_Slice[k][lk]);
-			}
+		var shList = [];
+		
+		for ( var k in JsonData) {				
+			shList.push(JsonData[k][lk]);
 		}
-
-		addChartLineData(0, ln[lk], shList);
+		addChartLineData(0, ln[lk], shList, "line");
 	}
 }
 
-function addChartLineData(isSelect, lname, hsData) {
-	var oldOption = getChartOption();
 
+function addChartLineData(isSelect, lname, hsData, types) {
+	var oldOption = getChartOption();
+	
+	//console.log("== oldOption:" + JSON.stringify(oldOption));
+	
 	var legendName = oldOption['legend']['data'];
 
 	if (isSelect == 1) {
@@ -269,7 +241,7 @@ function addChartLineData(isSelect, lname, hsData) {
 
 	var seriesData = {};
 	seriesData['name'] = lname;
-	seriesData['type'] = "line";
+	seriesData['type'] = types;
 	seriesData['data'] = hsData;
 	seriesData['yAxisIndex'] = 1;
 	seriesList.push(seriesData);
@@ -277,7 +249,7 @@ function addChartLineData(isSelect, lname, hsData) {
 	oldOption['legend']['data'] = legendName;
 	oldOption['series'] = seriesList;
 
-	// console.log("oldOption:" + JSON.stringify(oldOption));
+	//console.log("oldOption:" + JSON.stringify(oldOption));
 
 	ChartRefresh(oldOption);
 }
@@ -287,6 +259,7 @@ function getChartOption() {
 }
 
 function ChartRefresh(o) {
+	$('input:radio[name=inline-radio][value=0]').attr('checked', true);
 	myChart.clear();
 	myChart.setOption(o, true);
 	myChart.refresh();
@@ -295,11 +268,13 @@ function ChartRefresh(o) {
 function KChart() {
 	var code = $("#code_num").val();
 	if (code.length == 0) {
-		alert("请填写代码");
+		BellNotifi("请填写代码");
 		return;
 	}
 	$("#icode").html(code);
 	getStockData(code);	
+	
+	$('input:radio[id=stockRadio0]').attr('checked', true);
 }
 
 function getStockData(code) {
@@ -311,16 +286,155 @@ function getStockData(code) {
 			"code" : code,
 		},
 		success : function(result) {
-			// console.log("success" + result);
+			// //console.log("success" + result);
 		},
 		error : function(request, textStatus, errorThrown) {
 			// alert(textStatus);
 		},
 		complete : function(request, textStatus) { // for additional info
 			var option = request.responseText;
-			// console.log("option:" + option);
+			//console.log("option:" + option);
 			StockData = option;
-			showChart(StockData);
+			showChart(StockData, code);
 		}
 	});
+}
+
+function ClearExtChart(){
+	var oldOption = myChart_ext.getOption();
+	
+	oldOption['series'] = [];
+	
+	myChart_ext.clear();
+	myChart_ext.setOption(oldOption, true);
+	myChart_ext.refresh();
+}
+
+function ExtChart(isSelect, lname, hsData, types, yIndex){
+	
+	var shList = [];
+	
+	addChartLineData(0, lname, shList, types);
+	
+	var MainChartOption = getChartOption();
+	
+	var legendName = MainChartOption['legend']['data'];
+	
+	var oldOption = myChart_ext.getOption();
+		
+	var seriesList = oldOption['series'];
+	
+	var seriesData = {};
+	seriesData['name'] = lname;
+	seriesData['type'] = types;
+	seriesData['yAxisIndex'] = yIndex;
+	seriesData['data'] = hsData;
+	seriesList.push(seriesData);
+
+	oldOption['legend']['data'] = legendName;
+	oldOption['series'] = seriesList;
+	
+	myChart_ext.clear();
+	myChart_ext.setOption(oldOption, true);
+	myChart_ext.refresh();
+	
+}
+
+function initExtChart(){
+	var MainChartOption = getChartOption();
+
+	var ln = ['成交金额(元)','成交量'];	
+	var shList = [];
+	var lnl = ['line', 'bar']
+	for(var n in ln){		
+		addChartLineData(0, ln[n], shList, lnl[n]);
+	}
+	
+	var legendName = MainChartOption['legend']['data'];
+	
+	var Jsonhfq = StockJsonDBHFQ['hfq'];
+	
+	var Json = StockJsonDBHFQ['data'];
+
+	var Volume = [];
+	var Amount = []
+	var axisData = [];
+
+	for ( var k in Json) {	 
+		
+		Volume.push( Json[k]['volume']/10000);
+		
+		if(Jsonhfq != undefined){
+			
+			Amount.push(Jsonhfq[k]['amount']/10000);			
+		}else{
+			Amount.push(0);
+		}
+		axisData.push(Json[k]['date']);
+		
+	}
+	
+	var optionExt = {
+		    tooltip : {
+		        trigger: 'axis',
+		        showDelay: 0             // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
+		    },
+		    legend: {
+		        y : -30,
+		        data:legendName
+		    },		  
+		    dataZoom : {
+		        show : true,
+		        realtime: true,
+		        start : 50,
+		        end : 100
+		    },
+		    grid: {
+		        x: 80,
+		        y:5,
+		        x2:40,
+		        y2:40
+		    },
+		    xAxis : [
+		        {
+		            type : 'category',
+		            position:'top',
+		            boundaryGap : true,
+		            axisLabel:{show:false},
+		            axisTick: {onGap:false},
+		            splitLine: {show:false},
+		            data : axisData
+		        }
+		    ],
+		    yAxis : [ {
+				type : 'value',
+				scale : true,
+				boundaryGap : [ 0.01, 0.01 ]
+			}, {
+				"scale" : true,
+				"type" : "value",
+				"name" : ""
+			} ],
+		    series : [
+		        {
+		            name:'成交金额(元)',
+		            type:'line',	
+		            yAxisIndex:1,	 		            
+		            data: Amount,
+		           
+		        },
+		        {
+		            name:'成交量',
+		            type:'bar',		            
+		            data: Volume,
+		          
+		        }
+		    ]
+		};
+	
+	//console.log("oldOption:" + JSON.stringify(optionExt));
+	
+	myChart_ext.clear();
+	myChart_ext.setOption(optionExt, true);
+	myChart_ext.refresh();
 }

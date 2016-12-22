@@ -1,19 +1,17 @@
 package com.lib.api;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.db.MGDB;
-import org.ppl.io.TimeClass;
 
 import com.alibaba.fastjson.JSON;
 
 public class getTuShare extends BaseSurface {
 	private String className = null;
-	private int getStockDay = 660;
+	//private int getStockDay = 660;
 
 	public getTuShare() {
 		// TODO Auto-generated constructor stub
@@ -33,10 +31,15 @@ public class getTuShare extends BaseSurface {
 		}
 		Map<String, Object> d = new HashMap<>();
 		String Json = "";
-		List<Map<String, Object>> Data = getData(code, 0);
+		List<Map<String, Object>> Data = getData(code);
+		
 		if (!code.equals("hs300")) {
-			List<Map<String, Object>> Datahfp = getData(code, 1);
-			d.put("hfq", Datahfp);
+			int len = Data.size();
+			List<Map<String, Object>> Datahfp = getData(code+"_hfq");
+			int hlen = Datahfp.size();
+			
+			List<Map<String, Object>> nData = Datahfp.subList(hlen-len, hlen);
+			d.put("hfq", nData);
 		}
 
 		d.put("data", Data);
@@ -47,33 +50,21 @@ public class getTuShare extends BaseSurface {
 	}
 
 	@SuppressWarnings("unchecked")
-	private List<Map<String, Object>> getData(String code, int Ishfq) {
-		String filed = code;
+	private List<Map<String, Object>> getData(String code) {
+		//String filed = code;
 
 		MGDB mgdb = new MGDB();
 		mgdb.DBEnd();
 		mgdb.SetCollection("stockDB");
 
 		Map<String, Object> cMap = new HashMap<>();
-		if (Ishfq == 0) {
-			// no hfq
-			int now = time();
-			now = now - getStockDay * TimeClass.OneDaySceond;
-			TimeClass tc = TimeClass.getInstance();
-			String date = tc.TimeStamptoDate((long) now, "yyyy-MM-dd");
-			cMap.put(mgdb.gte, date);
 
-		} else {
-			// is hfq
-			int now = time();
-			now = now - getStockDay * TimeClass.OneDaySceond;
-			cMap.put(mgdb.gte, now);
-			filed += "_hfq";
-		}
+		cMap.put(mgdb.exists, 1);
 
 		Map<String, Object> wMap = new HashMap<>();
-		wMap.put(filed + ".date", cMap);
+		wMap.put(code, cMap);
 		String JsonMap = JSON.toJSONString(wMap);
+		
 		mgdb.JsonWhere(JsonMap);
 
 		Map<String, Object> _idMap = new HashMap<>();
@@ -82,35 +73,13 @@ public class getTuShare extends BaseSurface {
 		String Jsonid = JSON.toJSONString(_idMap);
 		mgdb.JsonColumn(Jsonid);
 
-		Map<String, Object> _sortMap = new HashMap<>();
-		_sortMap.put(filed + ".date", 1);
-		String JsonSort = JSON.toJSONString(_sortMap);
-		mgdb.JsonSort(JsonSort);
-
 		boolean s = mgdb.FetchList();
 		if (s == false)
 			return null;
 
-		String time = "", time2 = "";
-		List<Map<String, Object>> ok2 = new ArrayList<>();
-		Map<String, Object> map = null;
-		while ((map = mgdb.GetValueLoop()) != null) {
-			List<Map<String, Object>> a = (List<Map<String, Object>>) map
-					.get(filed);
-			if (time.length() == 0) {
-				time = a.get(a.size() - 1).get("date").toString();
-			} else {
-				time2 = time;
-				time = a.get(0).get("date").toString();
-				if (time.equals(time2)) {
-					a.remove(0);
-				}
-			}
-			ok2.addAll(a);
-
-		}
+		List<Map<String, Object>> ok = mgdb.GetValue();
 
 		mgdb.Close();
-		return ok2;
+		return (List<Map<String, Object>>) ok.get(0).get(code);
 	}
 }

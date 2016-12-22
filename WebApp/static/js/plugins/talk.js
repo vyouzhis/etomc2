@@ -1,3 +1,4 @@
+
 /*
  *	############################################################################
  *	
@@ -6,12 +7,7 @@
  *	############################################################################
  */
 
-var symbols = " !\"#$%&'()*+,-./0123456789:;<=>?@";
-var loAZ = "abcdefghijklmnopqrstuvwxyz";
-symbols += loAZ.toUpperCase();
-symbols += "[\\]^_`";
-symbols += loAZ;
-symbols += "{|}~";
+
 
 
 function talkSelect(i, sid){
@@ -20,6 +16,9 @@ function talkSelect(i, sid){
 	
 	var ariaStra = false;
 	var activeStra = "";
+	
+	var ariaRes = false;
+	var activeRes = "";
 	
 	StockCode = $("#code_num").val();
 	StockSid = 0;
@@ -34,17 +33,36 @@ function talkSelect(i, sid){
 		
 		StockCode = "";
 		StockSid = sid;
+	}else if(i==4){
+		ariaCode = false;
+		activeCode = "";
+		
+		ariaStra = false;
+		activeStra = "false";	
+		
+		ariaRes = true;
+		activeRes = "active";
+		
+		StockCode = "";
+		StockSid = sid;
 	}
-	
-	$("#talkNameCode").attr("aria-expanded",ariaCode);
-	$("#listtab2").attr("class", activeCode);
-	$("#chapter2").attr("class","tab-pane fade "+activeCode+" in");
-	
 	
 	$("#talkNameStra").attr("aria-expanded", ariaStra);			
 	$("#listtab1").attr("class",activeStra);				
 	$("#chapter1").attr("class","tab-pane fade "+activeStra+" in");
 	
+	$("#talkNameCode").attr("aria-expanded",ariaCode);
+	$("#listtab2").attr("class", activeCode);
+	$("#chapter2").attr("class","tab-pane fade "+activeCode+" in");
+	
+	$("#newsNList").attr("aria-expanded", false);			
+	$("#listtab3").attr("class",false);				
+	$("#chapter3").attr("class","tab-pane fade  in");
+	
+	$("#ResNList").attr("aria-expanded", ariaRes);			
+	$("#listtab4").attr("class",ariaRes);				
+	$("#chapter4").attr("class","tab-pane fade "+activeRes+" in");
+
 }
 
 
@@ -80,13 +98,15 @@ function toAscii(valueStr) {
 	return text;
 }
 
+function URLencode(sStr){  
+    return sStr.replace(/%/g, '%25');  
+} 
+
 function saveTalk() {
-	// var icore = getCookie("iCore");
 
 	var msg = $("#comment-text").val();
-
-	var dataList = 'msg=' + msg + "&sid=" + StockSid + "&code=" + StockCode + "&pid=" + 0;
-	//console.log(dataList);
+	
+	var dataList = 'msg=' + URLencode(msg) + "&sid=" + StockSid + "&code=" + StockCode + "&pid=" + 0;
 
 	$.ajax({
 		url : DomainUrl+"/italk?jsoncallback=?",
@@ -95,15 +115,15 @@ function saveTalk() {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
 			var option = request.responseText;
-			//console.log("option:" + option);
+			////console.log("option:" + option);
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 
@@ -128,7 +148,7 @@ function listTalk(p, sid, code) {
 					"p" : p
 				},
 				success : function(result) {
-					// console.log("success" + result);
+					// //console.log("success" + result);
 				},
 				error : function(request, textStatus, errorThrown) {
 					// alert(textStatus);
@@ -136,7 +156,7 @@ function listTalk(p, sid, code) {
 				complete : function(request, textStatus) { // for additional
 					// info
 					var option = request.responseText;
-					// console.log("option:" + option);
+					// //console.log("option:" + option);
 					var Json = JSON.parse(option);
 					StockInfoData = Json["StockInfo"];
 				
@@ -159,7 +179,7 @@ function listTalk(p, sid, code) {
 						
 						ListHtml += "<li class='media shopping-cart-table'>"
 								+ "<a class='media-left' href='javascript:void(0)'> " +
-										"<span class='avatar anonymous'><img alt='Avatar' class='img-circle' height='42' width='42' src=\"Data/"+Json['data'][i]['logo']+"\"></span>"
+										"<span class='avatar '><img alt='Avatar' class='img-circle' height='42' width='42' src=\"Data/"+Json['data'][i]['logo']+"\"></span>"
 								+ "</a><div class='media-body'>"
 								+ "	<h4 class='media-heading comment-author'>"
 								+ "		<a href='#'>"
@@ -174,7 +194,7 @@ function listTalk(p, sid, code) {
 						var strDesc =  "";
 						if(p==0 || p ==1){
 							strDesc = "<li class='media'>"
-							+ "<a class='media-left' href='javascript:void(0)'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
+							+ "<a class='media-left' href='javascript:void(0)'> <span class='avatar'><img alt='Avatar' class='img-circle' height='42' width='42' src='Data/UserLogo/etomc2_144x144.png'></span>"
 							+ "</a><div class='media-body'>"
 							+ "	<h4 class='media-heading comment-author'>"
 							+ "		<a href='#'>站长</a>"
@@ -216,7 +236,7 @@ function listTalk(p, sid, code) {
 								+ td + "</tbody>" + "</table>";
 
 						var codeHtml = "<li class='media'>"
-								+ "<a class='media-left' href='blog-single.html#'> <span class='avatar anonymous'><i class='fa fa-user'></i></span>"
+								+ "<a class='media-left' href='blog-single.html#'> <span class='avatar'><img alt='Avatar' class='img-circle' height='42' width='42' src='Data/UserLogo/etomc2_144x144.png'></span>"
 								+ "</a>" + "<div class='media-body'>"
 								+ "	<h4 class='media-heading comment-author'>"
 								+ "		<a href='#'>站长</a>" + "	</h4>"
@@ -226,10 +246,11 @@ function listTalk(p, sid, code) {
 
 						$("#talkCode").html(codeHtml + ListHtml);
 						infoshow("basics", code);
+						NewsCode(code);
 						$("#comment-code").val(code);						
 					}
 					
-					//console.log("page:" + Json['page']);
+					////console.log("page:" + Json['page']);
 					if(sid != 0){
 						$("#talkListPageStra").html(Json['page']);
 					}else{
@@ -241,13 +262,88 @@ function listTalk(p, sid, code) {
 			});
 }
 
+function NewsCode(code){
+	
+	$.ajax({
+				url : DomainUrl+"/listtalk?jsoncallback=?",
+				contentType : 'text/html;charset=utf-8',
+				data : {
+					"sid" : 0,
+					"code" : code,
+					"p" : 0,
+					"isNews":1
+				},
+				success : function(result) {
+					// //console.log("success" + result);
+				},
+				error : function(request, textStatus, errorThrown) {
+					// alert(textStatus);
+				},
+				complete : function(request, textStatus) { // for additional
+					// info
+					var option = request.responseText;
+					// //console.log("option:" + option);
+					var Json = JSON.parse(option);
+					
+	
+					var ListHtml = "";
+
+					for (var i = 0; i < Json['data'].length; i++) {
+						var reply = ""
+						
+						var date = new Date(
+								parseInt(Json['data'][i]['ctime']) * 1000)
+								.toLocaleString().substr(0, 17);
+						var msg = Json['data'][i]['msg'];
+						
+						msg = msg.replace(/@/g, "<a class='product-title' href='#'>@");
+						msg = msg.replace(/:/g, ":</a>");
+						if(msg.length > 250){
+							pmsg = msg.substr(0, 250);
+							nmsg = msg.substr(250,msg.length);
+							
+							msg = pmsg+"<br><a href='javascript:void(0)' id='sname_"+i+"' name='sname_"+i+"' onclick='showFullNews("+i+")'>" +
+									"<i class='fa fa-arrows-v'></i>展开</a></br>" +
+									"<div id='fullid_"+i+"' name='fullid_"+i+"' style='display:none'>"+nmsg+"</div>";
+						}
+						ListHtml += "<li class='media shopping-cart-table'>"
+								+ "<a class='media-left' href='javascript:void(0)'> " +
+										" <span class='avatar'><img alt='Avatar' class='img-circle' height='42' width='42' src='Data/UserLogo/etomc2_144x144.png'></span>"
+								+ "</a><div class='media-body'>"
+								+ "	<h4 class='media-heading comment-author'>"
+								+ "		<a href='#'>"
+								+ Json['data'][i]['nickname'] + "</a>"
+								+ "	</h4>"
+								+ "	<span class='timestamp text-muted'>" + date
+								+ "</span>" + "	<p>" + msg
+								+ "</p>" + reply + "	<hr>" + "</div>" + "</li>";
+					}
+		
+					$("#newsList").html(ListHtml);
+					$("#newpList").attr("class","hide");
+				}
+			});
+}
+
+function showFullNews(i){
+	
+	if($("#fullid_"+i).css('display') == 'none'){ 
+	   $("#fullid_"+i).show();
+	   $("#sname_"+i).html("<i class='fa fa-arrows-v'></i>折叠"); 
+	} else { 
+	   $("#fullid_"+i).hide(); 
+	   $("#sname_"+i).html("<i class='fa fa-arrows-v'></i>展开");
+	}
+}
+
 function tReplay(o){
-	console.log("replay:" + JSON.stringify(o));
+	//console.log("replay:" + JSON.stringify(o));
 	var val = "@"+o['nickname']+":"+o['msg'];
 	$("#comment-text").val(val);
 }
 
 function infoshow(k, c) {
+	
 	var infoList = sInfo();
 
 	$("#tdName").html(infoList[k + "_name"] + " (属性)");
@@ -259,8 +355,7 @@ function infoshow(k, c) {
 		var db = "--";
 
 		td += "<tr>" + "<th scope='row'>" + infoList[k][ik] + "</th>" + "<td>"
-				+ db
-		"</td>" + "</tr>";
+				+ db+"</td>" + "</tr>";
 	}
 
 	for (var i = 0; i < StockInfoData.length; i++) {
@@ -268,22 +363,25 @@ function infoshow(k, c) {
 		if (StockInfoData[i] === null) {
 			continue;
 		}
-
-		if (StockInfoData[i][k] != undefined) {
+		if ( StockInfoData[i]['Info'][k] === undefined) {
+			continue;
+		}
+				
+		InfoCode =  StockInfoData[i]['Info'][k][c];
+		
+		if (InfoCode != undefined) {
 			td = "";
 			for ( var ik in infoList[k]) {
 
 				var db = "";
-				if (k == "basics") {
-					db = StockInfoData[i][k][c][ik];
-				} else {
-					db = StockInfoData[i][k][0][ik];
-				}
+				
+				db = InfoCode[ik];
+				
 				if (db === undefined) {
 					db = "--";
 				}
 				td += "<tr>" + "<th scope='row'>" + infoList[k][ik] + "</th>"
-						+ "<td>" + db
+						+ "<td>" + db+
 				"</td>" + "</tr>";
 			}
 			break;

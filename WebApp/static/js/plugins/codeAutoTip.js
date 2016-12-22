@@ -1,7 +1,8 @@
+
 /*
  *	############################################################################
  *	
- *   showChart
+ *   codeAutoTip
  *   
  *	############################################################################
  */
@@ -27,7 +28,7 @@ function CodeAuto() {
 										"codeext" : code,
 									},
 									success : function(result) {
-										// console.log("success" + result);
+										// //console.log("success" + result);
 									},
 									error : function(request, textStatus,
 											errorThrown) {
@@ -35,7 +36,7 @@ function CodeAuto() {
 									},
 									complete : function(request, textStatus) {
 										var option = request.responseText;
-										// console.log("option:" + option);
+										// //console.log("option:" + option);
 										if (option.length > 2) {
 											var JsonList = JSON.parse(option);
 
@@ -61,7 +62,7 @@ function CodeAuto() {
 											
 											$("#codeMenu").html(html);
 										} else {
-											console.log("option:" + option);
+											//console.log("option:" + option);
 										}
 									}
 								});
@@ -73,12 +74,12 @@ function CodeAuto() {
 function addCode(o, n) {
 	$("#code_num").val(o);
 
-	$("#talkNameCode").html("<i class='fa fa-bar-chart-o'></i>" + o + " " + n);
+	$("#talkNameCode").html("<i class='fa fa-line-chart'></i>" + o + " " + n);
 	$("#talkNameCode").attr("class", "");
 
 	$("#talkNameCode").focus();
 
-	//console.log("code:" + o);
+	////console.log("code:" + o);
 
 	// 获取股票的讨论内容
 	listTalk(0, 0, o);
@@ -86,4 +87,24 @@ function addCode(o, n) {
 	talkSelect(0);
 	StockCode = o
 	StockCodeName = n;		
+}
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+ 
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }

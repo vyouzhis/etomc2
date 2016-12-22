@@ -5,7 +5,7 @@
 <title>EtoMC2 Beta</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Responsive Multipurpose Bootstrap Theme">
+<meta name="description" content="大数据量化策略分析分享网站">
 <meta name="author" content="EtoMC2">
 <!-- CSS -->
 <link href="${static_css_uri}/bootstrap.css${StaticVer}" rel="stylesheet" type="text/css">
@@ -100,6 +100,7 @@ ${ClazzHeader!""}
 								<li><a href="${trade}">算法交易</a></li>
 								<li><a href="${risk}">风险控制</a></li>
 								-->
+								
 								<li><a href="${arbitrage}">统计套利</a></li>
  								
 							</ul></li>
@@ -110,7 +111,9 @@ ${ClazzHeader!""}
 							<ul role="menu" class="dropdown-menu">
 								<#if islogin == -1>
 								<li><a href="${register}">用户注册</a></li>
-								<li><a href="${login}">用户登录</a></li> <#else>
+								<li><a href="${login}">用户登录</a></li> 
+								<#else>
+								<li><a href="${rshare}">我的分享</a></li>
 								<li><a href="${icore}">用户中心</a></li>
 								<li><a href="${ilogout}">我要退出</a></li> </#if>
 							</ul></li>

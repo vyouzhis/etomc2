@@ -30,10 +30,15 @@ public class SurfaceHeader extends BaseModule {
 		setRoot("arbitrage", ucl.Url("arbitrage"));
 		setRoot("strategy", ucl.Url("strategy"));
 
+		
+		
 		int islogin = isLogin();
 		setRoot("islogin", islogin);
 		if (islogin>0) {
+			setRoot("rshare", ucl.BuildUrl("s", igetUid()+""));
 			setRoot("UserName", igetName());
+		}else {
+			setRoot("rshare", "");
 		}
 		
 		super.View();

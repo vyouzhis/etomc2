@@ -1,3 +1,4 @@
+
 /*
  *	############################################################################
  *	
@@ -6,7 +7,7 @@
  *	############################################################################
  */
 
-var StockDescCode = "";
+
 
 function selling(c) {
 	var dataList = 'act=0&code=' + c;
@@ -17,7 +18,7 @@ function selling(c) {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
@@ -28,7 +29,7 @@ function selling(c) {
 			BellNotifi(msg);
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 }
@@ -48,7 +49,7 @@ function showStrategy() {
 		type : 'POST',
 		dataType : 'json',
 		success : function(response) {
-			// console.log(response.status);
+			// //console.log(response.status);
 
 		},
 		complete : function(request, textStatus) {
@@ -74,7 +75,7 @@ function showStrategy() {
 			}
 		},
 		error : function(response) {
-			// console.log(response);
+			// //console.log(response);
 		}
 	});
 }

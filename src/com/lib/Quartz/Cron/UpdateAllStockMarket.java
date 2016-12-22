@@ -34,16 +34,16 @@ public class UpdateAllStockMarket extends CronQuartz implements Job {
 					mConfig.GetValue("pythonUser"), "!@#qazwsx");
 
 			String out = new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo.py");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py");
 
 			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo.py hs300");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py hs300");
 			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo.py sh");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py sh");
 			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo.py sz");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py sz");
 			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo.py sz50");
+					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py sz50");
 			echo(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -86,7 +86,8 @@
 				<hr>
 				<div class="row">
 
-					<div id="echart_k" name="echart_k" style="height: 400px"></div>
+					<div id="echart_k" name="echart_k" style="height: 400px;margin-bottom:1px;padding:1px 10px;border-width:0 1px;"></div>
+					<div id="echart_ext" name="echart_ext"  style='height:145px;margin-bottom:1px;padding:1px 10px;border-width:0 1px;'></div>
 				</div>
 			</div>
 		</div>
@@ -183,13 +184,13 @@
 							role="tab" href="#chapter1" aria-expanded="true"><i class="fa fa-flask"></i> </a></li>
 						<li id="listtab2" name="listtab2" class=""><a id="talkNameCode" name="talkNameCode" data-toggle="tab"
 							class="hide" role="tab" href="#chapter2" aria-expanded="false"><i
-								class="fa fa-bar-chart-o"></i> </a></li>
+								class="fa fa-line-chart"></i> </a></li>
 						<li id="listtab3" name="listtab3" class=""><a id="newsNList" name="newsNList" data-toggle="tab"
 							class="" role="tab" href="#chapter3" aria-expanded="false"><i
 								class="fa fa-newspaper-o"></i> 新闻公告</a></li>
 						<li id="listtab4" name="listtab4" class=""><a id="ResNList" name="ResNList" data-toggle="tab"
 							class="hide" role="tab" href="#chapter4" aria-expanded="false"><i
-								class="fa fa-connectdevelop"></i> 回测结果</a></li>
+								class="fa fa-connectdevelop" id="developing" name="developing"></i> 回测结果</a></li>
 
 					</ul>
 
@@ -376,13 +377,13 @@
 
 						<div class="col-sm-4">
 							<button class="btn btn-block btn-primary" type="button" onclick="KChart()">
-								<i class="fa fa-asterisk"></i> K线图
+								<i class="fa fa-area-chart"></i> K线图
 							</button>
 						</div>
 
 						<div class="col-sm-4">
 							<button class="btn btn-block btn-primary" type="button" onclick="Tactics()">
-								<i class="fa fa-asterisk"></i> 回测
+								<i id="looping" name="looping" class="fa fa-cog fa-fw" aria-hidden="true"></i>回测
 							</button>
 						</div>
 						<div class="col-sm-4">
@@ -621,7 +622,7 @@
 
 				<!-- text widget -->
 				<div class="widget <#if islogin == -1> hide </#if>">
-					<h4 class="widget-title">信息列表</h4>
+					<h4 class="widget-title">分享列表</h4>
 					<ul class="list-unstyled blogposts latest">
 						<li>
 							<h4 class="post-title">

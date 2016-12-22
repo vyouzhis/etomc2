@@ -20,7 +20,7 @@ public class StraPage extends BaseSurface {
 		GetSubClassName(className);
 		isAutoHtml = false;
 	}
-
+	
 	@Override
 	public void Show() {
 		// TODO Auto-generated method stub
@@ -44,7 +44,7 @@ public class StraPage extends BaseSurface {
 	}
 
 	private List<Map<String, Object>> getStra() {
-		String format = "SELECT s.id, s.title,s.sdesc,s.integral, s.follow, i.nickname, s.cid,s.returns"
+		String format = "SELECT s.id, s.title,s.sdesc,s.integral, s.follow, i.nickname, s.cid"
 				+ " FROM `strategy_stock` s, stock_user_info i"
 				+ " where i.uid=s.uid  ORDER by s.integral limit %d, %d";
 		int p = toInt(porg.getKey("p"));
