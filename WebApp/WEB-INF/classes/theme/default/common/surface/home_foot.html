@@ -1,13 +1,22 @@
 <script src="${static_js_uri}/plugins/echart2/echarts-all.js${StaticVer}"></script>
 <script src="${static_js_uri}/plugins/md5/jquery.md5.js${StaticVer}"></script>
 <script src="${static_js_uri}/plugins/etomc2_gather.js${StaticVer}"></script>
+<script src="${static_js_uri}/plugins/showChart.js${StaticVer}"></script>
+
 <script>
 	var StockCid = ${Step_Type!1};	
 	StockMd = 1;
 	ToolTip = false;
 	var DomainUrl = "";
-	getStockData("hs300");
-
+	showExt = 0;
+	isDZ = 1;
+	var baseIndex = Math.ceil(Math.random()*4);
+	
+	var baseVal=["","hs300","sh","sz","zx","cy"];
+		
+	getStockData(baseVal[baseIndex]);
+	
+	
 	/**
 	 *  测试在首页 的 变量
 	 */

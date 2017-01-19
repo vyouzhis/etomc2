@@ -1,5 +1,6 @@
 package com.lib.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,13 +33,30 @@ public class getTuShare extends BaseSurface {
 		Map<String, Object> d = new HashMap<>();
 		String Json = "";
 		List<Map<String, Object>> Data = getData(code);
+		List<String> base = new ArrayList<String>();
+		base.add("hs300");
+		base.add("sh");
+		base.add("sz");
+		base.add("zx");
+		base.add("cy");
 		
-		if (!code.equals("hs300")) {
-			int len = Data.size();
+		if (base.contains(code) != true) {
+			String date = (String) Data.get(0).get("date");
+			
 			List<Map<String, Object>> Datahfp = getData(code+"_hfq");
 			int hlen = Datahfp.size();
+			int len=0;
+			String hdate = "";
+			for (len=0; len<hlen; len++){
+				 hdate = (String) Datahfp.get(len).get("date");
+				
+				if (hdate.equals(date)){
+					break;
+				}
+			}
+
+			List<Map<String, Object>> nData = Datahfp.subList(len, hlen);
 			
-			List<Map<String, Object>> nData = Datahfp.subList(hlen-len, hlen);
 			d.put("hfq", nData);
 		}
 

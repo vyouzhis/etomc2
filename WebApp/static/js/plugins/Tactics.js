@@ -12,6 +12,7 @@
         {
             "format": "line",　　//  图像 line 线
             "yIndex": "0",　　//  刻度方位，０　左边，１右边
+            "isExt": "0",　　//  ０　下面副图区，１主图区
             "db": "list",　　　　 // 数组
             "date": "list",  // 时间数组，可为空
             "name": "db name" //　名字
@@ -19,6 +20,15 @@
         {
              "format": "bar",　　//  图像 bar 线
              "yIndex": "0",　　//  刻度方位，０　左边，１右边
+             "isExt": "0",　　//  ０　下面副图区，１主图区
+            "db": "list",　　　　 // 数组
+            "date": "list",  // 时间数组，可为空
+            "name": "db name" //　名字
+        },
+        {
+            "format": "markPoint",　　//  在k 线上面标识
+            "yIndex": "0",　　//  刻度方位，０　左边，１右边
+            "isExt": "1",　　//  ０　下面副图区，１主图区
             "db": "list",　　　　 // 数组
             "date": "list",  // 时间数组，可为空
             "name": "db name" //　名字
@@ -63,7 +73,7 @@ function Tactics() {
 		},
 		complete : function(request, textStatus) { // for additional info
 			var option = request.responseText;
-			console.log("codeJson:" + option);
+			//console.log("codeJson:" + option);
 			if (option.length > 0) {
 			
 				var codeJson = JSON.parse(option);
@@ -75,7 +85,11 @@ function Tactics() {
 				var table = "";
 
 				InitStockData(StockJsonDBHFQ['data'], code);
-				AddmaData(code);
+				if (rawma == 1){
+					AddmaData(code);
+					
+				}
+				
 				var i = 0;
 				
 				for(k in data){
@@ -83,11 +97,39 @@ function Tactics() {
 					format = data[k]["format"];
 					if(format == "table"){
 						//console.log("codeJson1:" + data[k]["db"]);
+						table += data[k]["name"]
 						table += showTable(data[k]["db"]);
 						table += "<br />";
-					}else {
-						//console.log("codeJson2:" + data[k]["db"]);
-						if(i == 0){
+					}else if(format == "markPoint"){
+						//{name : 'Buy', value : 20.61, xAxis: '2016-12-12', yAxis: 20.61}
+						var mpList = []
+						
+						mdata = data[k]["db"];
+						console.log("cdata:" + mdata);
+						var mData = JSON.parse(mdata);
+						var col = mData["columns"]
+						for(var k in mData["index"]){
+							var mpdict = {}
+							mpdict["name"] = "BUY";
+							mpdict["value"] = mData["data"][k][0];
+							mpdict["xAxis"] = mData["data"][k][1];
+							mpdict["yAxis"] = mData["data"][k][0];
+							mpList.push(mpdict)	
+							
+							var selldict = {}
+							selldict["name"] = "SELL";
+							selldict["value"] = mData["data"][k][2];
+							selldict["xAxis"] = mData["data"][k][3];
+							selldict["yAxis"] = mData["data"][k][2];
+							mpList.push(selldict)
+							
+						}
+						markPointAction(mpList);
+						console.log("cdata:" + JSON.stringify(mpList));
+					}
+					else {
+						//console.log("isExt:" + data[k]["isExt"]);
+						if(i == 0 && data[k]["isExt"] == 0){
 							ClearExtChart();
 							i = 1;
 						}
@@ -97,12 +139,21 @@ function Tactics() {
 						cdata = cdata.replace(/NaN/g, 0);
 						
 						var cData = JSON.parse(cdata);
+						// 这儿有一个 bug
+						if(data[k]["isExt"] == 0){
+							//console.log("codeJson2:" + name);
+							ExtChart(name, cData, format, data[k]["yIndex"]);
+						}else{
+							addChartLineData(0, name, cData, format);
+						}
 						
-						ExtChart(rawma, name, cData, format, data[k]["yIndex"]);
 					}
 					
 				}
-				addTables(table);				
+				if (table.length > 0){
+					addTables(table);	
+				}
+						
 			}
 			$("#looping").attr("class","fa fa-cog fa-fw");
 			$("#developing").attr("class","fa fa-connectdevelop");
@@ -114,11 +165,15 @@ function Tactics() {
 function showTable(o){
 	$("#ResNList").attr("class", "");
 	var codeJson = JSON.parse(o);
-	var columns = codeJson['columns'];
 	var th = "", td="";
-	for(var k in columns){
-		th += "<th>"+columns[k]+"</th>";
+	
+	if(codeJson['columns'] != undefined){
+		var columns = codeJson['columns'];	
+		for(var k in columns){
+			th += "<th>"+columns[k]+"</th>";
+		}
 	}
+	
 	var data = codeJson['data'];
 	for(var d in data){
 		td+="<tr>";

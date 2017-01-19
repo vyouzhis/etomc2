@@ -72,18 +72,6 @@ public class PythonTactics extends BaseSurface {
 		}
 	}
 	
-//	private Map<String, Object> findPyRun(int iid) {
-//		
-//		String format = "SELECT * FROM `strategy_info`  where id='%d' limit 1";
-//		String sql = String.format(format, iid);
-//		
-//		Map<String, Object> res = FetchOne(sql);
-//		
-//		return res;
-//		
-//	}
-
-	
 	private Map<String, Object> getScriptInfo(int id) {
 		String format = "SELECT s.path, i.*  FROM `strategy_stock` s, strategy_info i where i.id = s.iid AND s.id=%s limit 1";
 		String sql = String.format(format, id);

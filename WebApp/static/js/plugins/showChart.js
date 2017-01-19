@@ -13,10 +13,12 @@ function showChart(dt, code) {
 		// //console.log("JsonList:" + dt );
 		StockJsonDBHFQ = JSON.parse(dt);
 		InitStockData(StockJsonDBHFQ['data'], code);
-		//if(StockMd==0){
-		AddmaData(code);
-		//}
-		initExtChart();
+		
+		if(showExt == 1){
+			AddmaData(code);
+			initExtChart();
+		}
+		
 	}
 }
 
@@ -25,19 +27,28 @@ function InitStockData(JsonData, cn) {
 	var legendName = [];
 	var bool = 0;
 	var seriesList = [];
-
-	//console.log("Json:" + Json );
-	if(cn=="hs300"){
-		legendName.push("沪深300指数");
-	}else{
+	var NameList = {};
+	NameList["hs300"] = "沪深300指数";
+	NameList["sh"] = "上证指数";
+	NameList["sz"] = "深证指数";
+	NameList["zx"] = "中小板指数";
+	NameList["cy"] = "创业板指数";
+	
+	//console.log("NameList:" + NameList[cn] );
+	if(NameList[cn] == undefined){
 		legendName.push(cn);
+		
+	}else{
+		legendName.push(NameList[cn]);
 	}
 	var seriesData = {};
 	var shList = [];
-	if(cn=="hs300"){			
-		seriesData['name'] = "沪深300指数";
-	}else{
+	
+	if(NameList[cn] == undefined){		
 		seriesData['name'] = cn;
+		
+	}else{
+		seriesData['name'] = NameList[cn];
 	}
 	
 	seriesData['type'] = "k";
@@ -48,8 +59,7 @@ function InitStockData(JsonData, cn) {
 		if (bool == 0) {
 
 			DateList.push(sdate);
-		}
-		// //console.log("sdate:" +sdate );
+		}		
 		var datalist = [];
 		// 开盘，收盘，最低，最高
 		datalist.push(JsonData[k]['open']);
@@ -62,7 +72,6 @@ function InitStockData(JsonData, cn) {
 	seriesData['data'] = shList;
 	seriesList.push(seriesData);
 
-
 	var JsonOpton = {
 		title : {
 			text : ''
@@ -70,7 +79,7 @@ function InitStockData(JsonData, cn) {
 		tooltip : {
 			trigger : 'axis',
 			formatter : function(params) {
-				////console.log("params:" +JSON.stringify(params) );
+				//console.log("params:" +JSON.stringify(params) );
 				var res = "";
 				for (var m = 0; m < params.length; m++) {
 					if (params[m]['series']['type'] == "k") {
@@ -90,13 +99,16 @@ function InitStockData(JsonData, cn) {
 				crossStyle : {
 					color : '#c7254e',
 					width : 1,
-					type : 'dashed'
-				}
+					type : 'dashed',
+					
+				},
+				
 			}, 
 		},
 		legend : {
 			data : legendName
 		},
+			    
 		toolbox : {
 			show : ToolTip,
 			feature : {
@@ -148,6 +160,20 @@ function InitStockData(JsonData, cn) {
 		series : seriesList
 	};
 
+	
+	//"dataZoom" 
+	 
+    
+   if(isDZ == 1){
+	   var dz =  {
+	        show : true,
+	        realtime: true,
+	        start : 50,
+	        end : 100
+		    }
+	   JsonOpton["dataZoom"] = dz;
+	   JsonOpton["grid"] = {};
+	 }
 	// //console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
 
 	ChartRefresh(JsonOpton);
@@ -164,6 +190,8 @@ $(function() {
 	});
 });
 
+
+
 function hfqStockData(dtype) {
 	if (StockJsonDBHFQ[dtype] == undefined) {
 		//console.log("StockJsonDBHFQ null !"+dtype);
@@ -173,17 +201,29 @@ function hfqStockData(dtype) {
 	var JsonData = StockJsonDBHFQ[dtype];
 
 	var oldOption = getChartOption();
-
+	var xDate = oldOption['xAxis'][0]['data'];
+	
 	var shList = [];
 
 	for ( var k in JsonData) {
-
 		var datalist = [];
-		// 开盘，收盘，最低，最高
-		datalist.push(JsonData[k]['open']);
-		datalist.push(JsonData[k]['close']);
-		datalist.push(JsonData[k]['low']);
-		datalist.push(JsonData[k]['high']);
+		
+		console.log(xDate[k] +"---"+ JsonData[k]['date']);
+		
+		if (xDate[k] == JsonData[k]['date']){
+			// 开盘，收盘，最低，最高
+			datalist.push(JsonData[k]['open']);
+			datalist.push(JsonData[k]['close']);
+			datalist.push(JsonData[k]['low']);
+			datalist.push(JsonData[k]['high']);
+		}else{
+			// 开盘，收盘，最低，最高
+			datalist.push('-');
+			datalist.push('-');
+			datalist.push('-');
+			datalist.push('-');
+		}
+				
 		shList.push(datalist);
 	}
 	
@@ -205,7 +245,7 @@ function AddmaData(cn) {
 	var ln = {};
 	ln["ma5"] = "5日均价";
 	ln["ma10"] = "10日均价";
-	ln["ma20"] = "20日均价";
+	ln["ma30"] = "30日均价";
 
 	for ( var lk in ln) {
 		var hsData = [];
@@ -310,7 +350,7 @@ function ClearExtChart(){
 	myChart_ext.refresh();
 }
 
-function ExtChart(isSelect, lname, hsData, types, yIndex){
+function ExtChart(lname, hsData, types, yIndex){
 	
 	var shList = [];
 	
@@ -340,6 +380,31 @@ function ExtChart(isSelect, lname, hsData, types, yIndex){
 	
 }
 
+function markPointAction(dataList){	
+	var Option = getChartOption();
+	
+	var markPoint = {
+	        symbol: 'emptyPin',  
+	        symbolSize:5,
+	        itemStyle:{
+	            normal:{color:"#3c6699",label:{position:'top'}}
+	        },
+	        data : dataList
+	    };
+	for (var m=0; m< Option['series'].length; m++){
+		
+		if (Option['series'][m]['type'] == "k"){
+			//console.log("markPoint ..." );
+			Option['series'][m]["markPoint"] = markPoint;
+			//console.log("oldOption:" + JSON.stringify(Option));
+			ChartRefresh(Option);
+			break;
+		}
+	}
+	
+	
+}
+
 function initExtChart(){
 	var MainChartOption = getChartOption();
 
@@ -355,7 +420,7 @@ function initExtChart(){
 	var Jsonhfq = StockJsonDBHFQ['hfq'];
 	
 	var Json = StockJsonDBHFQ['data'];
-
+	
 	var Volume = [];
 	var Amount = []
 	var axisData = [];
@@ -364,7 +429,7 @@ function initExtChart(){
 		
 		Volume.push( Json[k]['volume']/10000);
 		
-		if(Jsonhfq != undefined){
+		if(Jsonhfq != undefined && Jsonhfq[k] != undefined){
 			
 			Amount.push(Jsonhfq[k]['amount']/10000);			
 		}else{

@@ -54,9 +54,9 @@ public class home extends BaseSurface{
 	}
 	
 	private void listStrategy() {
-		String sql = "(SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=1 limit 2 )UNION "
-				+ "(SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=2 limit 2) UNION "
-				+ "(SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=3 limit 2)";
+		String sql = "SELECT title,sdesc FROM `strategy_stock` order by id desc limit 6 ";
+				//+ " UNION(SELECT title, sdesc FROM `strategy_stock` WHERE cid=2 order by id desc limit 4)  ";
+				//+ " UNION (SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=3 limit 2)";
 		
 		List<Map<String, Object>> res = null;
 		

@@ -1,4 +1,10 @@
-
+/*
+ *	############################################################################
+ *	
+ *   etomc2 gather
+ *   
+ *	############################################################################
+ */
 var StockData = "";
 var talkListInit = 0;
 
@@ -22,29 +28,31 @@ symbols += "[\\]^_`";
 symbols += loAZ;
 symbols += "{|}~";
 
-
 var StockJsonDBHFQ = "";
 var StockMd=0;
 var ToolTip=true;
 
-
 var StockDescCode = "";
 
+var showExt = 1;
+var isDZ = 0;
 var myChart;
 var myChart_ext;
 var MainChartLengendName=[];
 if($('#echart_k').length > 0) {
 	myChart = echarts.init(document.getElementById('echart_k'));
-	myChart_ext = echarts.init(document.getElementById('echart_ext'));
 	
-	myChart.connect([myChart_ext]);
-	myChart_ext.connect([myChart]);
-	
-	setTimeout(function (){
-	    window.onresize = function () {
-	        myChart.resize();
-	        myChart_ext.resize();
-	        
-	    }
-	},200)
+	if($('#echart_ext').length > 0) {
+		myChart_ext = echarts.init(document.getElementById('echart_ext'));
+		myChart.connect([myChart_ext]);
+		myChart_ext.connect([myChart]);
+		
+		setTimeout(function (){
+		    window.onresize = function () {
+		        myChart.resize();
+		        myChart_ext.resize();
+		        
+		    }
+		},200);
+	}
 }

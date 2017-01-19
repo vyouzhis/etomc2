@@ -3,7 +3,6 @@ package com.lib.api;
 import java.sql.SQLException;
 
 import org.ppl.BaseClass.BaseiCore;
-import org.ppl.common.Escape;
 
 public class iTalk extends BaseiCore {
 	private String className = null;

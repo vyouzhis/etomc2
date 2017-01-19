@@ -1,6 +1,8 @@
 package com.lib.Quartz.Cron;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.ppl.plug.Quartz.CronQuartz;
 import org.quartz.Job;
@@ -35,15 +37,19 @@ public class UpdateAllStockMarket extends CronQuartz implements Job {
 
 			String out = new Shell.Plain(shell)
 					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py");
-
-			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py hs300");
-			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py sh");
-			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py sz");
-			new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py sz50");
+			
+			List<String> codeList = new ArrayList<String>();
+			codeList.add("300");
+			codeList.add("sh");
+			codeList.add("sz");
+			codeList.add("zx");
+			codeList.add("cy");
+			for (int i = 0; i < codeList.size(); i++) {
+				String path = "python "+mConfig.GetValue("pythonPath")+"/tushare_to_mongo.py "+codeList.get(i);
+				new Shell.Plain(shell)
+				.exec(path);
+			}
+			
 			echo(out);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
