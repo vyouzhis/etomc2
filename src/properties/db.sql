@@ -158,6 +158,16 @@ CREATE TABLE `strategy_stock` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+--- 首页显示的内容信息
+DROP TABLE IF EXISTS `index_show`;
+CREATE TABLE `index_show` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tables` varchar(255) NOT NULL COMMENT '表名',
+  `tid` int(11) NOT NULL COMMENT '该表的 id',
+  `seque` int(11) NOT NULL DEFAULT '0' COMMENT '顺序',
+  PRIMARY KEY (`id`)  
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --- 股票类策略类型
 DROP TABLE IF EXISTS `strategy_stock_style`;
 CREATE TABLE IF NOT EXISTS `strategy_stock_style` (

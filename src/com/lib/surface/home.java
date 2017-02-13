@@ -37,7 +37,7 @@ public class home extends BaseSurface{
 		
 		int is = isLogin();
 		if(is<1){
-			setRoot("IndexTopBar", "1");
+			//setRoot("IndexTopBar", "1");
 			String salt = getSalt();
 			
 			setRoot("Salt", salt);
@@ -54,15 +54,15 @@ public class home extends BaseSurface{
 	}
 	
 	private void listStrategy() {
-		String sql = "SELECT title,sdesc FROM `strategy_stock` order by id desc limit 6 ";
-				//+ " UNION(SELECT title, sdesc FROM `strategy_stock` WHERE cid=2 order by id desc limit 4)  ";
-				//+ " UNION (SELECT title,SUBSTRING(sdesc,1,50) as sdesc FROM `strategy_stock` WHERE cid=3 limit 2)";
-		
+		String sql = "SELECT s.title,s.sdesc,s.follow FROM `index_show` i, `strategy_stock` s WHERE tables LIKE 'strategy_stock' AND s.id = i.tid  limit 3";
+				
 		List<Map<String, Object>> res = null;
 		
 		try {
 			res = FetchAll(sql);
 			if(res!=null){
+				setRoot("StrategyIndex", res.get(0));
+				res.remove(0);
 				setRoot("listStrategy", res);
 			}
 		} catch (SQLException e) {

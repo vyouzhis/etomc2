@@ -11,6 +11,12 @@ import org.quartz.JobExecutionException;
 import com.jcabi.ssh.SSHByPassword;
 import com.jcabi.ssh.Shell;
 
+/**
+ * 
+ * @author vyouzhi
+ * 不用了,原本是推送指数的
+ *
+ */
 public class RealTimeStockDB extends CronQuartz implements Job {
 	public RealTimeStockDB() {
 		// TODO Auto-generated constructor stub

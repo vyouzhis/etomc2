@@ -35,7 +35,8 @@ var ToolTip=true;
 var StockDescCode = "";
 
 var showExt = 1;
-var isDZ = 0;
+// 定义是否要放缩
+var isDZ = 0; 
 var myChart;
 var myChart_ext;
 var MainChartLengendName=[];

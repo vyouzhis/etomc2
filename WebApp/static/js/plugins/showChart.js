@@ -28,6 +28,7 @@ function InitStockData(JsonData, cn) {
 	var bool = 0;
 	var seriesList = [];
 	var NameList = {};
+
 	NameList["hs300"] = "沪深300指数";
 	NameList["sh"] = "上证指数";
 	NameList["sz"] = "深证指数";
@@ -49,6 +50,8 @@ function InitStockData(JsonData, cn) {
 		
 	}else{
 		seriesData['name'] = NameList[cn];
+		isDZ = 1;
+		
 	}
 	
 	seriesData['type'] = "k";
@@ -160,21 +163,24 @@ function InitStockData(JsonData, cn) {
 		series : seriesList
 	};
 
-	
 	//"dataZoom" 
 	 
-    
    if(isDZ == 1){
 	   var dz =  {
 	        show : true,
 	        realtime: true,
-	        start : 50,
+	        start : 95,
 	        end : 100
 		    }
 	   JsonOpton["dataZoom"] = dz;
-	   JsonOpton["grid"] = {};
+	   JsonOpton["grid"] = {
+		        x: 0,
+		        y: 0,
+		        x2:0,
+		        y2:0
+		    };
 	 }
-	// //console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
+	//console.log("JsonOpton:" +JSON.stringify(JsonOpton) );
 
 	ChartRefresh(JsonOpton);
 }
@@ -502,4 +508,62 @@ function initExtChart(){
 	myChart_ext.clear();
 	myChart_ext.setOption(optionExt, true);
 	myChart_ext.refresh();
+}
+
+
+function radarFun(){
+
+	option = {
+	    title : {
+	        
+	    },
+	    tooltip : {
+	        trigger: 'axis'
+	    },
+	    legend: {
+	        orient : 'vertical',
+	        x : 'right',
+	        y : 'bottom',
+	        data:['预算分配','实际开销']
+	    },
+	    toolbox: {
+	       
+	    },
+	  
+	    polar : [
+	       {
+	           indicator : [
+	               { text: '盈利能力', max: 6000},
+	               { text: '累计收益', max: 16000},
+	               { text: '最大回撤', max: 30000},
+	               { text: '夏普比率', max: 38000},
+	               { text: '夏普比率', max: 52000},
+	               { text: '收益波动率', max: 25000}
+	            ]
+	        }
+	    ],
+	    calculable : true,
+	    series : [
+	        {
+	            name: '预算 vs 开销（Budget vs spending）',
+	            type: 'radar',
+	            data : [
+	                {
+	                    value : [4300, 10000, 28000, 35000, 50000, 19000],
+	                    name : '预算分配'
+	                },
+	                 {
+	                    value : [5000, 14000, 28000, 31000, 42000, 21000],
+	                    name : '实际开销'
+	                }
+	            ]
+	        }
+	    ]
+	};
+	                    
+	if($('#echart_radar').length > 0) {
+		radarChart = echarts.init(document.getElementById('echart_radar'));
+		radarChart.setOption(option, true);
+		radarChart.refresh();
+	}
 }
