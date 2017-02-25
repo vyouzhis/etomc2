@@ -2,13 +2,11 @@ package com.lib.api;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.ppl.BaseClass.BaseiCore;
-import org.ppl.db.MGDB;
-import org.ppl.io.TimeClass;
+import org.ppl.net.cUrl;
 
 import com.alibaba.fastjson.JSON;
 import com.jcabi.ssh.SSHByPassword;
@@ -28,7 +26,7 @@ public class iBookMark extends BaseiCore {
 	public void Show() {
 		// TODO Auto-generated method stub
 		super.setAjax(true);
-
+		
 		if (super.Init() == -1) {
 
 			super.setHtml("");
@@ -66,7 +64,7 @@ public class iBookMark extends BaseiCore {
 				+ "( `uid`, `code`,`name`, `cid`, `sid`, `ctime`,`price`) "
 				+ "VALUES ( %d, '%s', '%s', '%d', '%d', '%d','%s');";
 
-		float price = getPrice(code);
+		float price = CodrPrice(code);
 		String sql = String.format(format, uid, code, name, cid, sid, now, price);
 
 		List<Map<String, Object>> res = checksid(uid, cid, code);
@@ -159,7 +157,7 @@ public class iBookMark extends BaseiCore {
 			
 			for (int i = 0; i < res.size(); i++) {
 				Map<String, Object> map = res.get(i);
-				float price = getPrice(map.get("code").toString());
+				float price = CodrPrice(map.get("code").toString());
 				res.get(i).put("nowprice", price);
 			}
 			
@@ -205,29 +203,24 @@ public class iBookMark extends BaseiCore {
 		super.setHtml(json);
 	}
 	
-	@SuppressWarnings("unchecked")
-	private float getPrice(String code) {
+	private float CodrPrice(String code) {
+		cUrl curl = new cUrl();
 		
-		Shell shell = null;
-		String price = "";
-		try {
-			shell = new SSHByPassword(mConfig.GetValue("pythonIp"), 22,
-					mConfig.GetValue("pythonUser"), "!@#qazwsx");
-
-			String out = new Shell.Plain(shell)
-					.exec("python "+mConfig.GetValue("pythonPath")+"/tushare_mongo_realtime.py "+code);
-			out = out.replace("u'", "'");
-			//echo(out);
-			List<Map<String, Object>> cInfo = JSON.parseObject(out, List.class);
-			price = cInfo.get(0).get("price").toString();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			echo(e.getMessage());
+		String url = "http://hq.sinajs.cn/?_=1486209732022/&list=";
+		String sCode = "";
+		if(code.substring(0, 1).equals("6")){
+			sCode = "sh"+code;
+		}else{
+			sCode = "sz"+code;
 		}
-		return toFloat(price);
+			
+		String res = curl.httpGet(url+sCode);
+		res = res.substring(21);
+		float price = toFloat(res.split(",")[3]);
+		
+		return price;
 	}
-
+	
 	private void ListCodeStra() {
 		String format = "SELECT s.id,s.code,s.sid,t.title FROM `stock_strategy` s, strategy_stock t WHERE s.uid=%d and s.cid=%d AND s.isstop = 0 and t.id = s.sid ORDER BY s.code ";
 		int cid = mConfig.GetInt("Step.strategy");

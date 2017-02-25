@@ -33,7 +33,7 @@ public class iregister_action extends BaseSurface {
 
 		List<String> rmc = porg.getRmc();
 
-		String salt = porg.getKey("salt");
+		String salt = porg.getKey("rsalt");
 
 		if (rmc.get(0).equals("register_act")) {
 
@@ -69,12 +69,16 @@ public class iregister_action extends BaseSurface {
 				+ "user_info` ( `passwd`, `nickname`, `email`, `ctime`, `phone`,  `ip`, `salt`) "
 				+ "VALUES ('%s', '%s', '%s', '%d',  '%s', '%s', '%s');";
 
-		String pwd = porg.getKey("password");
-
-		String sql = String.format(format, pwd, porg.getKey("nickname"), porg
-				.getKey("email"), now, porg.getKey("phone").replace("-", ""),
+		String pwd = porg.getKey("rPassword");
+		
+		String phone = "";
+		if(porg.getKey("rphone") != null){
+			phone = porg.getKey("rphone").replace("-", "");
+		}
+		
+		String sql = String.format(format, pwd, porg.getKey("rnickname"), porg
+				.getKey("remail"), now, phone,
 				porg.GetIP(), salt);
-		//echo(sql);
 		try {
 			insert(sql);
 		} catch (SQLException e) {
@@ -89,7 +93,7 @@ public class iregister_action extends BaseSurface {
 			isOK = true;
 		}
 
-		ActiveEmail(porg.getKey("email"), salt);
+		ActiveEmail(porg.getKey("remail"), salt);
 	}
 
 	private void ActiveEmail(String email, String salt) {

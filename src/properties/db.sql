@@ -143,19 +143,20 @@ CREATE TABLE IF NOT EXISTS `stock_user_talk` (
 
 --- 股票类策略, 策略时间为 两年
 DROP TABLE IF EXISTS `strategy_stock`;
-CREATE TABLE `strategy_stock` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `strategy_stock` (
+  `id` int(11) NOT NULL AUTO_INCREMENT, 
   `cid` int(11) NOT NULL COMMENT '策略 类型 id',
   `title` varchar(255) NOT NULL COMMENT '策略标题',
   `uid` int(11) NOT NULL COMMENT 'login uid',
   `sdesc` text COMMENT '详细说明',
   `integral` int(11) DEFAULT '0' COMMENT '0 免费 ',
   `iid` int(11) NOT NULL COMMENT '策略 运行信息 id',
-  `path` text COMMENT '策略路经',
-  `returns` tinyint(1) DEFAULT '0' COMMENT '返回类型 0 table , 1 chart,  2 aplah, 3 chart and table. 4... ',
+  `path` varchar(255) COMMENT '策略路经',
+  `quota` varchar(255) COMMENT '指标路经',
   `follow` int(11) NOT NULL COMMENT '当有人使用的时候记录一次',
-  PRIMARY KEY (`id`)  
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `indexs` int(11) NOT NULL DEFAULT '2' COMMENT '0 可以首页显示，1 首页的下一栏，2一般的情况',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
 --- 首页显示的内容信息
@@ -208,6 +209,16 @@ CREATE TABLE IF NOT EXISTS `stock_strategy` (
 
 create index  `index_uid_isstop` on `stock_strategy` (`uid`,`isstop`);
 --ALTER TABLE `stock_strategy` ADD UNIQUE `unique_index`(`uid`, `isstop`, `code`，`sid`);
+
+--- 组合策略
+DROP TABLE IF EXISTS `strategy_group`;
+CREATE TABLE IF NOT EXISTS `strategy_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT 'login uid 该策略是认证发布的',
+  `title` varchar(255) NOT NULL COMMENT '策略组合标题',
+  `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',  
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 ---- 是单独给与 SQLErrorLog 类使用，专门记录出错的日志

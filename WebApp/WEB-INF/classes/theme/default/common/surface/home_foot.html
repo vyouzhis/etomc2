@@ -50,17 +50,50 @@
 	}
 	
 	function chkForm() {
-		var passwd = $("#Password").val();
 		var salt = $("#salt").val();
+		
+		var passwd = $("#Password").val();		
 		var md5 = $.md5($.md5(passwd) + salt);
 		$("#Password").val(md5);
+				
+		var rpasswd = $("#rPassword").val();
+		rmd5 = $.md5(rpasswd);
+		$("#rPassword").val(rmd5);
+
 	}
 
 	function changeCode() {
 		$('#kaptchaImage').attr('src',
-				'/etomc2/captcha_image?' + Math.floor(Math.random() * 100))
+				'${captcha_image}?' + Math.floor(Math.random() * 100))
 				.fadeIn();
 	}
+	
+	function validateEmail(email) {
+	    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	    return re.test(email);
+	}
+	function validateForm() {
+		console.log("iiiiiiii");
+		if(!validateEmail($("#remail").val())){
+			$("#rPassword").val("");
+			console.log("1111");
+			return false;
+		}
+		
+		if($("#rnickname").val().length == 0){
+			$("#rPassword").val("");
+			console.log("222");
+			return false;
+		}
+		if($("#rPassword").val().length == 0){
+			$("#rPassword").val("");
+			console.log("33");
+			return false;
+		}
+			
+		return true;
+	}
+	
 </script>
 
 

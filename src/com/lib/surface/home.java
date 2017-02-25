@@ -8,6 +8,7 @@ import java.util.Map;
 import org.ppl.BaseClass.BaseSurface;
 import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
+import org.ppl.io.Encrypt;
 
 import com.jcabi.ssh.SSHByPassword;
 import com.jcabi.ssh.Shell;
@@ -39,10 +40,14 @@ public class home extends BaseSurface{
 		if(is<1){
 			//setRoot("IndexTopBar", "1");
 			String salt = getSalt();
-			
+			Encrypt en = Encrypt.getInstance();
 			setRoot("Salt", salt);
 			setRoot("ilogin_action_uri", ucl.Url("loginAction"));
-						
+			String radromSalt = en.MD5(String.valueOf(time()+10));
+			setRoot("register_action_uri", ucl.Url("register_act/"+radromSalt));
+			setRoot("captcha_image", ucl.Url("captcha_image"));
+			setRoot("captcha_check", ucl.Url("captcha_check"));
+			
 			listStrategy();
 		}else {
 			ShowMessage sm = ShowMessage.getInstance();

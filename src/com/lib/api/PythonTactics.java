@@ -34,6 +34,7 @@ public class PythonTactics extends BaseSurface {
 		Shell shell = null;
 		
 		String code = porg.getKey("code");
+		int isquota = toInt(porg.getKey("quota"));
 		
 		int id = toInt(porg.getKey("id"));
 		Map<String, Object> si = getScriptInfo(id);
@@ -44,6 +45,7 @@ public class PythonTactics extends BaseSurface {
 		}
 				
 		String path = si.get("path").toString();
+		String quota = si.get("quota").toString();
 
 		try {
 							
@@ -61,8 +63,15 @@ public class PythonTactics extends BaseSurface {
 			
 			shell = new SSHByPassword(ip, 22, user, pwd);
 			
-			String stdout = new Shell.Plain(shell).exec("export LC_CTYPE=zh_CN.utf8 && python "+mConfig.GetValue("pythonQuant")
-					+ path +" "+code);
+			String stdout = "";
+			if (isquota == 0) {
+				stdout = new Shell.Plain(shell).exec("export LC_CTYPE=zh_CN.utf8 && cd "+mConfig.GetValue("pythonPath")+" && python "
+				+ path +" "+code);
+			}else {
+				stdout = new Shell.Plain(shell).exec("export LC_CTYPE=zh_CN.utf8 && cd "+mConfig.GetValue("pythonPath") + " && python "
+				+ quota +" "+code);
+			}
+			
 						
 			super.setHtml(stdout);
 
@@ -73,7 +82,7 @@ public class PythonTactics extends BaseSurface {
 	}
 	
 	private Map<String, Object> getScriptInfo(int id) {
-		String format = "SELECT s.path, i.*  FROM `strategy_stock` s, strategy_info i where i.id = s.iid AND s.id=%s limit 1";
+		String format = "SELECT s.path,s.quota, i.*  FROM `strategy_stock` s, strategy_info i where i.id = s.iid AND s.id=%s limit 1";
 		String sql = String.format(format, id);
 		
 		Map<String, Object> res = FetchOne(sql);

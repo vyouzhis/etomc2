@@ -31,6 +31,9 @@ function istrSelect(i) {
 	// 获取策略的讨论内容
 	listTalk(0, straListData[i]['id'], "");
 
+	//对 当前的股票进行指标去处
+	Tactics(1);
+	
 	talkSelect(1, straListData[nowTId]['id']);
 }
 

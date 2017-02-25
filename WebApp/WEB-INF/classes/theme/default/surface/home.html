@@ -348,33 +348,80 @@
 
 								</ul>
 								<div class="widget-content">
-
-									<p class="comment-form-author"><label for="author" style="display: none;">Your Name</label> <input id="author" name="author" value="" size="20" aria-required="true" placeholder="Your N注册" class="required" type="text"><span class="required_lab">*</span></p>
-									<p class="comment-form-email"><label for="email" style="display: none;">Your Email</label> <input id="email" name="email" value="" size="20" aria-required="true" placeholder="Your Email" class="required email" type="text"><span class="required_lab">*</span></p>
-									<p class="form-submit"><input name="submit" id="submit" class="submit" value="Submit" type="submit"> <input name="comment_post_ID" value="503" id="comment_post_ID" type="hidden">
-										<input name="comment_parent" id="comment_parent" value="0" type="hidden">
-									</p>
-									<div class="clear"></div>
+									<form role="form" class="form-horizontal" action="${ilogin_action_uri}" enctype="multipart/form-data" method="post">
+										<p class="comment-form-author">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+												<input type="email" placeholder="Email" id="email" name="email" class="form-control">
+											</div>											
+										</p>
+										
+										<p class="comment-form-email">
+											<div class="input-group">
+												<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+												<input type="password" placeholder="密码" id="Password" name="Password" class="form-control">
+											</div>
+										</p>
+										
+										<p class="form-submit">
+											<input name="submit" id="submit" class="submit" value="Submit" type="submit"> 
+											<input style="display:none;" type="text" id="salt" name="salt" value="${Salt}" />
+										</p>
+										<div class="clear"></div>
+									</form>
 								</div>
 								<div class="clear"></div>
 							</div>
 							<div id="wpzoom-popular-news-2" class="tabbertab popular-news">
+							<form role="form" class="form-horizontal" action="${register_action_uri}" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
 								<h2 class="widgettitle">注册成为会员</h2>
 								<ul class='popular'>
 									<li>
-										<a href='http://demo.wpzoom.com/alpha/2015/12/07/testing-the-elements-2/' rel='bookmark'>欢迎成为会员</a>
-										<span class='comments' href='http://demo.wpzoom.com/alpha/2015/12/07/testing-the-elements-2/'>501个会员</span>
+										<a href='http://www.etomc2.com/' rel='bookmark'>欢迎成为会员</a>
+										<span class='comments' href='http://ww.etomc2.com'>501个会员</span>
 									</li>
 								</ul>
 								<div class="widget-content">
 
-									<p class="comment-form-author"><label for="author" style="display: none;">Your Name</label> <input id="author" name="author" value="" size="20" aria-required="true" placeholder="Your N注册" class="required" type="text"><span class="required_lab">*</span></p>
-									<p class="comment-form-email"><label for="email" style="display: none;">Your Email</label> <input id="email" name="email" value="" size="20" aria-required="true" placeholder="Your Email" class="required email" type="text"><span class="required_lab">*</span></p>
-									<p class="form-submit"><input name="submit" id="submit" class="submit" value="Submit" type="submit"> <input name="comment_post_ID" value="503" id="comment_post_ID" type="hidden">
-										<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+									<p class="comment-form-author">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-envelope"></i></span> <input type="email"
+												placeholder="888888@qq.com" id="remail" name="remail" class="form-control">
+										</div>
+									</p>
+									
+									<p class="comment-form-email">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-user"></i></span> <input type="text" placeholder="昵称" id="rnickname"
+												name="rnickname" class="form-control">
+										</div>
+									 </p>
+									 <p class="comment-form-email">
+										<div class="input-group">
+											<span class="input-group-addon"><i class="fa fa-lock"></i></span> <input type="password" placeholder="密码"
+												id="rPassword" name="rPassword" class="form-control">
+										</div>
+									 </p>
+									 <p class="comment-form-email">
+										<div class="form-group">
+											<label class="col-md-3 control-label" for="exampleInputFile"><img src="${captcha_image}" alt=""
+												id="kaptchaImage" name="kaptchaImage" onclick="changeCode()"></label>
+											<div class="col-md-5">
+												<input type="text" placeholder="" class="form-control" id="verify" name="verify">
+											</div>
+											<label class="col-md-1 control-label hide" id="verify_label" name="verify_label">
+											<button type="button" class="btn btn-outline btn-success"><i class="fa fa-close" name="verify_i" id="verify_i"></i> </button>
+											</label>
+										</div>
+									 </p>
+									 
+									<p class="form-submit">
+										<input name="submit" id="submit" class="submit" value="Submit" type="submit"> 
+										<input style="display: none;" type="text" id="rsalt" name="rsalt" value="${Salt}" />
 									</p>
 									<div class="clear"></div>
 								</div>
+								</form>
 							</div>
 
 							<div class="clear"></div>
@@ -449,7 +496,7 @@
 			<div class="inner-wrap">
 
 				Copyright &copy; 2017 &mdash;
-				风险提示：<a href="/" class="on">EtoMC2</a> 里任何用户或者嘉宾的发言，都有其特定立场，投资决策需要建立在独立思考之上。 <span> #<a href="http://www.wpzoom.com" target="_blank" title="WPZOOM WordPress Themes">深圳市发现数据科技有限公司</a>#</span>
+				风险提示：<a href="/" class="on">EtoMC2</a> 里任何用户或者嘉宾的发言，都有其特定立场，投资决策需要建立在独立思考之上。 <span> #<a href="http://www.etomc2.com" target="_blank" title="EtoMC2">深圳市发现数据信息技术有限公司</a>#</span>
 
 			</div>
 		</div>

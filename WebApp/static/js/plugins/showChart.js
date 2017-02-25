@@ -12,13 +12,16 @@ function showChart(dt, code) {
 	if (dt.length > 10) {
 		// //console.log("JsonList:" + dt );
 		StockJsonDBHFQ = JSON.parse(dt);
-		InitStockData(StockJsonDBHFQ['data'], code);
-		
-		if(showExt == 1){
-			AddmaData(code);
-			initExtChart();
-		}
-		
+		InitChart(code);		
+	}
+}
+
+function InitChart(code){
+	InitStockData(StockJsonDBHFQ['data'], code);
+	
+	if(showExt == 1){
+		AddmaData(code);
+		initExtChart();
 	}
 }
 
@@ -46,12 +49,10 @@ function InitStockData(JsonData, cn) {
 	var shList = [];
 	
 	if(NameList[cn] == undefined){		
-		seriesData['name'] = cn;
-		
+		seriesData['name'] = cn;		
 	}else{
 		seriesData['name'] = NameList[cn];
-		isDZ = 1;
-		
+		//isDZ = 1;		
 	}
 	
 	seriesData['type'] = "k";
@@ -457,7 +458,7 @@ function initExtChart(){
 		    dataZoom : {
 		        show : true,
 		        realtime: true,
-		        start : 50,
+		        start : 80,
 		        end : 100
 		    },
 		    grid: {

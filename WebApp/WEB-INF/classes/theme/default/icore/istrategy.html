@@ -375,20 +375,25 @@
 					</table>
 					<div class="row">
 
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<button class="btn btn-block btn-primary" type="button" onclick="KChart()">
 								<i class="fa fa-area-chart"></i> K线图
 							</button>
 						</div>
 
-						<div class="col-sm-4">
-							<button class="btn btn-block btn-primary" type="button" onclick="Tactics()">
+						<div class="col-sm-3">
+							<button class="btn btn-block btn-primary" type="button" onclick="Tactics(0)">
 								<i id="looping" name="looping" class="fa fa-cog fa-fw" aria-hidden="true"></i>回测
 							</button>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<button class="btn btn-block btn-primary"
-								<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_Type!1})" > <i class="fa fa-heart"></i> 加入我的策略
+								<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_Type!1})" > <i class="fa fa-heart"></i> 收藏策略
+										</button>
+						</div>
+						<div class="col-sm-3">
+							<button class="btn btn-block btn-primary"
+								<#if islogin == -1> disabled="disabled" </#if> type="button" onclick="addBookMark(0, ${Step_Type!1})" > <i class="fa fa-heart"></i> 发布组合
 										</button>
 						</div>
 					</div>

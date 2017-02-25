@@ -11,22 +11,22 @@
 
 	function validateForm() {
 		
-		if(!validateEmail($("#email").val())){
-			$("#password").val("");
+		if(!validateEmail($("#remail").val())){
+			$("#rPassword").val("");
 			return false;
 		}
 		
-		if($("#nickname").val().length == 0){
-			$("#password").val("");
+		if($("#rnickname").val().length == 0){
+			$("#rPassword").val("");
 			return false;
 		}
-		if($("#password").val().length == 0){
-			$("#password").val("");
+		if($("#rPassword").val().length == 0){
+			$("#rPassword").val("");
 			return false;
 		}
 		
-		if($("#phone").val().length == 0){
-			$("#password").val("");
+		if($("#rphone").val().length == 0){
+			$("#rPassword").val("");
 			return false;
 		}
 		
@@ -39,9 +39,9 @@
 	}
 
 	function chkForm() {
-		var passwd = $("#password").val();
+		var passwd = $("#rPassword").val();
 		var md5 = $.md5(passwd);
-		$("#password").val(md5);
+		$("#rPassword").val(md5);
 	}
 
 	function changeCode() {

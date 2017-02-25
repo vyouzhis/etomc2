@@ -45,9 +45,15 @@
  *	############################################################################
  */
 
-function Tactics() {
-	$("#looping").attr("class","fa fa-cog fa-spin fa-fw");
-	$("#developing").attr("class","fa fa-connectdevelop fa-spin");
+function Tactics(quota) {
+	/**
+	 * quota == 0 就是运行 pyalgo 回测, == 1 就是运行指标
+	 */
+	
+	if(quota==0){
+		$("#looping").attr("class","fa fa-cog fa-spin fa-fw");
+		$("#developing").attr("class","fa fa-connectdevelop fa-spin");
+	}
 	var code = $("#code_num").val();
 	if (code.length == 0) {
 		BellNotifi("请填写代码");
@@ -57,10 +63,10 @@ function Tactics() {
 	$.ajax({
 		url : DomainUrl+"/ptactics?jsoncallback=?",
 		contentType : 'text/html;charset=utf-8',
-
 		data : {
 			"code" : code,
 			"id" : straListData[nowTId]['id'],
+			"quota":quota
 		},
 		success : function(result) {
 			// //console.log("success" + result);
@@ -72,94 +78,110 @@ function Tactics() {
 			talkSelect(4, straListData[nowTId]['id']);
 		},
 		complete : function(request, textStatus) { // for additional info
-			var option = request.responseText;
-			//console.log("codeJson:" + option);
-			if (option.length > 0) {
-			
-				var codeJson = JSON.parse(option);
-						
-				//ShowResult(codeJson);
-				//
-				var rawma = codeJson["rawma"];
-				var data = codeJson["data"];
-				var table = "";
-
-				InitStockData(StockJsonDBHFQ['data'], code);
-				if (rawma == 1){
-					AddmaData(code);
-					
-				}
-				
-				var i = 0;
-				
-				for(k in data){
-					
-					format = data[k]["format"];
-					if(format == "table"){
-						//console.log("codeJson1:" + data[k]["db"]);
-						table += data[k]["name"]
-						table += showTable(data[k]["db"]);
-						table += "<br />";
-					}else if(format == "markPoint"){
-						//{name : 'Buy', value : 20.61, xAxis: '2016-12-12', yAxis: 20.61}
-						var mpList = []
-						
-						mdata = data[k]["db"];
-						console.log("cdata:" + mdata);
-						var mData = JSON.parse(mdata);
-						var col = mData["columns"]
-						for(var k in mData["index"]){
-							var mpdict = {}
-							mpdict["name"] = "BUY";
-							mpdict["value"] = mData["data"][k][0];
-							mpdict["xAxis"] = mData["data"][k][1];
-							mpdict["yAxis"] = mData["data"][k][0];
-							mpList.push(mpdict)	
-							
-							var selldict = {}
-							selldict["name"] = "SELL";
-							selldict["value"] = mData["data"][k][2];
-							selldict["xAxis"] = mData["data"][k][3];
-							selldict["yAxis"] = mData["data"][k][2];
-							mpList.push(selldict)
-							
-						}
-						markPointAction(mpList);
-						console.log("cdata:" + JSON.stringify(mpList));
-					}
-					else {
-						//console.log("isExt:" + data[k]["isExt"]);
-						if(i == 0 && data[k]["isExt"] == 0){
-							ClearExtChart();
-							i = 1;
-						}
-												
-						var name = data[k]["name"];
-						cdata = data[k]["db"];
-						cdata = cdata.replace(/NaN/g, 0);
-						
-						var cData = JSON.parse(cdata);
-						// 这儿有一个 bug
-						if(data[k]["isExt"] == 0){
-							//console.log("codeJson2:" + name);
-							ExtChart(name, cData, format, data[k]["yIndex"]);
-						}else{
-							addChartLineData(0, name, cData, format);
-						}
-						
-					}
-					
-				}
-				if (table.length > 0){
-					addTables(table);	
-				}
-						
+			returnBuild(request.responseText, code);
+			if(quota==0){
+				quantLoop();
 			}
-			$("#looping").attr("class","fa fa-cog fa-fw");
-			$("#developing").attr("class","fa fa-connectdevelop");
-			talkSelect(4, straListData[nowTId]['id']);
 		}
 	});
+}
+
+function returnBuild(option, code){
+	//var option = request.responseText;
+	//console.log("codeJson:" + option);
+	if (code.length ==0 ){
+		console.log("StockCode is null");
+		return;
+	}
+	
+	if (option.length > 0) {
+		// 恢复所有的图表数据
+		InitChart(code);
+		
+		var codeJson = JSON.parse(option);
+				
+		//ShowResult(codeJson);
+		//
+		var rawma = codeJson["rawma"];
+		var data = codeJson["data"];
+		var table = "";
+
+		//按要求重新处理一次
+		InitStockData(StockJsonDBHFQ['data'], code);
+		if (rawma == 1){
+			AddmaData(code);			
+		}
+		
+		var i = 0;
+		
+		for(k in data){
+			
+			format = data[k]["format"];
+			if(format == "table"){
+				//console.log("codeJson1:" + data[k]["db"]);
+				table += data[k]["name"]
+				table += showTable(data[k]["db"]);
+				table += "<br />";
+			}else if(format == "markPoint"){
+				//{name : 'Buy', value : 20.61, xAxis: '2016-12-12', yAxis: 20.61}
+				var mpList = []
+				
+				mdata = data[k]["db"];
+				//console.log("cdata:" + mdata);
+				var mData = JSON.parse(mdata);
+				var col = mData["columns"]
+				for(var k in mData["index"]){
+					var mpdict = {}
+					mpdict["name"] = "BUY";
+					mpdict["value"] = mData["data"][k][0];
+					mpdict["xAxis"] = mData["data"][k][1];
+					mpdict["yAxis"] = mData["data"][k][0];
+					mpList.push(mpdict)	
+					
+					var selldict = {}
+					selldict["name"] = "SELL";
+					selldict["value"] = mData["data"][k][2];
+					selldict["xAxis"] = mData["data"][k][3];
+					selldict["yAxis"] = mData["data"][k][2];
+					mpList.push(selldict)
+					
+				}
+				markPointAction(mpList);
+				console.log("cdata:" + JSON.stringify(mpList));
+			}
+			else {
+				//console.log("isExt:" + data[k]["isExt"]);
+				if(i == 0 && data[k]["isExt"] == 0){
+					ClearExtChart();
+					i = 1;
+				}
+										
+				var name = data[k]["name"];
+				cdata = data[k]["db"];
+				cdata = cdata.replace(/NaN/g, 0);
+				
+				var cData = JSON.parse(cdata);
+				// 这儿有一个 bug
+				if(data[k]["isExt"] == 0){
+					console.log("codeJson2:" + name);
+					ExtChart(name, cData, format, data[k]["yIndex"]);
+				}else{
+					addChartLineData(0, name, cData, format);
+				}
+				
+			}
+			
+		}
+		if (table.length > 0){
+			addTables(table);	
+		}
+				
+	}
+}
+function quantLoop(){
+	$("#looping").attr("class","fa fa-cog fa-fw");
+	$("#developing").attr("class","fa fa-connectdevelop");
+	talkSelect(4, straListData[nowTId]['id']);
 }
 
 function showTable(o){
