@@ -1,6 +1,6 @@
 package com.lib.surface;
 
-import java.io.IOException;
+
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +10,6 @@ import org.ppl.common.ShowMessage;
 import org.ppl.etc.UrlClassList;
 import org.ppl.io.Encrypt;
 
-import com.jcabi.ssh.SSHByPassword;
-import com.jcabi.ssh.Shell;
 
 public class home extends BaseSurface{
 	private String className = null;
@@ -29,8 +27,8 @@ public class home extends BaseSurface{
 		UrlClassList ucl = UrlClassList.getInstance();
 		
 		setRoot("istrategy_url", ucl.Url("strategy"));
-		setRoot("itrade_url", ucl.Url("trade"));
-		setRoot("irisk_url", ucl.Url("risk"));
+		setRoot("OneQuantGroup", ucl.Url("one"));
+		setRoot("QuantGroupList", ucl.Url("grouplist"));
 		setRoot("iarbitrage_url", ucl.Url("arbitrage"));
 		
 		

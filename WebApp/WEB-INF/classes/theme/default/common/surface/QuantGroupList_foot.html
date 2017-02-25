@@ -1,0 +1,255 @@
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/flexslider.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/jquery.carouFredSel.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/fitvids.min.js'></script>
+
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/tabs.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/jquery.placeholder.min.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/functions.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/functions/wpzoom/assets/js/galleria.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/functions/wpzoom/assets/js/wzslider.js'></script>
+		
+
+<script src="${static_js_uri}/plugins/jquery.sparkline.min.js${StaticVer}"></script>
+
+<script type="text/javascript">
+	
+	AjaxInitDB() ;
+	function AjaxInitDB() {
+		var Url = "http://hq.sinajs.cn/list=sh000001,sz399001,sh000300,sz399006,sz399005,sz000001";
+		/*		
+		 http://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20_fx_susdcny2017_2_4=/NewForexService.getDayKLine?symbol=fx_susdcny&_=2017_2_4
+
+			 http://hq.sinajs.cn/?_=1486209732022/&list=hf_XAU,hf_XAG,DINIW,hf_CL,USDCNY
+
+
+			 http://hq.sinajs.cn/list=sh000001,sz399001,sh000300,sz399006,sz399005
+		*/
+	
+		$.ajax({
+					url : Url+"='';jsoncallback=?",
+					dataType: "jsonp",
+					jsonp: "callback",
+		         jsonpCallback:"flightHandler",
+					success : function(result) {
+						 console.log("success" + result);
+					},
+					error : function(request, textStatus, errorThrown) {
+						console.log(request);
+					},
+					complete : function(request, textStatus) { // for additional
+
+						var html = "";
+						
+						html = writeResponse(hq_str_sh000001) 
+						+ writeResponse(hq_str_sz399001)
+						+ writeResponse(hq_str_sh000300)
+						//+ writeResponse(hq_str_sz399006)
+						+ writeResponse(hq_str_sz399005);
+						
+						//console.log(html);
+						$("#ticker").html("");
+						$("#ticker").html(html);
+												
+					}
+				});
+		
+		//每隔5分钟，读取一次.300000
+	   setTimeout('AjaxInitDB()', 30000);
+	}
+	
+	function writeResponse(text) {
+		var texts =  text.split(",");
+		var dots = texts[3] - texts[2];
+		var pet = (dots / texts[3]) * 100;
+		var html = "<dt>"+texts[0]+" </dt><dd>"+texts[3]+" "+dots.toFixed(2) +" "+ pet.toFixed(2)+"%</dd>";
+		
+		return html;
+	}
+	
+	
+	
+	
+	function flightHandler(o){
+		console.log(o);
+	}
+	
+	
+	function GetDay(){
+		Date.prototype.Format = function(fmt)   
+		{ //author: meizz   
+		  var o = {   
+		    "M+" : this.getMonth()+1,                 //月份   
+		    "d+" : this.getDate(),                    //日   
+		    "h+" : this.getHours(),                   //小时   
+		    "m+" : this.getMinutes(),                 //分   
+		    "s+" : this.getSeconds(),                 //秒   
+		    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+		    "S"  : this.getMilliseconds()             //毫秒   
+		  };   
+		  if(/(y+)/.test(fmt))   
+		    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+		  for(var k in o)   
+		    if(new RegExp("("+ k +")").test(fmt))   
+		  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+		  return fmt;   
+		} 
+		
+		var mdate = (new Date()).Format("yyyy_M_d") ;
+		return mdate;
+	}
+	var params = {
+			width: '140px',
+			height: '30px',
+			lineWidth: '2',
+			lineColor: '#7d939a',
+			fillColor: false,
+			spotRadius: '2',
+			highlightLineColor: '#aedaff',
+			highlightSpotColor: '#71aadb',
+			spotColor: false,
+			minSpotColor: false,
+			maxSpotColor: false,
+			disableInteraction: false
+		}
+	
+	pmi();
+	function pmi(){
+		
+		$.ajax({
+			url : DomainUrl+"/pmi?jsoncallback=?",
+			contentType : 'text/html;charset=utf-8',
+
+			success : function(result) {
+				//console.log("success" + result);
+			},
+			error : function(request, textStatus, errorThrown) {
+				 alert(textStatus);
+			},
+			complete : function(request) { // for additional info
+				//console.log("complete:" + request);
+				var json = JSON.parse(JSON.stringify(request));
+	
+				var datanodes = json['responseJSON']['returndata']['datanodes'];
+				var val = [];
+				for(var i=0; i<datanodes.length; i++){
+					if(datanodes[i]['code'].indexOf('A190101') != -1){
+						console.log("success" + datanodes[i]['data']['data']+":"+datanodes[i]['code']);
+						
+						val.push(Number(datanodes[i]['data']['data']).toFixed(2));
+					}	
+				}
+				var v = val.reverse();
+				console.log(v);	
+				$('#number-chart1').sparkline(v, params);
+			
+			}
+		});
+		
+	}
+	
+	ixicx();
+	function ixicx(){
+		var mdate = GetDay();
+		var Url = "http://stock.finance.sina.com.cn/usstock/api/jsonp_v2.php/var%20_ixic_ok=/US_MinKService.getDailyK?symbol=.ixic&_="+mdate;
+		 
+		$.ajax({
+			url : Url+"jsoncallback=?",
+			dataType: "jsonp",
+			jsonp: "callback",
+         jsonpCallback:"flightHandler",
+			success : function(result) {
+				 console.log("success" + result);
+			},
+			error : function(request, textStatus, errorThrown) {
+				console.log(request);
+			},
+			complete : function(request, textStatus) { // for additional
+
+				var html = "";
+				//console.log(_XAU);
+				var val = [];
+	         for(var i=_ixic_ok.length-20;i<_ixic_ok.length; i++){
+	        		
+	        	   val.push(Number(_ixic_ok[i]['c']).toFixed(4));
+	          	}
+	       					
+				$('#number-chart4').sparkline(val, params);
+				
+			}
+		});
+	}
+	
+	
+	xau();
+	function xau(){
+		var mdate = GetDay();
+		var Url = "http://stock2.finance.sina.com.cn/futures/api/jsonp.php/var%20_XAU=/GlobalFuturesService.getGlobalFuturesDailyKLine?symbol=XAU&_="+mdate;
+		 
+		$.ajax({
+			url : Url+"jsoncallback=?",
+			dataType: "jsonp",
+			jsonp: "callback",
+         jsonpCallback:"flightHandler",
+			success : function(result) {
+				 console.log("success" + result);
+			},
+			error : function(request, textStatus, errorThrown) {
+				console.log(request);
+			},
+			complete : function(request, textStatus) { // for additional
+
+				var html = "";
+				//console.log(_XAU);
+				var val = [];
+	         for(var i=_XAU.length-20;i<_XAU.length; i++){
+	        		//console.log(_XAU[i]);  
+	        	   val.push(Number(_XAU[i]['close']).toFixed(4));
+	          	}
+	       					
+				$('#number-chart2').sparkline(val, params);
+				
+			}
+		});
+	}
+	
+	usdcny();
+	function usdcny(){
+		
+		var mdate = GetDay();
+		//console.log(mdate);
+		
+		var Url = "http://vip.stock.finance.sina.com.cn/forex/api/jsonp.php/var%20_fx_susdcny=/NewForexService.getDayKLine?symbol=fx_susdcny&_="+mdate;
+		$.ajax({
+			url : Url+"jsoncallback=?",
+			dataType: "jsonp",
+			jsonp: "callback",
+         jsonpCallback:"flightHandler",
+			success : function(result) {
+				 console.log("success" + result);
+			},
+			error : function(request, textStatus, errorThrown) {
+				console.log(request);
+			},
+			complete : function(request, textStatus) { // for additional
+
+				var html = "";
+				//2017-01-25,6.85540,6.85540,6.88350,6.88110
+	          //   开盘， 最低      最高     收盘     
+				var susdcny = _fx_susdcny.split("|");
+				var len = susdcny.length;
+				var usdarr = susdcny.slice(len-20,len);
+				var val = [];
+				for(var i=0; i<usdarr.length; i++){
+					v = usdarr[i].split(",");
+					
+					val.push(Number(v[4]).toFixed(4));
+				}		
+				//console.log(val);
+				$('#number-chart3').sparkline(val, params);
+				
+			}
+		});
+	}
+	
+	
+</script>
