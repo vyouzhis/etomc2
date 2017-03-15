@@ -216,6 +216,23 @@ CREATE TABLE IF NOT EXISTS `strategy_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL COMMENT 'login uid 该策略是认证发布的',
   `title` varchar(255) NOT NULL COMMENT '策略组合标题',
+  `sdesc` text COMMENT '详细说明',  
+  `capital` double NOT NULL DEFAULT '100000' COMMENT '默认资本 默认资本, 累积资本,',
+  `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',  
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--- 组合股票列表
+DROP TABLE IF EXISTS `strategy_group_list`;
+CREATE TABLE IF NOT EXISTS `strategy_group_list` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gid` int(11) NOT NULL COMMENT '组的ID',
+  `code` varchar(10) NOT NULL COMMENT '股票代码' ,
+  `cname` varchar(10) NOT NULL COMMENT '股票行业' ,
+  `price` double NOT NULL COMMENT '股票价格',
+  `istrade`  tinyint(1) DEFAULT '0' COMMENT 'defaule 0 trade 1 close',
+  `otime` int(11) NOT NULL DEFAULT '1' COMMENT 'order time',
+  `ltime` int(11)  DEFAULT '0' COMMENT 'close time',  
   `ctime` int(11) NOT NULL DEFAULT '1' COMMENT 'create time',  
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

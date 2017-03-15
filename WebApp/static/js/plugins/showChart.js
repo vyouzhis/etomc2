@@ -122,10 +122,7 @@ function InitStockData(JsonData, cn) {
 				dataZoom : {
 					show : ToolTip
 				},
-				magicType : {
-					show : ToolTip,
-					type : [ 'line', 'bar' ]
-				},
+				
 				restore : {
 					show : ToolTip
 				}
@@ -186,19 +183,6 @@ function InitStockData(JsonData, cn) {
 	ChartRefresh(JsonOpton);
 }
 
-$(function() {
-	$("input[name='inline-radio']").change(function() {
-		var v = $("input[name='inline-radio']:checked").val();
-		if (parseInt(v) == 0) {
-			hfqStockData("data");
-		} else {
-			hfqStockData("hfq");
-		}
-	});
-});
-
-
-
 function hfqStockData(dtype) {
 	if (StockJsonDBHFQ[dtype] == undefined) {
 		//console.log("StockJsonDBHFQ null !"+dtype);
@@ -215,7 +199,7 @@ function hfqStockData(dtype) {
 	for ( var k in JsonData) {
 		var datalist = [];
 		
-		console.log(xDate[k] +"---"+ JsonData[k]['date']);
+		//console.log(xDate[k] +"---"+ JsonData[k]['date']);
 		
 		if (xDate[k] == JsonData[k]['date']){
 			// 开盘，收盘，最低，最高
@@ -268,10 +252,14 @@ function AddmaData(cn) {
 
 
 function addChartLineData(isSelect, lname, hsData, types) {
-	var oldOption = getChartOption();
+	var oldOption = "";
 	
-	//console.log("== oldOption:" + JSON.stringify(oldOption));
-	
+	if(MutileQuant == 0){
+		oldOption = getChartOption();	
+	}else{
+		oldOption = JSON.parse(MutileMainOption);	
+	}
+		
 	var legendName = oldOption['legend']['data'];
 
 	if (isSelect == 1) {
@@ -347,8 +335,13 @@ function getStockData(code) {
 	});
 }
 
-function ClearExtChart(){
+function getExtOldOption(){
 	var oldOption = myChart_ext.getOption();
+	return oldOption;
+}
+
+function ClearExtChart(){
+	var oldOption = getExtOldOption();
 	
 	oldOption['series'] = [];
 	
@@ -362,12 +355,19 @@ function ExtChart(lname, hsData, types, yIndex){
 	var shList = [];
 	
 	addChartLineData(0, lname, shList, types);
+	var MainChartOption = "";
+	var oldOption = "";
 	
-	var MainChartOption = getChartOption();
-	
+	if(MutileQuant == 0){
+		 MainChartOption = getChartOption();	
+		 oldOption = getExtOldOption();
+	}else{
+		 MainChartOption = JSON.parse(MutileMainOption);	
+		 oldOption = JSON.parse(MutileExtOption);
+		 console.log("MutileMainOption  --- :" + JSON.stringify(MainChartOption));
+	}
+		
 	var legendName = MainChartOption['legend']['data'];
-	
-	var oldOption = myChart_ext.getOption();
 		
 	var seriesList = oldOption['series'];
 	

@@ -19,6 +19,13 @@ var StockInfoData;
 var StockCode = "";
 var StockSid = 0;
 
+//多重指标 0 单 1 多
+var MutileQuant = 0;
+//保存主的option
+var MutileMainOption = "";
+//保存副的option
+var MutileExtOption = "";
+
 var DomainUrl="";
 
 var symbols = " !\"#$%&'()*+,-./0123456789:;<=>?@";

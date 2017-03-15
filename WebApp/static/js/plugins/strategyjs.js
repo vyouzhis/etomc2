@@ -21,7 +21,12 @@ function istrSelect(i) {
 	selectStraId = straListData[i]['id'];
 	var name = straListData[i]['title'];
 	nowTId = i;
-	$("#strategy_name").html(name);
+	if(MutileQuant == 0){
+		$("#strategy_name").html(name);
+	}else{
+		$("#strategy_name_sub").html(name);
+	}
+	
 
 	$("#talkNameStra").html("<i class='fa fa-flask'></i>" + name);
 

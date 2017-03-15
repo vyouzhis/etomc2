@@ -1,5 +1,42 @@
+<header id="header">
+
+			<div class="inner-wrap header-wrap">
+
+				<div id="logo">
+					<h1>
+				<a href="http://demo.wpzoom.com/alpha" title="WPZOOM Theme Demo">
+					<img alt="Repute - Responsive Multipurpose Bootstrap Theme" src="http://static.etomc2.com/static/images/logo/etomc2.png">				
+				</a>
+
+				</h1>
+				EtoMC2 我们的量化交流平台 
+				</div>
+				<!-- / #logo -->
+
+				<div class="adv">
+
+					<a href="http://www.wpzoom.com">
+						<img src="${surface_static_images_uri}/ad_1.png" title="WPZOOM" />
+						<!--
+                        	作者：offline
+                        	时间：2017-01-20
+                        	描述：
+                        <img src="http://www.wpzoom.com/images/placeholder/728.png" title="WPZOOM" />
+                        -->
+					</a>
+
+				</div>
+				<!-- /.adv -->
+				<div class="clear"></div>
 
 
+
+			</div>
+			<!-- /.inner-wrap -->
+
+		</header>
+
+<div class="container-wp">
 
 <!-- LATEST NEWS -->
 
@@ -174,8 +211,8 @@
 <section>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-6 col-xs-6">
+		<div class="row featured-category">
+			<div class="col-sm-6 col-xs-6 ">
 				<article class="comments">
 					<h3 class="section-heading">讨论区</h3>
 
@@ -322,7 +359,8 @@
 				</div>
 
 			</div>
-			<div class="col-sm-6 col-xs-6">
+			
+			<div class="col-sm-6 col-xs-6 ">
 				<div class="widget">
 					<table class="table table-striped">
 						<thead>
@@ -360,7 +398,14 @@
 							</tr>
 							<tr>
 								<th></th>
-								<td></td>
+								<td>
+									<div class="col-md-5" >
+										<label class="switch-input" >
+											<input type="checkbox"  name="switch-checkbox" id="switch-checkbox" <#if islogin == -1> disabled="disabled" </#if>>
+											<i data-swoff-text="NO" data-swon-text="YES"></i>  多重指标:  
+								  		</label>
+								  	</div>
+								</td>
 
 							</tr>
 							<tr>
@@ -368,6 +413,12 @@
 								<th scope="row">策略:</th>
 								<td><h4>
 										<code id="strategy_name" name="strategy_name">${strategy_name!""}</code>
+									</h4></td>
+							</tr>
+							<tr id ="strategy_name_sub_tr" name="strategy_name_sub_tr" class="hide">
+								<th scope="row">副策略:</th>
+								<td><h4>
+										<code id="strategy_name_sub" name="strategy_name_sub">${strategy_name_sub!""}</code>
 									</h4></td>
 							</tr>
 
@@ -667,4 +718,13 @@
 		</div>
 	</div>
 </section>
+</div>
 
+		<div id="copyright">
+			<div class="inner-wrap">
+
+				Copyright &copy; 2017 &mdash;
+				风险提示：<a href="/" class="on">EtoMC2</a> 里任何用户或者嘉宾的发言，都有其特定立场，投资决策需要建立在独立思考之上。 <span> #<a href="http://www.etomc2.com" target="_blank" title="EtoMC2">深圳市发现数据信息技术有限公司</a>#</span>
+
+			</div>
+		</div>

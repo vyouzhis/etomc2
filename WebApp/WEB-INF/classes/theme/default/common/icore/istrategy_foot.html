@@ -1,3 +1,13 @@
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/flexslider.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/jquery.carouFredSel.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/fitvids.min.js'></script>
+
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/tabs.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/jquery.placeholder.min.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/js/functions.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/functions/wpzoom/assets/js/galleria.js'></script>
+<script type='text/javascript' src='${static_js_uri}/themes/alpha/functions/wpzoom/assets/js/wzslider.js'></script>
+
 <script src="${static_js_uri}/plugins/echart2/echarts-all.js${StaticVer}"></script>
 <script src="${static_js_uri}/plugins/etomc2_gather.js${StaticVer}"></script>
 
@@ -36,6 +46,44 @@ jQuery(function($) {
 		StockCode = $("#code_num").val();
 		StockSid = 0;
 	});
+	
+	$(function() {
+		$("input[name='inline-radio']").change(function() {
+			var v = $("input[name='inline-radio']:checked").val();
+			if (parseInt(v) == 0) {
+				hfqStockData("data");
+			} else {
+				hfqStockData("hfq");
+			}
+		});
+	});
+	
+	$(function() {
+		$("input[name='switch-checkbox']").change(function() {
+			var v = $("input[name='switch-checkbox']:checked").val();
+			
+			if (v == 'on') {				
+				$("#strategy_name_sub_tr").attr("class","");
+				if(MutileQuant == 0){
+					MutileQuant = 1;
+					MutileMainOption = JSON.stringify(getChartOption());
+					console.log("MutileMainOption:" + MutileMainOption);
+					MutileExtOption = JSON.stringify(myChart_ext.getOption());					
+				}
+				console.log("on ");
+			} else {
+				
+				if(MutileQuant == 1){
+					MutileQuant = 0;
+					MutileMainOption = "";
+					MutileExtOption = "";					
+				}				
+				console.log("off ");
+				$("#strategy_name_sub_tr").attr("class","hide");
+			}
+		});
+	});
+	
 });
 
 
